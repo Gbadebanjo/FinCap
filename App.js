@@ -8,14 +8,15 @@ export default function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
       <StyledButton title="Click Me" />
+      <Text>Open up App.js to start working on your app!</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'tomato',
+    flex: 2,
+    backgroundColor: 'white',
     color: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
