@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     justifyContent: 'center',
-    width: '90%',
+    width: '92%',
     alignItems: 'center',
     margin: 15,
     textAlign: 'center',
   },
   text: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 18,
   },
 });
 
