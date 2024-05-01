@@ -22,8 +22,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     label: {
-        color: '#000',
-        marginBottom: 5,
+        color: '#111827',
+        width: 500,
+        fontSize: 16,
+        marginTop: 5,
+        marginLeft: 22,
+        alignSelf: 'flex-start',
     },
     input: {
         height: 45,
