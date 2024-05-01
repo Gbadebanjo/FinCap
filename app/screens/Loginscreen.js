@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
@@ -9,9 +9,10 @@ function Loginscreen(props) {
     const [password, setPassword] = useState('');
 
     return (
-        <View style={styles.container}>
-            
-            <InputField
+        <SafeAreaView style={styles.container}>
+        <Text style={styles.welcometext}>Welcome back !</Text>
+        <Text style={styles.subtext}>Login to continue</Text>
+        <InputField
             placeholder="Email "
             onChangeText={(text) => setUsername(text)}
             value={username}
@@ -24,14 +25,28 @@ function Loginscreen(props) {
           />
           <StyledButton title="Submit" />
             
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container : {
         width: "100%",
-    }
+        height: "100%",
+        paddingTop: 90,
+    },
+    subtext: {
+        fontSize: 16,
+        color: '#3F4654',
+        paddingLeft: 20,
+        paddingTop: 10,
+    
+    },
+    welcometext: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingLeft: 20,
+    },
 })
 
 export default Loginscreen;
