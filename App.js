@@ -13,17 +13,16 @@ export default function App() {
       {/* <StyledButton title="Click Me" /> */}
       {/* <InputField /> */}
       {/* <Landingscreen /> */}
-      <Loginscreen/>
-      
-      </View>
+      <Loginscreen />
+    </View>
   );
 }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      // backgroundColor: 'tomato',
-      color: '#fff',
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: 'tomato',
+    color: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

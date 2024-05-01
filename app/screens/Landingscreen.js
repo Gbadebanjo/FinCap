@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import Swiper from 'react-native-swiper';
 // import Carousel, { Pagination } from 'react-native-snap-carousel';
 
-
 const Landingscreen = () => {
   return (
     <Swiper loop={true}>
@@ -24,5 +23,3 @@ const Landingscreen = () => {
 };
 
 export default Landingscreen;
-
-
