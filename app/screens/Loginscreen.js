@@ -18,6 +18,7 @@ import GoogleLogo from "../assets/googleicon.png";
 function Loginscreen(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   // const navigation = useNavigation();
 
@@ -34,6 +35,10 @@ function Loginscreen(props) {
   //     }
   //   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); 
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.welcometext}>Welcome back !</Text>
@@ -45,13 +50,18 @@ function Loginscreen(props) {
         onChangeText={text => setUsername(text)}
         value={username}
       />
+      <View style={styles.passwordContainer}>
       <InputField
         label="Password"
         placeholder="Password"
-        secureTextEntry
+        secureTextEntry={!showPassword}
         onChangeText={text => setPassword(text)}
         value={password}
       />
+      <TouchableOpacity style={styles.eyeIconContainer} onPress={togglePasswordVisibility}>
+          <FontAwesome5 name={showPassword ? 'eye' : 'eye-slash'} size={15} color="#808080" />
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity>
         <Text style={styles.forgotText}>Forgot Pin?</Text>
       </TouchableOpacity>
@@ -130,6 +140,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     paddingLeft: 20,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  eyeIconContainer: {
+    position: 'absolute',
+    right: 30,
+    bottom: 23,
   },
 });
 
