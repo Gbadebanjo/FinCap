@@ -59,9 +59,7 @@ function Loginscreen(props) {
       <View style={styles.SignUpContainer}>
       <Text style={styles.SignUptext}>
         Don't have an account?{' '}
-        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-          <Text style={styles.SignUplinkText}>Sign Up</Text>
-        </TouchableOpacity>
+          <Text style={styles.SignUplinkText} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
       </Text>
       </View>
          {/* Google Sign In Button */}
@@ -107,19 +105,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   SignUpContainer : {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 20,
     textAlign: 'center',
+    justifyContent: 'space-around',
   },
   SignUptext : {
     textAlign: 'center',
-    justifyContent: 'center',
   },
   SignUplinkText : {
-    alignItems: 'center',
     color: '#7538EC',
-    textAlign: 'center',
-    paddingLeft: 5,
+    paddingLeft: 20,
   },
   subtext: {
     fontSize: 16,
