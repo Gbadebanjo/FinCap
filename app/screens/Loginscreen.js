@@ -16,11 +16,11 @@ import StyledButton from '../components/StyledButton';
 import GoogleLogo from "../assets/googleicon.png";
 
 function Loginscreen(props) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   // const handleLogin = async () => {
   //     try {
@@ -47,8 +47,8 @@ function Loginscreen(props) {
       <InputField
         label="Email address"
         placeholder="Enter your email adress "
-        onChangeText={text => setUsername(text)}
-        value={username}
+        onChangeText={text => setEmail(text)}
+        value={email}
       />
       <View style={styles.passwordContainer}>
       <InputField
@@ -63,7 +63,7 @@ function Loginscreen(props) {
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgotText}>Forgot Pin?</Text>
+        <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
       </TouchableOpacity>
       <StyledButton title="Login" />
       <View style={styles.SignUpContainer}>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    paddingTop: 90,
+    paddingTop: 60,
   },
   forgotText: {
     paddingLeft: 20,
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     paddingLeft: 20,
+    paddingTop: 30,
   },
   passwordContainer: {
     flexDirection: 'row',
