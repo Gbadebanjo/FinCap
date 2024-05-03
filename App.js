@@ -4,6 +4,7 @@ import StyledButton from './app/components/StyledButton';
 import Landingscreen from './app/screens/Landingscreen';
 import InputField from './app/components/InputField';
 import Loginscreen from './app/screens/Loginscreen';
+import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 
 export default function App() {
   return (
@@ -13,7 +14,8 @@ export default function App() {
       {/* <StyledButton title="Click Me" /> */}
       {/* <InputField /> */}
       {/* <Landingscreen /> */}
-      <Loginscreen />
+      {/* <Loginscreen /> */}
+      <ForgotPasswordScreen/>
     </View>
   );
 }
