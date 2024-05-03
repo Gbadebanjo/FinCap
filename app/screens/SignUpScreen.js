@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     // marginTop: 90,
   },
   anleleft: {
-    marginTop: 50,
+    marginTop: 40,
     marginLeft: 30,
     marginBottom: 30,
   },
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   },
   LoginlinkText: {
     color: '#7538EC',
-    paddingLeft: 10,
+    paddingLeft: 20,
   },
   oauthbutton: {
     borderWidth: 1,

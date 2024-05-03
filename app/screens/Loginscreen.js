@@ -79,7 +79,7 @@ function Loginscreen(props) {
           Don't have an account?{' '}
           <Text
             style={styles.SignUplinkText}
-            onPress={() => navigation.navigate('SignUp')}>
+            onPress={() => navigation.navigate('ResetPassword')}>
             Sign Up
           </Text>
         </Text>

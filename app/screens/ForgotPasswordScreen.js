@@ -27,6 +27,8 @@ export default function ForgotPasswordScreen() {
                 placeholder="Enter your email adress"
                 onChangeText={text => setEmail(text)}
                 value={email}
+                width="100%"
+                marginLeft="22px"
             />
             <StyledButton title="Submit" />
 
