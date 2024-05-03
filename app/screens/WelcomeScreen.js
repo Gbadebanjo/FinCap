@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-// import StyledButton from '../components/StyledButton';
-// import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
@@ -20,22 +18,20 @@ const WelcomeScreen = () => {
         source={require('./../assets/image1.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
-          <Text
-            style={styles.bigText}
-            onPress={() => navigation.navigate('SignUp')}>
-            Secure your Finance
-          </Text>
-          <Text
-            style={styles.text}
-            onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.bigText}>Secure your Finance</Text>
+          <Text style={styles.text}>
             Save and get 10% interest on your savings
           </Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.createText}>Create New Account</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Login')}>
             <Text style={styles.LoginText}>Have an account? Sign In</Text>
           </TouchableOpacity>
         </View>
@@ -44,22 +40,18 @@ const WelcomeScreen = () => {
         source={require('./../assets/image2.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
-          <Text
-            style={styles.bigText}
-            onPress={() => navigation.navigate('SignUp')}>
-            Fast and easy loans
-          </Text>
-          <Text
-            style={styles.text}
-            onPress={() => navigation.navigate('SignUp')}>
-            Get up to 500,000 loan in minutes
-          </Text>
+          <Text style={styles.bigText}>Fast and easy loans</Text>
+          <Text style={styles.text}>Get up to 500,000 loan in minutes</Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.createText}>Create New Account</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Login')}>
             <Text style={styles.LoginText}>Have an account? Sign In</Text>
           </TouchableOpacity>
         </View>
@@ -68,22 +60,18 @@ const WelcomeScreen = () => {
         source={require('./../assets/image3.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
-          <Text
-            style={styles.bigText}
-            onPress={() => navigation.navigate('SignUp')}>
-            Earn
-          </Text>
-          <Text
-            style={styles.text}
-            onPress={() => navigation.navigate('SignUp')}>
-            Get up 20% return on investment
-          </Text>
+          <Text style={styles.bigText}>Earn</Text>
+          <Text style={styles.text}>Get up 20% return on investment</Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.createText}>Create New Account</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Login')}>
             <Text style={styles.LoginText}>Have an account? Sign In</Text>
           </TouchableOpacity>
         </View>
