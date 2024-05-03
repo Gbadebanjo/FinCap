@@ -1,34 +1,59 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, Image, Animated } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { useNavigation } from '@react-navigation/native';
-import StyledButton from '../components/StyledButton';
-// import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const Landingscreen = () => {
   const navigation = useNavigation();
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate('Welcome');
+    }, 5000);
+
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [navigation, fadeAnim]);
 
   return (
     <Swiper loop={true}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text onPress={() => navigation.navigate('SignUp')}>
-          Page 1: Welcome
-        </Text>
-
-        {/* Add your welcome content here */}
-      </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text onPress={() => navigation.navigate('SignUp')}>
-          Page 2: Signup
-        </Text>
-        {/* Add your signup form here */}
-      </View>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text onPress={() => navigation.navigate('Login')}>Page 3: Login</Text>
-        {/* Add your login form here */}
+      <View style={styles.container}>
+        <Animated.Image
+          source={require('./../assets/Gradient Logo@3x 1.png')}
+          style={{ ...styles.image, opacity: fadeAnim }}
+        />
       </View>
     </Swiper>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#7538ec',
+  },
+  image: {
+    width: 200,
+    height: 100,
+  },
+});
 export default Landingscreen;
