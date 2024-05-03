@@ -69,7 +69,7 @@ function Loginscreen(props) {
       <View style={styles.SignUpContainer}>
       <Text style={styles.SignUptext}>
         Don't have an account?{' '}
-          <Text style={styles.SignUplinkText} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
+          <Text style={styles.SignUplinkText} onPress={() => navigation.navigate('VerifyEmail')}>Sign Up</Text>
       </Text>
       </View>
          {/* Google Sign In Button */}

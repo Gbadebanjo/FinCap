@@ -1,7 +1,5 @@
 import {
-    View,
     Text,
-    Image,
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
@@ -30,7 +28,7 @@ export default function ForgotPasswordScreen() {
                 onChangeText={text => setEmail(text)}
                 value={email}
             />
-                  <StyledButton title="Submit" />
+            <StyledButton title="Submit" />
 
         </SafeAreaView>
     )
