@@ -37,9 +37,9 @@ const getStyles = (width, marginLeft) =>
       color: '#111827',
       width: 500,
       fontSize: 16,
-      marginLeft: marginLeft,
       marginTop: 2,
       alignSelf: 'flex-start',
+      paddingLeft: '5%',
     },
     input: {
       height: 48,
