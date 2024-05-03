@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Landingscreen from './app/screens/Landingscreen';
+import WelcomeScreen from './app/screens/WelcomeScreen';
 import Loginscreen from './app/screens/Loginscreen';
 import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 import SignupScreen from './app/screens/SignUpScreen';
@@ -13,8 +14,17 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="">
-        <Stack.Screen name="Landing" component={Landingscreen} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName="Landing">
+        <Stack.Screen
+          name="Landing"
+          component={Landingscreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Welcome"
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="SignUp"
           component={SignupScreen}
@@ -30,8 +40,16 @@ export default function App() {
           component={ForgotPasswordScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="VerifyEmail" component={VerifyEmail} options={{ headerShown: false }} />
-        <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="VerifyEmail"
+          component={VerifyEmail}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
