@@ -15,9 +15,11 @@ import StyledButton from '../components/StyledButton';
 
 export default function ForgotPasswordScreen() {
     const [email, setEmail] = useState('')
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView style={styles.Container}>
-            <TouchableOpacity style={styles.Icon} onPress={() => navigation.goBack()}>
+            <TouchableOpacity style={styles.Icon} onPress={() => navigation.navigate('Login')}>
                 <AntDesign name="left" size={16} color="black" />
             </TouchableOpacity>
             <Text style={styles.Heading}>Forgot Password</Text>

@@ -20,7 +20,7 @@ function Loginscreen(props) {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   // const handleLogin = async () => {
   //     try {
@@ -63,7 +63,7 @@ function Loginscreen(props) {
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
-        <Text style={styles.forgotText}>Forgot Pin?</Text>
+        <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
       </TouchableOpacity>
       <StyledButton title="Login" />
       <View style={styles.SignUpContainer}>
