@@ -13,7 +13,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
-import GoogleLogo from "../assets/googleicon.png";
+import GoogleLogo from '../assets/googleicon.png';
 
 function Loginscreen(props) {
   const [email, setEmail] = useState('');
@@ -36,7 +36,7 @@ function Loginscreen(props) {
   //   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); 
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -51,15 +51,23 @@ function Loginscreen(props) {
         value={email}
       />
       <View style={styles.passwordContainer}>
-      <InputField
-        label="Password"
-        placeholder="Password"
-        secureTextEntry={!showPassword}
-        onChangeText={text => setPassword(text)}
-        value={password}
-      />
-      <TouchableOpacity style={styles.eyeIconContainer} onPress={togglePasswordVisibility}>
-          <FontAwesome5 name={showPassword ? 'eye' : 'eye-slash'} size={15} color="#808080" />
+        <InputField
+          label="Password"
+          placeholder="Password"
+          secureTextEntry={!showPassword}
+          onChangeText={text => setPassword(text)}
+          value={password}
+          width="100%"
+          marginLeft="22px"
+        />
+        <TouchableOpacity
+          style={styles.eyeIconContainer}
+          onPress={togglePasswordVisibility}>
+          <FontAwesome5
+            name={showPassword ? 'eye' : 'eye-slash'}
+            size={15}
+            color="#808080"
+          />
         </TouchableOpacity>
       </View>
       <TouchableOpacity>
@@ -67,14 +75,18 @@ function Loginscreen(props) {
       </TouchableOpacity>
       <StyledButton title="Login" />
       <View style={styles.SignUpContainer}>
-      <Text style={styles.SignUptext}>
-        Don't have an account?{' '}
-          <Text style={styles.SignUplinkText} onPress={() => navigation.navigate('SignUp')}>Sign Up</Text>
-      </Text>
+        <Text style={styles.SignUptext}>
+          Don't have an account?{' '}
+          <Text
+            style={styles.SignUplinkText}
+            onPress={() => navigation.navigate('SignUp')}>
+            Sign Up
+          </Text>
+        </Text>
       </View>
-         {/* Google Sign In Button */}
+      {/* Google Sign In Button */}
       <TouchableOpacity style={styles.oauthbutton}>
-      <Image source={GoogleLogo} style={{ width: 24, height: 24 }} />
+        <Image source={GoogleLogo} style={{ width: 24, height: 24 }} />
         <Text style={styles.oauthtext}>Sign In with Google</Text>
       </TouchableOpacity>
       {/* Apple Sign In Button */}
@@ -98,8 +110,8 @@ const styles = StyleSheet.create({
     color: '#7538EC',
     fontSize: 13,
   },
-  oauthbutton : {
-    borderWidth : 1,
+  oauthbutton: {
+    borderWidth: 1,
     borderColor: '#D0D5DD',
     flexDirection: 'row',
     borderRadius: 8,
@@ -111,10 +123,10 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     textAlign: 'center',
   },
-  oauthtext : {
+  oauthtext: {
     paddingLeft: 10,
   },
-  SignUpContainer : {
+  SignUpContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -122,10 +134,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'space-around',
   },
-  SignUptext : {
+  SignUptext: {
     textAlign: 'center',
   },
-  SignUplinkText : {
+  SignUplinkText: {
     color: '#7538EC',
     paddingLeft: 20,
   },
