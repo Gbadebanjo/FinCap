@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import InputField from '../components/InputField';
+import { useNavigation } from '@react-navigation/native';
 import StyledButton from '../components/StyledButton';
 import ResponseModal from '../components/Modal';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -30,6 +31,7 @@ const SignupScreen = props => {
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const handleSignup = () => {
     // setUsernameError('');
@@ -80,7 +82,9 @@ const SignupScreen = props => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <TouchableOpacity style={styles.anleleft}>
+        <TouchableOpacity
+          style={styles.anleleft}
+          onPress={() => navigation.navigate('Login')}>
           <FontAwesome5 name="angle-left" size={19} color="#808080" />
         </TouchableOpacity>
 
