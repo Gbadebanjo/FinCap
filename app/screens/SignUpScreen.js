@@ -84,7 +84,7 @@ const SignupScreen = props => {
       <ScrollView>
         <TouchableOpacity
           style={styles.anleleft}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.navigate('Landing')}>
           <FontAwesome5 name="angle-left" size={19} color="#808080" />
         </TouchableOpacity>
 
