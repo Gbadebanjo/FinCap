@@ -8,6 +8,8 @@ import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 import SignupScreen from './app/screens/SignUpScreen';
 import VerifyEmail from './app/screens/VerifyEmail';
 import ResetPassword from './app/screens/ResetPassword';
+import DashboardScreen from './app/screens/DashboardScreen';
+import Text from './app/screens/Text';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +52,15 @@ export default function App() {
           component={ResetPassword}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Dashboard"
+          component={DashboardScreen}
+          options={{ headerShown: false }}
+        />
+        {/* <Stack.Screen
+        name='Text'
+        component={Text}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
