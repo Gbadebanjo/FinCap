@@ -66,6 +66,8 @@ const [isSuccess, setIsSuccess] = useState(false);
     } catch (error) {
       // Handle error
       console.log(`error: ${error}`)
+      console.log(`error.response.data: ${JSON.stringify(error.response.data, null, 2)}`)
+
       if (error.response && error.response.data && error.response.data.message) {
         setSignupError(error.response.data.message);
       } else {
