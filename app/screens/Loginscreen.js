@@ -8,72 +8,101 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
 import GoogleLogo from '../assets/googleicon.png';
+import ErrorAlert from '../components/ErrorAlert';
+import Api from '../config/Api';
+
+// Define validation schema with Yup
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(6).label('Password'),
+});
 
 function Loginscreen(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const navigation = useNavigation();
-
-  // const handleLogin = async () => {
-  //     try {
-  //       // Make API call to authenticate user
-  //       const response = await axios.post('your_api_endpoint/login', { email, password });
-
-  //       // Handle success, navigate to home screen
-  //       navigation.navigate('Home');
-  //     } catch (error) {
-  //       // Handle error
-  //       setError('Invalid email or password. Please try again.');
-  //     }
-  //   };
+  const [error, setError] = useState('');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleLogin = async (values) => {
+    console.log(values)
+      try {
+        const response = await Api.post(`/login`, values);
+        console.log(response.data);
+        // Make API call to authenticate user
+        // const response = await axios.post('your_api_endpoint/login', { email, password });
+
+        // Handle success, navigate to home screen
+        navigation.navigate('Dashboard');
+      } catch (error) {
+        // Handle error
+        setError('Invalid email or password. Please try again.');
+      }
+    };
+
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.welcometext}>Welcome back !</Text>
       <Text style={styles.subtext}>Login to continue</Text>
+      <ErrorAlert error={error} />
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleLogin}
+        >
+        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
 
-      <InputField
-        label="Email address"
-        placeholder="Enter your email adress "
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <View style={styles.passwordContainer}>
-        <InputField
-          label="Password"
-          placeholder="Password"
-          secureTextEntry={!showPassword}
-          onChangeText={text => setPassword(text)}
-          value={password}
-          width="100%"
-          marginLeft="22px"
-        />
-        <TouchableOpacity
-          style={styles.eyeIconContainer}
-          onPress={togglePasswordVisibility}>
-          <FontAwesome5
-            name={showPassword ? 'eye' : 'eye-slash'}
-            size={15}
-            color="#808080"
+          <View>
+          <InputField
+            label="Email address"
+            placeholder="Enter your email adress "
+            onChangeText={handleChange('email')}
+            value={values.email}
+            error={errors.email}
           />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity>
-        <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
-      </TouchableOpacity>
-      <StyledButton title="Login" />
+          <ErrorAlert error={errors.email} />
+
+          <View style={styles.passwordContainer}>
+            <InputField
+              label="Password"
+              placeholder="Password"
+              secureTextEntry={!showPassword}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+              width="100%"
+              marginLeft="22px"
+              error={errors.email}
+            />
+            <TouchableOpacity
+              style={styles.eyeIconContainer}
+              onPress={togglePasswordVisibility}>
+              <FontAwesome5
+                name={showPassword ? 'eye' : 'eye-slash'}
+                size={15}
+                color="#808080"
+              />
+            </TouchableOpacity>
+          </View>
+          <ErrorAlert error={errors.password} />
+          <TouchableOpacity>
+            <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
+          </TouchableOpacity>
+          <StyledButton title="Login" onPress={handleSubmit} />
+        </View>
+        )}
+        </Formik>
       <View style={styles.SignUpContainer}>
         <Text style={styles.SignUptext}>
           Don't have an account?{' '}
@@ -94,7 +123,6 @@ function Loginscreen(props) {
         <FontAwesome5 name="apple" size={24} color="black" />
         <Text style={styles.oauthtext}>Sign In with Apple</Text>
       </TouchableOpacity>
-      {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
     </SafeAreaView>
   );
 }
