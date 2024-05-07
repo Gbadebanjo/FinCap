@@ -4,11 +4,10 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  TextInput,
   Image,
-  Button,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ResponseModal from '../components/ResponseModal';
@@ -20,15 +19,22 @@ import axios from 'axios';
 import GoogleLogo from '../assets/googleicon.png';
 import StyledButton from '../components/StyledButton';
 import InputField from '../components/InputField';
-import Api from '../config/Api';
 import ErrorAlert from '../components/ErrorAlert';
+// import Api from '../config/Api';
 
 const validationSchema = Yup.object().shape({
   userName: Yup.string().required().label('Username'),
   email: Yup.string().required().email().label('Email'),
   firstName: Yup.string().required().label('First Name'),
   lastName: Yup.string().required().label('Last Name'),
-  password: Yup.string().required().min(6).label('Password'),
+  password: Yup.string()
+    .required()
+    .min(6)
+    .test('uppercase', 'Password must contain a Uppercase', value => /^(?=.*[A-Z]).+$/.test(value))
+    .test('lowercase', 'Password must contain a Lowercase', value => /^(?=.*[a-z]).+$/.test(value))
+    .test('number', 'Password must contain a Number', value => /^(?=.*\d).+$/.test(value))
+    .test('non-alphabet', 'Password must contain a Non-alphabet character', value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value))
+    .label('Password'),
   confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required().label('Confirm Password'),
 });
 
@@ -37,7 +43,8 @@ const SignupScreen = props => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -52,16 +59,16 @@ const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSignup = async (values) => {
     console.log(values)
+    setLoading(true);
     try {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register`, values,
-      { headers: { 'Content-Type': 'application/json' } }
+        { headers: { 'Content-Type': 'application/json' } }
 
       );
       console.log(`response: ${response}`)
       if (response.data) {
         setIsSuccess(true);
-      setModalVisible(true);
-        // navigation.navigate('Verify')
+        setModalVisible(true);
       }
     } catch (error) {
       // Handle error
@@ -74,7 +81,9 @@ const [isSuccess, setIsSuccess] = useState(false);
         setSignupError('An error occurred. Please try again.');
       }
       setIsSuccess(false);
-    setModalVisible(true);
+      setModalVisible(true);
+      setLoading(false);
+
     }
   };
 
@@ -93,7 +102,7 @@ const [isSuccess, setIsSuccess] = useState(false);
         <Text style={styles.subtext}>
           Enter your details to create an account
         </Text>
-        <ErrorAlert error={signupError} />
+        <ErrorAlert error={signupError} showIcon />
         <Formik
           initialValues={{ userName: '', email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }}
           validationSchema={validationSchema}
@@ -193,7 +202,7 @@ const [isSuccess, setIsSuccess] = useState(false);
                 </TouchableOpacity>
               </View>
               <ErrorAlert error={errors.confirmPassword} />
-              <StyledButton title="Create Account" onPress={handleSubmit} />
+              <StyledButton title={loading ? <ActivityIndicator color="#fff" /> : "Create Account"} onPress={handleSubmit} />
             </View>
           )}
         </Formik>
@@ -222,19 +231,19 @@ const [isSuccess, setIsSuccess] = useState(false);
       </ScrollView>
 
       <ResponseModal
-      visible={isModalVisible}
-      title={isSuccess ? 'Success' : 'Error'}
-      message={signupError || 'Signup successful!'}
-      isSuccess={isSuccess}
-      onDismiss={() => {
-        setModalVisible(false);
-        if (isSuccess) {
-          // Navigate to next screen if signup was successful
-          navigation.navigate('Verify');
-        }
-      }}
-      buttonTitle="OK"
-    />
+        visible={isModalVisible}
+        title={isSuccess ? 'Success' : 'Error'}
+        message={signupError || 'Signup successful!'}
+        isSuccess={isSuccess}
+        onDismiss={() => {
+          setModalVisible(false);
+          if (isSuccess) {
+            // Navigate to next screen if signup was successful
+            navigation.navigate('Verify');
+          }
+        }}
+        buttonTitle="OK"
+      />
     </SafeAreaView>
   );
 };
