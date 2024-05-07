@@ -1,22 +1,27 @@
 import React from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-import {Text, StyleSheet} from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 
-function ErrorAlert({ error }) {
+function ErrorAlert({ error, showIcon }) {
     if (!error) return null;
     return (
-        <Text style={styles.error}>
-            {error}
-        </Text>
+        <View style={styles.errorContainer}>
+            {showIcon && <FontAwesome5 name="exclamation-triangle" size={24} style={{paddingLeft : 20}} color="red" />}
+            <Text style={styles.errorText}>{error}</Text>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    error: {
+    errorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        margin: 10,
+    },
+    errorText: {
         color: 'red',
-        fontSize: 13,
-        marginBottom: 10,
-        marginLeft: 23,
+        marginLeft: 10,
     },
 })
 
