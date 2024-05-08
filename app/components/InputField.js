@@ -9,6 +9,7 @@ const InputField = ({
   value,
   width,
   marginLeft,
+  error,
 }) => {
   const styles = getStyles(width, marginLeft);
 
@@ -16,7 +17,7 @@ const InputField = ({
     <View style={styles.inputContainer}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, error && styles.error]}
         placeholder={placeholder}
         secureTextEntry={secureTextEntry}
         onChangeText={onChangeText}
@@ -49,6 +50,9 @@ const getStyles = (width, marginLeft) =>
       borderWidth: 1,
       margin: 10,
       paddingLeft: 10,
+    },
+    error : {
+      borderColor: 'red',
     },
   });
 

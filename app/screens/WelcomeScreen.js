@@ -94,23 +94,23 @@ const styles = StyleSheet.create({
   },
   bigText: {
     color: 'white',
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 24,
   },
   text: {
     color: 'white',
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 16,
     marginTop: 7,
   },
   createText: {
     color: '#541592',
-    fontWeight: 500,
+    fontWeight: '500',
     fontSize: 16,
   },
   LoginText: {
     color: '#fff',
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 14,
   },
   button: {

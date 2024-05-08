@@ -7,101 +7,48 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Pressable
+  ActivityIndicator,
 } from 'react-native';
-import InputField from '../components/InputField';
 import { useNavigation } from '@react-navigation/native';
-import StyledButton from '../components/StyledButton';
-import ResponseModal from '../components/Modal';
+import ResponseModal from '../components/ResponseModal';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
+
 import GoogleLogo from '../assets/googleicon.png';
+import StyledButton from '../components/StyledButton';
+import InputField from '../components/InputField';
+import ErrorAlert from '../components/ErrorAlert';
+// import Api from '../config/Api';
+
+const validationSchema = Yup.object().shape({
+  userName: Yup.string().required().label('Username'),
+  email: Yup.string().required().email().label('Email'),
+  firstName: Yup.string().required().label('First Name'),
+  lastName: Yup.string().required().label('Last Name'),
+  password: Yup.string()
+    .required()
+    .min(6)
+    .test('uppercase', 'Password must contain a Uppercase', value => /^(?=.*[A-Z]).+$/.test(value))
+    .test('lowercase', 'Password must contain a Lowercase', value => /^(?=.*[a-z]).+$/.test(value))
+    .test('number', 'Password must contain a Number', value => /^(?=.*\d).+$/.test(value))
+    .test('non-alphabet', 'Password must contain a Non-alphabet character', value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value))
+    .label('Password'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required().label('Confirm Password'),
+});
 
 const SignupScreen = props => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupError, setSignupError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
-  const [usernameError, setUsernameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleSignup = async () => {
-    setUsernameError('');
-    setEmailError('');
-    setPasswordError('');
-    setConfirmPasswordError('');
-
-    if (username === '') {
-      setUsernameError('Please enter a username');
-      return;
-    }
-
-    if (email === '') {
-      setEmailError('Please enter an email address');
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError('Please enter a valid email address');
-      return;
-    }
-
-    if (password === '') {
-      setPasswordError('Please enter a password');
-      return;
-    }
-
-    if (confirmPassword === '') {
-      setConfirmPasswordError('Please confirm your password');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
-      return;
-    }
-  // API call
-  try {
-    const response = await fetch(
-      'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          username: username,
-          firstName: firstName,
-          lastName: lastName,
-          password: password,
-          confirmPassword: confirmPassword,
-        }),
-      },
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      // handle error
-      console.log("Response not okay");
-    } else {
-      // handle success
-      navigation.navigate('VerifyEmail');
-      console.log(data);
-    }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -110,12 +57,44 @@ const SignupScreen = props => {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
+  const handleSignup = async (values) => {
+    console.log(values)
+    setLoading(true);
+    try {
+      const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register`, values,
+        { headers: { 'Content-Type': 'application/json' } }
+
+      );
+      console.log(`response: ${response}`)
+      if (response.data) {
+        setIsSuccess(true);
+        setModalVisible(true);
+      }
+    } catch (error) {
+      // Handle error
+      console.log(`error: ${error}`)
+      console.log(`error.response.data: ${JSON.stringify(error.response.data, null, 2)}`)
+
+      if (error.response && error.response.data && error.response.data.message) {
+        setSignupError(error.response.data.message);
+      } else {
+        setSignupError('An error occurred. Please try again.');
+      }
+      setIsSuccess(false);
+      setModalVisible(true);
+      setLoading(false);
+
+    }
+  };
+
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <TouchableOpacity
           style={styles.anleleft}
-          onPress={() => navigation.navigate('Landing')}>
+          onPress={() => navigation.navigate('Welcome')}>
           <FontAwesome5 name="angle-left" size={19} color="#808080" />
         </TouchableOpacity>
 
@@ -123,115 +102,110 @@ const SignupScreen = props => {
         <Text style={styles.subtext}>
           Enter your details to create an account
         </Text>
+        <ErrorAlert error={signupError} showIcon />
+        <Formik
+          initialValues={{ userName: '', email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleSignup}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+            <View>
+              <InputField
+                label="Username"
+                style={styles.input}
+                placeholder="Enter your username"
+                value={values.userName}
+                onChangeText={handleChange('userName')}
+                width="100%"
+                marginLeft="22px"
+                error={errors.userName}
+              />
+              <ErrorAlert error={errors.userName} />
 
-        <InputField
-          label="Username"
-          style={styles.input}
-          placeholder="Enter your username"
-          value={username}
-          onChangeText={setUsername}
-          width="100%"
-          marginLeft="22px"
-        />
-        {usernameError ? (
-          <Text style={styles.errorText}>{usernameError}</Text>
-        ) : null}
+              <InputField
+                label="Email Address"
+                style={styles.input}
+                placeholder="Enter your email address"
+                value={values.email}
+                onChangeText={handleChange('email')}
+                width="100%"
+                marginLeft="22px"
+                error={errors.email}
+              />
+              <ErrorAlert error={errors.email} />
+              <View style={styles.names}>
+                <InputField
+                  label="First Name"
+                  placeholder="First Name"
+                  value={values.firstName}
+                  onChangeText={handleChange('firstName')}
+                  width="47.5%"
+                  marginLeft="10px"
+                  error={errors.firstName}
+                />
+                <InputField
+                  label="Last Name"
+                  placeholder="Last Name"
+                  value={values.lastName}
+                  onChangeText={handleChange('lastName')}
+                  width="47.5%"
+                  marginLeft="10px"
+                  error={errors.lastName}
+                />
+              </View>
+              <View style={styles.passwordContainer}>
+                <InputField
+                  label="Password"
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry={!showPassword}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  width="100%"
+                  marginLeft="22px"
+                  error={errors.password}
+                />
+                <TouchableOpacity
+                  style={styles.eyeIconContainer}
+                  onPress={togglePasswordVisibility}>
+                  <FontAwesome5
+                    name={showPassword ? 'eye' : 'eye-slash'}
+                    size={15}
+                    color="#808080"
+                  />
+                </TouchableOpacity>
+              </View>
+              <ErrorAlert error={errors.password} />
 
-        <InputField
-          label="Email Address"
-          style={styles.input}
-          placeholder="Enter your email address"
-          value={email}
-          onChangeText={setEmail}
-          width="100%"
-          marginLeft="22px"
-        />
-
-        {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
-
-        <View style={styles.names}>
-          <InputField
-            label="First Name"
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={setFirstName}
-            width="47.5%"
-            marginLeft="10px"
-          />
-          <InputField
-            label="Last Name"
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={setLastName}
-            width="47.5%"
-            marginLeft="10px"
-          />
-        </View>
-
-        <View style={styles.passwordContainer}>
-          <InputField
-            label="Password"
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry={!showPassword}
-            onChangeText={text => setPassword(text)}
-            value={password}
-            width="100%"
-            marginLeft="22px"
-          />
-
-          {passwordError ? (
-            <Text style={styles.errorText}>{passwordError}</Text>
-          ) : null}
-
-          <TouchableOpacity
-            style={styles.eyeIconContainer}
-            onPress={togglePasswordVisibility}>
-            <FontAwesome5
-              name={showPassword ? 'eye' : 'eye-slash'}
-              size={15}
-              color="#808080"
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.passwordContainer}>
-          <InputField
-            label="Confirm Password"
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry={!showConfirmPassword}
-            onChangeText={text => setConfirmPassword(text)}
-            value={confirmPassword}
-            width="100%"
-            marginLeft="22px"
-          />
-          <TouchableOpacity
-            style={styles.eyeIconContainer}
-            onPress={toggleConfirmPasswordVisibility}>
-            <FontAwesome5
-              name={showConfirmPassword ? 'eye' : 'eye-slash'}
-              size={15}
-              color="#808080"
-            />
-          </TouchableOpacity>
-
-          {confirmPasswordError ? (
-            <Text style={styles.errorText}>{confirmPasswordError}</Text>
-          ) : null}
-        </View>
-
-        <StyledButton title="Create Account" onPress={handleSignup} />
-
-        <ResponseModal
-          visible={modalVisible}
-          title="Success"
-          message="Your account has been created successfully."
-          onDismiss={() => setModalVisible(false)}
-          iconName="check"
-          buttonTitle="Okay, Got It"
-        />
-
+              <View style={styles.passwordContainer}>
+                <InputField
+                  label="Confirm Password"
+                  style={styles.input}
+                  placeholder="Password"
+                  secureTextEntry={!showConfirmPassword}
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={handleBlur('confirmPassword')}
+                  value={values.confirmPassword}
+                  width="100%"
+                  marginLeft="22px"
+                  error={errors.confirmPassword}
+                />
+                <TouchableOpacity
+                  style={styles.eyeIconContainer}
+                  onPress={toggleConfirmPasswordVisibility}>
+                  <FontAwesome5
+                    name={showConfirmPassword ? 'eye' : 'eye-slash'}
+                    size={15}
+                    color="#808080"
+                  />
+                </TouchableOpacity>
+              </View>
+              <ErrorAlert error={errors.confirmPassword} />
+              <StyledButton title={loading ? <ActivityIndicator color="#fff" /> : "Create Account"} onPress={handleSubmit} />
+            </View>
+          )}
+        </Formik>
         <View style={styles.LoginContainer}>
           <Text style={styles.Logintext}>
             Already have an account?
@@ -255,6 +229,21 @@ const SignupScreen = props => {
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <ResponseModal
+        visible={isModalVisible}
+        title={isSuccess ? 'Success' : 'Error'}
+        message={signupError || 'Signup successful!'}
+        isSuccess={isSuccess}
+        onDismiss={() => {
+          setModalVisible(false);
+          if (isSuccess) {
+            // Navigate to next screen if signup was successful
+            navigation.navigate('Verify');
+          }
+        }}
+        buttonTitle="OK"
+      />
     </SafeAreaView>
   );
 };

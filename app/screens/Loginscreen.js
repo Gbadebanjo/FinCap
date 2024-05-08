@@ -6,95 +6,148 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
 import GoogleLogo from '../assets/googleicon.png';
+import ErrorAlert from '../components/ErrorAlert';
+import ResponseModal from '../components/ResponseModal';
+// import Api from '../config/Api';
+
+// Validation schema with Yup
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().label('Password'),
+});
 
 function Loginscreen(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
   const navigation = useNavigation();
+  const [error, setError] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // const handleLogin = async () => {
-  //     try {
-  //       // Make API call to authenticate user
-  //       const response = await axios.post('your_api_endpoint/login', { email, password });
-
-  //       // Handle success, navigate to home screen
-  //       navigation.navigate('Home');
-  //     } catch (error) {
-  //       // Handle error
-  //       setError('Invalid email or password. Please try again.');
-  //     }
-  //   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleLogin = async (values) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/login`, values);
+      if (response.data) {
+        setIsSuccess(true);
+        setModalVisible(true);
+      } else {
+        setIsSuccess(false);
+        setModalVisible(true);
+      }
+    } catch (error) {
+      // Handle error
+      console.log(error)
+      setError('Invalid email or password. Please try again.');
+      setLoading(false);
+    }
+  };
+
+
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.welcometext}>Welcome back !</Text>
-      <Text style={styles.subtext}>Login to continue</Text>
+      <>
+        <Text style={styles.welcometext}>Welcome back !</Text>
+        <Text style={styles.subtext}>Login to continue</Text>
+        <ErrorAlert error={error} showIcon />
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleLogin}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
 
-      <InputField
-        label="Email address"
-        placeholder="Enter your email adress "
-        onChangeText={text => setEmail(text)}
-        value={email}
-      />
-      <View style={styles.passwordContainer}>
-        <InputField
-          label="Password"
-          placeholder="Password"
-          secureTextEntry={!showPassword}
-          onChangeText={text => setPassword(text)}
-          value={password}
-          width="100%"
-          marginLeft="22px"
-        />
-        <TouchableOpacity
-          style={styles.eyeIconContainer}
-          onPress={togglePasswordVisibility}>
-          <FontAwesome5
-            name={showPassword ? 'eye' : 'eye-slash'}
-            size={15}
-            color="#808080"
-          />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity>
-        <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
-      </TouchableOpacity>
-      <StyledButton title="Login" />
-      <View style={styles.SignUpContainer}>
-        <Text style={styles.SignUptext}>
-          Don't have an account?{' '}
-          <Text
-            style={styles.SignUplinkText}
-            onPress={() => navigation.navigate('SignUp')}>
-            Sign Up
+            <View>
+              <InputField
+                label="Email address"
+                placeholder="Enter your email adress "
+                onChangeText={handleChange('email')}
+                value={values.email}
+                error={errors.email}
+              />
+              <ErrorAlert error={errors.email} />
+
+              <View style={styles.passwordContainer}>
+                <InputField
+                  label="Password"
+                  placeholder="Password"
+                  secureTextEntry={!showPassword}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                  width="100%"
+                  marginLeft="22px"
+                  error={errors.email}
+                />
+                <TouchableOpacity
+                  style={styles.eyeIconContainer}
+                  onPress={togglePasswordVisibility}>
+                  <FontAwesome5
+                    name={showPassword ? 'eye' : 'eye-slash'}
+                    size={15}
+                    color="#808080"
+                  />
+                </TouchableOpacity>
+              </View>
+              <ErrorAlert error={errors.password} />
+              <TouchableOpacity>
+                <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
+              </TouchableOpacity>
+              <StyledButton title={loading ? <ActivityIndicator color="#fff" /> : "Login"} onPress={handleSubmit} />
+            </View>
+          )}
+        </Formik>
+        <View style={styles.SignUpContainer}>
+          <Text style={styles.SignUptext}>
+            Don't have an account?{' '}
+            <Text
+              style={styles.SignUplinkText}
+              onPress={() => navigation.navigate('SignUp')}>
+              Sign Up
+            </Text>
           </Text>
-        </Text>
-      </View>
-      {/* Google Sign In Button */}
-      <TouchableOpacity style={styles.oauthbutton}>
-        <Image source={GoogleLogo} style={{ width: 24, height: 24 }} />
-        <Text style={styles.oauthtext}>Sign In with Google</Text>
-      </TouchableOpacity>
-      {/* Apple Sign In Button */}
-      <TouchableOpacity style={styles.oauthbutton}>
-        <FontAwesome5 name="apple" size={24} color="black" />
-        <Text style={styles.oauthtext}>Sign In with Apple</Text>
-      </TouchableOpacity>
-      {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
+        </View>
+        {/* Google Sign In Button */}
+        <TouchableOpacity style={styles.oauthbutton}>
+          <Image source={GoogleLogo} style={{ width: 24, height: 24 }} />
+          <Text style={styles.oauthtext}>Sign In with Google</Text>
+        </TouchableOpacity>
+        {/* Apple Sign In Button */}
+        <TouchableOpacity style={styles.oauthbutton}>
+          <FontAwesome5 name="apple" size={24} color="black" />
+          <Text style={styles.oauthtext}>Sign In with Apple</Text>
+        </TouchableOpacity>
+      </>
+      <ResponseModal
+        visible={isModalVisible}
+        title={isSuccess ? 'Success' : 'Error'}
+        message={error || 'Signup successful!'}
+        isSuccess={isSuccess}
+        onDismiss={() => {
+          setModalVisible(false);
+          if (isSuccess) {
+            // Navigate to next screen if signup was successful
+            navigation.navigate('Dashboard');
+          }
+        }}
+        buttonTitle="OK"
+      />
     </SafeAreaView>
   );
 }
