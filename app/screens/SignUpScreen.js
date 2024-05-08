@@ -81,7 +81,9 @@ const SignupScreen = props => {
       console.log(`response: ${response}`);
       if (response.data) {
         setIsSuccess(true);
-        setModalVisible(true);
+        // setModalVisible(true);
+        navigation.navigate('VerifyEmail')
+        setLoading(false)
       }
     } catch (error) {
       // Handle error
@@ -263,7 +265,7 @@ const SignupScreen = props => {
         </TouchableOpacity>
       </ScrollView>
 
-      <ResponseModal
+      {/* <ResponseModal
         visible={isModalVisible}
         title={isSuccess ? 'Success' : 'Error'}
         message={signupError || 'Signup successful!'}
@@ -276,7 +278,7 @@ const SignupScreen = props => {
           }
         }}
         buttonTitle="OK"
-      />
+      /> */}
     </SafeAreaView>
   );
 };

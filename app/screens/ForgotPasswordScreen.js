@@ -3,6 +3,7 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';

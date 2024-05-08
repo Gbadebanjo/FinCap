@@ -4,16 +4,19 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { Formik } from 'formik';
 
 function VerifyEmail(props) {
     const [code, setCode] = useState('');
     const navigation = useNavigation();
+
 
     return (
         <SafeAreaView style={styles.Container}>
@@ -32,7 +35,16 @@ function VerifyEmail(props) {
                 marginLeft="22px"
                 textAlign="center"
             />
-            <StyledButton title="Submit" />
+            <StyledButton
+                title={
+                  loading ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    'Submit'
+                  )
+                }
+                onPress={handleSubmit}
+              />
 
         </SafeAreaView>
     );
