@@ -30,12 +30,25 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .required()
     .min(6)
-    .test('uppercase', 'Password must contain a Uppercase', value => /^(?=.*[A-Z]).+$/.test(value))
-    .test('lowercase', 'Password must contain a Lowercase', value => /^(?=.*[a-z]).+$/.test(value))
-    .test('number', 'Password must contain a Number', value => /^(?=.*\d).+$/.test(value))
-    .test('non-alphabet', 'Password must contain a Non-alphabet character', value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value))
+    .test('uppercase', 'Password must contain a Uppercase', value =>
+      /^(?=.*[A-Z]).+$/.test(value),
+    )
+    .test('lowercase', 'Password must contain a Lowercase', value =>
+      /^(?=.*[a-z]).+$/.test(value),
+    )
+    .test('number', 'Password must contain a Number', value =>
+      /^(?=.*\d).+$/.test(value),
+    )
+    .test(
+      'non-alphabet',
+      'Password must contain a Non-alphabet character',
+      value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value),
+    )
     .label('Password'),
-  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required().label('Confirm Password'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required()
+    .label('Confirm Password'),
 });
 
 const SignupScreen = props => {
@@ -49,7 +62,6 @@ const SignupScreen = props => {
   // const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -57,37 +69,37 @@ const SignupScreen = props => {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
-  const handleSignup = async (values) => {
-    console.log(values)
+  const handleSignup = async values => {
+    console.log(values);
     setLoading(true);
     try {
-      const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register`, values,
-        { headers: { 'Content-Type': 'application/json' } }
-
+      const response = await axios.post(
+        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register`,
+        values,
+        { headers: { 'Content-Type': 'application/json' } },
       );
-      console.log(`response: ${response}`)
+      console.log(`response: ${response}`);
       if (response.data) {
         setIsSuccess(true);
         setModalVisible(true);
       }
     } catch (error) {
       // Handle error
-      console.log(`error: ${error}`)
-      console.log(`error.response.data: ${JSON.stringify(error.response.data, null, 2)}`)
+      console.log(`error: ${error}`);
+      console.log(
+        `error.response.data: ${JSON.stringify(error.response.data.errors[0].message)}`,
+      );
 
-      if (error.response && error.response.data && error.response.data.message) {
-        setSignupError(error.response.data.message);
+      if (error.response.data.errors[0].message) {
+        setSignupError(error.response.data.errors[0].message);
       } else {
         setSignupError('An error occurred. Please try again.');
       }
       setIsSuccess(false);
-      setModalVisible(true);
+      // setModalVisible(true);
       setLoading(false);
-
     }
   };
-
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -102,13 +114,26 @@ const SignupScreen = props => {
         <Text style={styles.subtext}>
           Enter your details to create an account
         </Text>
-        <ErrorAlert error={signupError} showIcon />
+        <ErrorAlert error={signupError} showIcon justifyContent="center" />
         <Formik
-          initialValues={{ userName: '', email: '', firstName: '', lastName: '', password: '', confirmPassword: '' }}
+          initialValues={{
+            userName: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            confirmPassword: '',
+          }}
           validationSchema={validationSchema}
-          onSubmit={handleSignup}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+          onSubmit={handleSignup}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
             <View>
               <InputField
                 label="Username"
@@ -202,7 +227,16 @@ const SignupScreen = props => {
                 </TouchableOpacity>
               </View>
               <ErrorAlert error={errors.confirmPassword} />
-              <StyledButton title={loading ? <ActivityIndicator color="#fff" /> : "Create Account"} onPress={handleSubmit} />
+              <StyledButton
+                title={
+                  loading ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    'Create Account'
+                  )
+                }
+                onPress={handleSubmit}
+              />
             </View>
           )}
         </Formik>
