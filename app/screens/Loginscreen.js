@@ -46,6 +46,7 @@ function Loginscreen(props) {
       if (response.data) {
         setIsSuccess(true);
         setModalVisible(true);
+        setLoading(false);
       } else {
         setIsSuccess(false);
         setModalVisible(true);
@@ -137,7 +138,7 @@ function Loginscreen(props) {
       <ResponseModal
         visible={isModalVisible}
         title={isSuccess ? 'Success' : 'Error'}
-        message={error || 'Signup successful!'}
+        message={error || 'Login successful!'}
         isSuccess={isSuccess}
         onDismiss={() => {
           setModalVisible(false);
