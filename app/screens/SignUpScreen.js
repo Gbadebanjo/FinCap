@@ -4,11 +4,10 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  TextInput,
   Image,
-  Button,
   StyleSheet,
   ScrollView,
+  Pressable
 } from 'react-native';
 import InputField from '../components/InputField';
 import { useNavigation } from '@react-navigation/native';
@@ -33,43 +32,75 @@ const SignupScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleSignup = () => {
-    // setUsernameError('');
-    // setEmailError('');
-    // setPasswordError('');
-    // setConfirmPasswordError('');
+  const handleSignup = async () => {
+    setUsernameError('');
+    setEmailError('');
+    setPasswordError('');
+    setConfirmPasswordError('');
 
-    // if (username === '') {
-    //   setUsernameError('Please enter a username');
-    //   return;
-    // }
+    if (username === '') {
+      setUsernameError('Please enter a username');
+      return;
+    }
 
-    // if (email === '') {
-    //   setEmailError('Please enter an email address');
-    //   return;
-    // }
+    if (email === '') {
+      setEmailError('Please enter an email address');
+      return;
+    }
 
-    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailRegex.test(email)) {
-    //   setEmailError('Please enter a valid email address');
-    //   return;
-    // }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
 
-    // if (password === '') {
-    //   setPasswordError('Please enter a password');
-    //   return;
-    // }
+    if (password === '') {
+      setPasswordError('Please enter a password');
+      return;
+    }
 
-    // if (confirmPassword === '') {
-    //   setConfirmPasswordError('Please confirm your password');
-    //   return;
-    // }
+    if (confirmPassword === '') {
+      setConfirmPasswordError('Please confirm your password');
+      return;
+    }
 
-    // if (password !== confirmPassword) {
-    //   setConfirmPasswordError('Passwords do not match');
-    //   return;
-    // }
-    setModalVisible(true);
+    if (password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match');
+      return;
+    }
+  // API call
+  try {
+    const response = await fetch(
+      'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/register',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          password: password,
+          confirmPassword: confirmPassword,
+        }),
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      // handle error
+      console.log("Response not okay");
+    } else {
+      // handle success
+      navigation.navigate('VerifyEmail');
+      console.log(data);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
   };
 
   const togglePasswordVisibility = () => {
