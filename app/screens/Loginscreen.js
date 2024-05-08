@@ -30,8 +30,6 @@ function Loginscreen(props) {
   const [showPassword, setShowPassword] = useState(false);
   const navigation = useNavigation();
   const [error, setError] = useState('');
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
 
@@ -45,6 +43,7 @@ function Loginscreen(props) {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/login`, values);
       if (response.data) {
         navigation.navigate('Dashboard');
+        setLoading(false);
       } else {
         setIsSuccess(false);
         setModalVisible(true);
@@ -64,7 +63,7 @@ function Loginscreen(props) {
       <>
         <Text style={styles.welcometext}>Welcome back !</Text>
         <Text style={styles.subtext}>Login to continue</Text>
-        <ErrorAlert error={error} showIcon />
+        <ErrorAlert error={error} showIcon justifyContent="center"  />
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
@@ -133,20 +132,6 @@ function Loginscreen(props) {
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </>
-      {/* <ResponseModal
-        visible={isModalVisible}
-        title={isSuccess ? 'Success' : 'Error'}
-        message={error || 'Signup successful!'}
-        isSuccess={isSuccess}
-        onDismiss={() => {
-          setModalVisible(false);
-          if (isSuccess) {
-            // Navigate to next screen if signup was successful
-            navigation.navigate('Dashboard');
-          }
-        }}
-        buttonTitle="OK"
-      /> */}
     </SafeAreaView>
   );
 }
