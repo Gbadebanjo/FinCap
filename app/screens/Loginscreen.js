@@ -44,8 +44,7 @@ function Loginscreen(props) {
     try {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/login`, values);
       if (response.data) {
-        setIsSuccess(true);
-        setModalVisible(true);
+        navigation.navigate('Dashboard');
       } else {
         setIsSuccess(false);
         setModalVisible(true);
@@ -134,7 +133,7 @@ function Loginscreen(props) {
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </>
-      <ResponseModal
+      {/* <ResponseModal
         visible={isModalVisible}
         title={isSuccess ? 'Success' : 'Error'}
         message={error || 'Signup successful!'}
@@ -147,7 +146,7 @@ function Loginscreen(props) {
           }
         }}
         buttonTitle="OK"
-      />
+      /> */}
     </SafeAreaView>
   );
 }
