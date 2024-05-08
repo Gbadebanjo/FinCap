@@ -30,20 +30,20 @@ export default function ForgotPasswordScreen(props) {
 
     const handleSubmit = async (values) => {
         setLoading(true);
-        // try {
-        //     const response = await axios.post(
-        //         `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/ForgotPassword`,
-        //         values)
-        //     if (response.status === 200) {
-        //         setIsSuccess(true);
+        try {
+            const response = await axios.post(
+                `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/ForgotPassword`,
+                values)
+            if (response.status === 200) {
+                setIsSuccess(true);
                 navigation.navigate('VerifyEmail');
-        //     }
-        // } catch (error) {
-        //     setError(error);
-        //     setIsSuccess(false);
-        //     setModalVisible(true);
-        // }
-        // setLoading(false);
+            }
+        } catch (error) {
+            setError(error);
+            setIsSuccess(false);
+            setModalVisible(true);
+        }
+        setLoading(false);
     }
 
     return (
@@ -54,7 +54,7 @@ export default function ForgotPasswordScreen(props) {
                 </TouchableOpacity>
                 <Text style={styles.Heading}>Forgot Password</Text>
                 <Text style={styles.SubHeading}>Enter your email address, a code will be sent to you to reset password.</Text>
-                <ErrorAlert errors={error} showIcon  />
+                <ErrorAlert errors={error} showIcon justifyContent="left" />
                 <Formik
                     initialValues={{ email: '' }}
                     validationSchema={validationSchema}

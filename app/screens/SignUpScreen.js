@@ -96,7 +96,6 @@ const SignupScreen = props => {
         setSignupError('An error occurred. Please try again.');
       }
       setIsSuccess(false);
-      // setModalVisible(true);
       setLoading(false);
     }
   };
