@@ -11,7 +11,6 @@ function ResetPassword(props) {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
 
-
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
