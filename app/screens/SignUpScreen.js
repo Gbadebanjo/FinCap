@@ -132,7 +132,6 @@ const SignupScreen = props => {
             handleSubmit,
             values,
             errors,
-            touched,
           }) => (
             <View>
               <InputField
