@@ -6,7 +6,8 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import Loginscreen from './app/screens/Loginscreen';
 import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
 import SignupScreen from './app/screens/SignUpScreen';
-import VerifyEmail from './app/screens/VerifyEmail';
+import VerifyForgotPassword from './app/screens/VerifyForgotPassword';
+import VerifySignup from './app/screens/VerifySignup';
 import ResetPassword from './app/screens/ResetPassword';
 import DashboardScreen from './app/screens/DashboardScreen';
 import Text from './app/screens/Text';
@@ -43,8 +44,13 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="VerifyEmail"
-          component={VerifyEmail}
+          name="VerifyForgotPassword"
+          component={VerifyForgotPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VerifySignup"
+          component={VerifySignup}
           options={{ headerShown: false }}
         />
         <Stack.Screen
