@@ -16,119 +16,102 @@ import StyledButton from '../components/StyledButton';
 import ResponseModal from '../components/ResponseModal';
 import ErrorAlert from '../components/ErrorAlert';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native';
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required().label('Email'),
+  email: Yup.string().email().required().label('Email'),
 });
 
 export default function ForgotPasswordScreen(props) {
-    const [isModalVisible, setModalVisible] = useState(false)
-    const navigation = useNavigation();
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+  const [isModalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    const handleSubmit = async (values) => {
-        setLoading(true);
-        // try {
-        //     const response = await axios.post(
-        //         `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/ForgotPassword`,
-        //         values)
-        //     if (response.status === 200) {
-        //         setIsSuccess(true);
-                navigation.navigate('VerifyEmail');
-        //     }
-        // } catch (error) {
-        //     setError(error);
-        //     setIsSuccess(false);
-        //     setModalVisible(true);
-        // }
-        // setLoading(false);
-    }
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/ForgotPassword`,
+        values,
+      );
+      if (response.status === 200) {
+        setIsSuccess(true);
+        navigation.navigate('VerifyEmail', { email: values.email });
+        setLoading(false);
+      }
+    } catch (error) {
+        setError(error.response.data.error);
+        setIsSuccess(false);
+        setLoading(false);
+      }
+  };
 
-    return (
-        <SafeAreaView style={styles.Container}>
+  return (
+    <SafeAreaView style={styles.Container}>
+        <TouchableOpacity
+          style={styles.Icon}
+          onPress={() => navigation.navigate('Login')}>
+          <AntDesign name="left" size={16} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.Heading}>Forgot Password</Text>
+        <Text style={styles.SubHeading}>
+          Enter your email address, a code will be sent to you to reset
+          password.
+        </Text>
+        <ErrorAlert error={error} showIcon justifyContent="left" />
+        <Formik
+          initialValues={{ email: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}>
+          {({ handleSubmit, handleChange, values, errors }) => (
             <>
-                <TouchableOpacity style={styles.Icon} onPress={() => navigation.navigate('Login')}>
-                    <AntDesign name="left" size={16} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.Heading}>Forgot Password</Text>
-                <Text style={styles.SubHeading}>Enter your email address, a code will be sent to you to reset password.</Text>
-                <ErrorAlert errors={error} showIcon  />
-                <Formik
-                    initialValues={{ email: '' }}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({ handleSubmit, handleChange, values, errors }) => (
-                        <>
-                            <InputField
-                                label="Email address"
-                                placeholder="Enter your email address"
-                                onChangeText={handleChange('email')}
-                                value={values.email}
-                                error={errors.email}
-                                width="100%"
-                                marginLeft="22px"
-                            />
-                            <ErrorAlert error={errors.email} />
+              <InputField
+                label="Email address"
+                placeholder="Enter your email address"
+                onChangeText={handleChange('email')}
+                value={values.email}
+                error={errors.email}
+                width="100%"
+                marginLeft="22px"
+              />
 
-                            <StyledButton title={
-                                loading ? (
-                                    <ActivityIndicator color="#fff" />
-                                ) : (
-                                    'Submit'
-                                )
-                            } onPress={handleSubmit} />
-                        </>
-                    )}
-                </Formik>
+              <StyledButton
+                title={loading ? <ActivityIndicator color="#fff" /> : 'Submit'}
+                onPress={handleSubmit}
+              />
             </>
-            <ResponseModal
-                visible={isModalVisible}
-                title={isSuccess ? 'Success' : 'Error'}
-                message={error || 'Signup successful!'}
-                isSuccess={isSuccess}
-                onDismiss={() => {
-                    setModalVisible(false);
-                    if (isSuccess) {
-                        // Navigate to next screen if signup was successful
-                        navigation.navigate('Dashboard');
-                    }
-                }}
-                buttonTitle="OK"
-            />
-
-        </SafeAreaView>
-    )
+          )}
+        </Formik>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    Container: {
-        height: '100%',
-        width: '100%',
-        paddingTop: 40,
-        alignItems: 'center',
-    },
-    Icon: {
-        paddingTop: 40,
-        paddingHorizontal: 20,
-        alignSelf: 'flex-start',
-    },
-    Heading: {
-        textAlign: 'center',
-        fontSize: 24,
-        fontWeight: 'bold',
-        paddingTop: 30,
-    },
-    SubHeading: {
-        color: '#3F4654',
-        fontSize: 16,
-        fontWeight: '400',
-        textAlign: 'center',
-        width: '94%',
-        alignItems: 'center',
-        paddingVertical: 20,
-    },
-})
+  Container: {
+    height: '100%',
+    width: '100%',
+    paddingTop: 40,
+    alignItems: 'center',
+  },
+  Icon: {
+    paddingTop: 40,
+    paddingHorizontal: 20,
+    alignSelf: 'flex-start',
+  },
+  Heading: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    paddingTop: 30,
+  },
+  SubHeading: {
+    color: '#3F4654',
+    fontSize: 16,
+    fontWeight: '400',
+    textAlign: 'center',
+    width: '94%',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+});
