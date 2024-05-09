@@ -81,7 +81,10 @@ const SignupScreen = props => {
       console.log(`response: ${response}`);
       if (response.data) {
         setIsSuccess(true);
-        setModalVisible(true);
+        setLoading(false);
+        // setModalVisible(true);
+        navigation.navigate('VerifyEmail');
+        
       }
     } catch (error) {
       // Handle error
@@ -125,13 +128,7 @@ const SignupScreen = props => {
           }}
           validationSchema={validationSchema}
           onSubmit={handleSignup}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-          }) => (
+          {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
             <View>
               <InputField
                 label="Username"
