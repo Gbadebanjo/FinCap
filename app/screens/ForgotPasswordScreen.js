@@ -3,6 +3,7 @@ import {
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -15,7 +16,6 @@ import StyledButton from '../components/StyledButton';
 import ResponseModal from '../components/ResponseModal';
 import ErrorAlert from '../components/ErrorAlert';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email().required().label('Email'),
@@ -36,14 +36,17 @@ export default function ForgotPasswordScreen(props) {
                 values)
             if (response.status === 200) {
                 setIsSuccess(true);
-                navigation.navigate('VerifyEmail');
+                navigation.navigate('VerifyEmail', { email: userEmail });
+                setLoading(false);
             }
         } catch (error) {
-            setError(error);
+            console.log(error.response.data.error);
+            setError(error.response.data.error);
             setIsSuccess(false);
             setModalVisible(true);
+            setLoading(false);
         }
-        setLoading(false);
+
     }
 
     return (
@@ -54,7 +57,7 @@ export default function ForgotPasswordScreen(props) {
                 </TouchableOpacity>
                 <Text style={styles.Heading}>Forgot Password</Text>
                 <Text style={styles.SubHeading}>Enter your email address, a code will be sent to you to reset password.</Text>
-                <ErrorAlert errors={error} showIcon justifyContent="left" />
+                <ErrorAlert error={error} showIcon justifyContent="center" />
                 <Formik
                     initialValues={{ email: '' }}
                     validationSchema={validationSchema}
@@ -71,7 +74,6 @@ export default function ForgotPasswordScreen(props) {
                                 width="100%"
                                 marginLeft="22px"
                             />
-                            <ErrorAlert error={errors.email} />
 
                             <StyledButton title={
                                 loading ? (
@@ -91,10 +93,6 @@ export default function ForgotPasswordScreen(props) {
                 isSuccess={isSuccess}
                 onDismiss={() => {
                     setModalVisible(false);
-                    if (isSuccess) {
-                        // Navigate to next screen if signup was successful
-                        navigation.navigate('Dashboard');
-                    }
                 }}
                 buttonTitle="OK"
             />

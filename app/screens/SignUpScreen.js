@@ -69,7 +69,7 @@ const SignupScreen = props => {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
-  const handleSignup = async values => {
+  const handleSignup = async (values) => {
     console.log(values);
     setLoading(true);
     try {
@@ -271,7 +271,7 @@ const SignupScreen = props => {
           setModalVisible(false);
           if (isSuccess) {
             // Navigate to next screen if signup was successful
-            navigation.navigate('Verify');
+            navigation.navigate('VerifyEmail');
           }
         }}
         buttonTitle="OK"
