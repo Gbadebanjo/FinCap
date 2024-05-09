@@ -28,7 +28,7 @@ export default function ForgotPasswordScreen(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     setLoading(true);
     try {
       const response = await axios.post(
@@ -37,19 +37,18 @@ export default function ForgotPasswordScreen(props) {
       );
       if (response.status === 200) {
         setIsSuccess(true);
-        navigation.navigate('VerifyEmail');
+        navigation.navigate('VerifyEmail', { email: values.email });
         setLoading(false);
       }
     } catch (error) {
-      setError(error.response.data.error);
-      setIsSuccess(false);
-      setLoading(false);
-    }
+        setError(error.response.data.error);
+        setIsSuccess(false);
+        setLoading(false);
+      }
   };
 
   return (
     <SafeAreaView style={styles.Container}>
-      <>
         <TouchableOpacity
           style={styles.Icon}
           onPress={() => navigation.navigate('Login')}>
@@ -84,59 +83,8 @@ export default function ForgotPasswordScreen(props) {
             </>
           )}
         </Formik>
-      </>
     </SafeAreaView>
   );
-    return (
-        <SafeAreaView style={styles.Container}>
-            <>
-                <TouchableOpacity style={styles.Icon} onPress={() => navigation.navigate('Login')}>
-                    <AntDesign name="left" size={16} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.Heading}>Forgot Password</Text>
-                <Text style={styles.SubHeading}>Enter your email address, a code will be sent to you to reset password.</Text>
-                <ErrorAlert error={error} showIcon justifyContent="center" />
-                <Formik
-                    initialValues={{ email: '' }}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({ handleSubmit, handleChange, values, errors }) => (
-                        <>
-                            <InputField
-                                label="Email address"
-                                placeholder="Enter your email address"
-                                onChangeText={handleChange('email')}
-                                value={values.email}
-                                error={errors.email}
-                                width="100%"
-                                marginLeft="22px"
-                            />
-
-                            <StyledButton title={
-                                loading ? (
-                                    <ActivityIndicator color="#fff" />
-                                ) : (
-                                    'Submit'
-                                )
-                            } onPress={handleSubmit} />
-                        </>
-                    )}
-                </Formik>
-            </>
-            <ResponseModal
-                visible={isModalVisible}
-                title={isSuccess ? 'Success' : 'Error'}
-                message={error || 'Signup successful!'}
-                isSuccess={isSuccess}
-                onDismiss={() => {
-                    setModalVisible(false);
-                }}
-                buttonTitle="OK"
-            />
-
-        </SafeAreaView>
-    )
 }
 
 const styles = StyleSheet.create({

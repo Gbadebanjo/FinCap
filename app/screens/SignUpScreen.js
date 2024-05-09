@@ -55,11 +55,9 @@ const SignupScreen = props => {
   const [signupError, setSignupError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   const togglePasswordVisibility = () => {
@@ -80,25 +78,18 @@ const SignupScreen = props => {
       );
       console.log(`response: ${response}`);
       if (response.data) {
-        setIsSuccess(true);
+        // setIsSuccess(true);
         setLoading(false);
-        // setModalVisible(true);
-        navigation.navigate('VerifyEmail');
-        
+        navigation.navigate('VerifySignup', { email: values.email });
+
       }
     } catch (error) {
-      // Handle error
-      console.log(`error: ${error}`);
-      console.log(
-        `error.response.data: ${JSON.stringify(error.response.data.errors[0].message)}`,
-      );
-
       if (error.response.data.errors[0].message) {
         setSignupError(error.response.data.errors[0].message);
       } else {
         setSignupError('An error occurred. Please try again.');
       }
-      setIsSuccess(false);
+      // setIsSuccess(false);
       setLoading(false);
     }
   };
@@ -258,21 +249,6 @@ const SignupScreen = props => {
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </ScrollView>
-
-      <ResponseModal
-        visible={isModalVisible}
-        title={isSuccess ? 'Success' : 'Error'}
-        message={signupError || 'Signup successful!'}
-        isSuccess={isSuccess}
-        onDismiss={() => {
-          setModalVisible(false);
-          if (isSuccess) {
-            // Navigate to next screen if signup was successful
-            navigation.navigate('VerifyEmail');
-          }
-        }}
-        buttonTitle="OK"
-      />
     </SafeAreaView>
   );
 };
