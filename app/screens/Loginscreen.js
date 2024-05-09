@@ -50,7 +50,7 @@ function Loginscreen(props) {
       }
     } catch (error) {
       // Handle error
-      console.log(error)
+      console.log(`login error: ${error}`)
       setError('Invalid email or password. Please try again.');
       setLoading(false);
     }

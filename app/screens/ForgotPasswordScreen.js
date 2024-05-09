@@ -1,4 +1,10 @@
-import { Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import {
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    TouchableOpacity,
+    ActivityIndicator,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,7 +16,6 @@ import StyledButton from '../components/StyledButton';
 import ResponseModal from '../components/ResponseModal';
 import ErrorAlert from '../components/ErrorAlert';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required().label('Email'),
@@ -23,7 +28,7 @@ export default function ForgotPasswordScreen(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values) => {
     setLoading(true);
     try {
       const response = await axios.post(
@@ -32,19 +37,18 @@ export default function ForgotPasswordScreen(props) {
       );
       if (response.status === 200) {
         setIsSuccess(true);
-        navigation.navigate('VerifyEmail');
+        navigation.navigate('VerifyEmail', { email: values.email });
         setLoading(false);
       }
     } catch (error) {
-      setError(error.response.data.error);
-      setIsSuccess(false);
-      setLoading(false);
-    }
+        setError(error.response.data.error);
+        setIsSuccess(false);
+        setLoading(false);
+      }
   };
 
   return (
     <SafeAreaView style={styles.Container}>
-      <>
         <TouchableOpacity
           style={styles.Icon}
           onPress={() => navigation.navigate('Login')}>
@@ -79,7 +83,6 @@ export default function ForgotPasswordScreen(props) {
             </>
           )}
         </Formik>
-      </>
     </SafeAreaView>
   );
 }

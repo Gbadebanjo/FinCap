@@ -3,6 +3,7 @@
     "name": "FinCap",
     "slug": "FinCap",
     "version": "1.0.0",
+    "privacy": "public",
     "orientation": "portrait",
     "icon": "app/assets/icon.png",
     "userInterfaceStyle": "light",
@@ -11,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
