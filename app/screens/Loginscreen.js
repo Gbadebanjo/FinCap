@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -17,8 +17,6 @@ import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
 import GoogleLogo from '../assets/googleicon.png';
 import ErrorAlert from '../components/ErrorAlert';
-import ResponseModal from '../components/ResponseModal';
-// import Api from '../config/Api';
 
 // Validation schema with Yup
 const validationSchema = Yup.object().shape({
@@ -49,8 +47,6 @@ function Loginscreen(props) {
         setModalVisible(true);
       }
     } catch (error) {
-      // Handle error
-      console.log(`login error: ${error}`)
       setError('Invalid email or password. Please try again.');
       setLoading(false);
     }
@@ -96,7 +92,7 @@ function Loginscreen(props) {
                 <TouchableOpacity
                   style={styles.eyeIconContainer}
                   onPress={togglePasswordVisibility}>
-                  <FontAwesome5
+                  <FontAwesome
                     name={showPassword ? 'eye' : 'eye-slash'}
                     size={15}
                     color="#808080"
@@ -128,7 +124,7 @@ function Loginscreen(props) {
         </TouchableOpacity>
         {/* Apple Sign In Button */}
         <TouchableOpacity style={styles.oauthbutton}>
-          <FontAwesome5 name="apple" size={24} color="black" />
+          <FontAwesome name="apple" size={24} color="black" />
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </>
@@ -198,7 +194,7 @@ const styles = StyleSheet.create({
   eyeIconContainer: {
     position: 'absolute',
     right: 30,
-    bottom: 23,
+    bottom: 26,
   },
 });
 

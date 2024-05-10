@@ -4,7 +4,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Text, StyleSheet, View } from 'react-native';
 
 function ErrorAlert({ error, showIcon, justifyContent }) {
-
   const styles = getStyles(justifyContent);
 
   if (!error) return null;
@@ -14,7 +13,7 @@ function ErrorAlert({ error, showIcon, justifyContent }) {
         <FontAwesome5
           name="exclamation-triangle"
           size={24}
-          style={{ paddingLeft: 0}}
+          style={{ paddingLeft: 0 }}
           color="red"
         />
       )}

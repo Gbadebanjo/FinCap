@@ -1,20 +1,34 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
-const ResponseModal = ({ visible, title, message, isSuccess, onDismiss, buttonTitle }) => {
+const ResponseModal = ({
+  visible,
+  title,
+  message,
+  isSuccess,
+  onDismiss,
+  buttonTitle,
+}) => {
   const iconName = isSuccess ? 'check' : 'times';
-  const iconColor = 'white'; 
+  const iconColor = 'white';
   const backgroundColor = isSuccess ? '#5dae64' : '#980D0D';
 
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={styles.centeredView}>
         <View style={styles.modalView}>
-        <View style={[styles.iconContainer, {backgroundColor}]}>
-  <FontAwesome5 name={iconName} size={27} color={iconColor} />
-</View>      
-    <Text style={styles.modalTitle}>{title}</Text>
+          <View style={[styles.iconContainer, { backgroundColor }]}>
+            <FontAwesome name={iconName} size={35} color={iconColor}/>
+          </View>
+          <Text style={styles.modalTitle}>{title}</Text>
           <Text style={styles.modalMessage}>{message}</Text>
           <TouchableOpacity style={styles.button} onPress={onDismiss}>
             <Text style={styles.buttonText}>{buttonTitle}</Text>
@@ -26,7 +40,6 @@ const ResponseModal = ({ visible, title, message, isSuccess, onDismiss, buttonTi
 };
 
 const styles = StyleSheet.create({
-  
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -34,7 +47,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '100%',
     height: '100vh',
-
   },
   modalView: {
     paddingBottom: 30,
@@ -47,12 +59,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#111827'
+    color: '#111827',
   },
   iconContainer: {
-    width: 50, 
-    height: 50, 
-    borderRadius: 25, 
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
@@ -60,6 +72,8 @@ const styles = StyleSheet.create({
   modalMessage: {
     marginBottom: 15,
     textAlign: 'center',
+    width: '90%',
+    justifyContent: 'center',
   },
   button: {
     borderColor: '#7538EC',
