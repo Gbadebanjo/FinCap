@@ -37,7 +37,7 @@ export default function ForgotPasswordScreen(props) {
       );
       if (response.status === 200) {
         setIsSuccess(true);
-        navigation.navigate('VerifyEmail', { email: values.email });
+        navigation.navigate('VerifyForgotPassword', { email: values.email });
         setLoading(false);
       }
     } catch (error) {

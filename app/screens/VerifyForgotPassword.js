@@ -42,28 +42,6 @@ function VerifyForgotPassword(props) {
     }
   }, [countdown, resendDisabled]);
 
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-  }
-
-  const resendCode = async () => {
-    const email = props.route.params.email;
-    console.log('got here')
-    const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/resendcode?email=${email}`);
-    console.log(response)
-    try {
-      if (response.status === 200) {
-        setResendDisabled(true);
-        setCountdown(120);
-      }
-    } catch (error) {
-      setError('An error occurred while resending the code. Please try again.');
-    }
-  };
-
-
   const handleCodeSubmit = async (values) => {
     setLoading(true);
     const data = {
@@ -73,7 +51,7 @@ function VerifyForgotPassword(props) {
     try {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/VerifyResetCode`, data);
       if (response.status === 200) {
-        navigation.navigate('ResetPassword');
+        navigation.navigate('ResetPassword', {data});
       } else {
         setError('An error occurred while verifying the code. Please try again.');
       }
@@ -88,11 +66,6 @@ function VerifyForgotPassword(props) {
     }
   };
 
-  useEffect(() => {
-    if (!loading) {
-      navigation.replace('VerifyForgotPassword', { email: email });
-    }
-  }, [loading]);
 
   return (
     <SafeAreaView style={styles.Container}>
@@ -133,27 +106,6 @@ function VerifyForgotPassword(props) {
           </>
         )}
       </Formik>
-
-
-      <View disabled={resendDisabled}  style={styles.resendView}>
-        <Text style={styles.resendText}>
-          We have sent you a code.{' '}
-        </Text>
-        <TouchableOpacity style={styles.touchable} onPress={resendCode}>
-          <Text
-            style={
-              resendDisabled ? styles.resendDisabled : styles.resendEnabled
-            }>
-            Resend code
-          </Text>
-        </TouchableOpacity>
-        </View>
-        {resendDisabled && (
-          <Text style={styles.resendTimer}>
-            {formatTime(countdown)}
-          </Text>
-        )}
-
     </SafeAreaView>
   );
 }

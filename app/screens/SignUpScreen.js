@@ -10,8 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import ResponseModal from '../components/ResponseModal';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -20,7 +19,6 @@ import GoogleLogo from '../assets/googleicon.png';
 import StyledButton from '../components/StyledButton';
 import InputField from '../components/InputField';
 import ErrorAlert from '../components/ErrorAlert';
-// import Api from '../config/Api';
 
 const validationSchema = Yup.object().shape({
   userName: Yup.string().required().label('Username'),
@@ -55,7 +53,6 @@ const SignupScreen = props => {
   const [signupError, setSignupError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
@@ -67,7 +64,7 @@ const SignupScreen = props => {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
-  const handleSignup = async (values) => {
+  const handleSignup = async values => {
     console.log(values);
     setLoading(true);
     try {
@@ -76,12 +73,13 @@ const SignupScreen = props => {
         values,
         { headers: { 'Content-Type': 'application/json' } },
       );
-      console.log(`response: ${response}`);
-      if (response.data) {
-        // setIsSuccess(true);
+      console.log(`response: ${JSON.stringify(response)}`);
+      if (response && response.data) {
         setLoading(false);
         navigation.navigate('VerifySignup', { email: values.email });
-
+      } else {
+        setSignupError('Response or response.data is undefined');
+        setLoading(false);
       }
     } catch (error) {
       if (error.response.data.errors[0].message) {
@@ -89,7 +87,6 @@ const SignupScreen = props => {
       } else {
         setSignupError('An error occurred. Please try again.');
       }
-      // setIsSuccess(false);
       setLoading(false);
     }
   };
@@ -100,7 +97,7 @@ const SignupScreen = props => {
         <TouchableOpacity
           style={styles.anleleft}
           onPress={() => navigation.navigate('Welcome')}>
-          <FontAwesome5 name="angle-left" size={19} color="#808080" />
+          <FontAwesome name="angle-left" size={22} color="#808080" />
         </TouchableOpacity>
 
         <Text style={styles.welcometext}>Welcome to Suba!</Text>
@@ -180,7 +177,7 @@ const SignupScreen = props => {
                 <TouchableOpacity
                   style={styles.eyeIconContainer}
                   onPress={togglePasswordVisibility}>
-                  <FontAwesome5
+                  <FontAwesome
                     name={showPassword ? 'eye' : 'eye-slash'}
                     size={15}
                     color="#808080"
@@ -205,7 +202,7 @@ const SignupScreen = props => {
                 <TouchableOpacity
                   style={styles.eyeIconContainer}
                   onPress={toggleConfirmPasswordVisibility}>
-                  <FontAwesome5
+                  <FontAwesome
                     name={showConfirmPassword ? 'eye' : 'eye-slash'}
                     size={15}
                     color="#808080"
@@ -228,7 +225,7 @@ const SignupScreen = props => {
         </Formik>
         <View style={styles.LoginContainer}>
           <Text style={styles.Logintext}>
-            Already have an account?
+            Already have an account? {''}
             <Text
               style={styles.LoginlinkText}
               onPress={() => navigation.navigate('Login')}>
@@ -245,7 +242,7 @@ const SignupScreen = props => {
 
         {/* Apple Sign In Button */}
         <TouchableOpacity style={styles.oauthbutton}>
-          <FontAwesome5 name="apple" size={24} color="black" />
+          <FontAwesome name="apple" size={24} color="black" />
           <Text style={styles.oauthtext}>Sign In with Apple</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -295,7 +292,7 @@ const styles = StyleSheet.create({
   eyeIconContainer: {
     position: 'absolute',
     right: 30,
-    bottom: 23,
+    bottom: 26,
   },
   LoginContainer: {
     flexDirection: 'row',
