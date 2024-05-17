@@ -48,11 +48,11 @@ export default function App() {
           component={VerifyForgotPassword}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="VerifySignup"
           component={VerifySignup}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="ResetPassword"
           component={ResetPassword}
