@@ -73,9 +73,10 @@ const SignupScreen = props => {
         values,
         { headers: { 'Content-Type': 'application/json' } },
       );
-      console.log(`response: ${JSON.stringify(response)}`);
+      // console.log(`response: ${JSON.stringify(response)}`);
       if (response && response.data) {
         setLoading(false);
+        // navigation.navigate('VerifySignup', { email: values.email });
         navigation.navigate('VerifySignup', { email: values.email });
       } else {
         setSignupError('Response or response.data is undefined');
