@@ -75,11 +75,10 @@ function VerifySignup(props) {
       verificationCode: values.code,
     };
     try {
-      const response = await axios.post(
-        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/VerifyResetCode`,
-        data,
+      const response = await axios.get(
+        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/confirmemail?email=${data.email}&code=${data.verificationCode}`
       );
-      if (response.status === 200) {
+      if (response.code === 200) {
         isSuccess(true);
         setModalVisible(true);
       } else {
@@ -92,6 +91,7 @@ function VerifySignup(props) {
         isSuccess(false);
         setModalVisible(true);
         setError(error.response.data.error);
+        console.log(error.response.data.error);
       } else {
         setError(
           'An error occurred while verifying the code. Please try again.',
@@ -156,17 +156,17 @@ function VerifySignup(props) {
 
       <ResponseModal
         visible={setModalVisible}
-        title={isSuccess ? 'Success' : 'Error!'}
-        message={setError || 'Your email have been verified'}
-        isSuccess={isSuccess}
+        title={success ? 'Success' : 'Error!'}
+        message={error || 'Your email have been verified'}
+        isSuccess={success}
         onDismiss={() => {
           setModalVisible(false);
-          if (isSuccess) {
+          if (success) {
             // Navigate to next screen if signup was successful
-            navigation.navigate('DashboardScreen');
+            navigation.navigate('Dashboard');
           }
         }}
-        buttonTitle={isSuccess ? 'Okay, Got it' : 'Try again'}
+        buttonTitle={success ? 'Okay, Got it' : 'Try again'}
       />
     </SafeAreaView>
   );
