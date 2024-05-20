@@ -1,15 +1,24 @@
 import { StyleSheet, Text, StatusBar, SafeAreaView, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 export default function SavingsScreen() {
-    const colors = ['red', 'green', 'black']; // Array of colors
+    const navigation = useNavigation();
+
+    const handlePress = (title, interest, amount) => {
+        navigation.navigate('SavingsInputScreen', { title, interest, amount });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar backgroundColor="transparent" barStyle="dark-content" />
             <Text style={styles.heading}>Savings plan</Text>
             <View style={styles.box}>
-                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#F6F8FF' }]}>
+                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#F6F8FF' }]}
+                    onPress={() => handlePress('Flex save plan', '10% intrest p.a', '\u20A6 0')}
+
+                >
                     <View style={styles.iconbackground} >
                         <FontAwesome name="flag" size={24} color="#1146FF" borderRadius='0' />
                     </View>
@@ -18,19 +27,23 @@ export default function SavingsScreen() {
                     <Text style={styles.boxAmount}>{'\u20A6'}0</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#fef1ef' }]}>
-                <View style={styles.iconbackground} >
-                    <FontAwesome name="flag" size={24} color="#F9A699" borderRadius='0' />
-                </View>
+                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#fef1ef' }]}
+                    onPress={() => handlePress('Goals plan', '10% intrest p.a', '\u20A6 0')}
+                >
+                    <View style={styles.iconbackground} >
+                        <FontAwesome name="flag" size={24} color="#F9A699" borderRadius='0' />
+                    </View>
                     <Text style={styles.boxHead}>Goals</Text>
                     <Text>10% intrest p.a</Text>
                     <Text style={styles.boxAmount}>{'\u20A6'}0</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#ebf8f1' }]}>
-                <View style={styles.iconbackground} >
-                    <FontAwesome name="flag" size={24} color="#1146FF" borderRadius='0' />
-                </View>
+                <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#ebf8f1' }]}
+                    onPress={() => handlePress('Fixed plan', '10% intrest p.a', '\u20A6 0')}
+                >
+                    <View style={styles.iconbackground} >
+                        <FontAwesome name="flag" size={24} color="#1146FF" borderRadius='0' />
+                    </View>
                     <Text style={styles.boxHead}>Fixed</Text>
                     <Text>10% intrest p.a</Text>
                     <Text style={styles.boxAmount}>{'\u20A6'}0</Text>

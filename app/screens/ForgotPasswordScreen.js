@@ -13,7 +13,6 @@ import { Formik } from 'formik';
 
 import InputField from '../components/InputField';
 import StyledButton from '../components/StyledButton';
-import ResponseModal from '../components/ResponseModal';
 import ErrorAlert from '../components/ErrorAlert';
 import axios from 'axios';
 
@@ -22,9 +21,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function ForgotPasswordScreen(props) {
-  const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

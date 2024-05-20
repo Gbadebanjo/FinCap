@@ -14,6 +14,7 @@ import SavingsScreen from './app/screens/SavingsScreen';
 
 import Text from './app/screens/Text';
 import NavButtons from './app/components/NavButtons';
+import SavingsInputScreen from './app/screens/SavingsInputScreen';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,16 @@ export default function App() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SavingsScreen"
+          component={SavingsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SavingsInputScreen"
+          component={SavingsInputScreen}
           options={{ headerShown: false }}
         />
         {/* <Stack.Screen
