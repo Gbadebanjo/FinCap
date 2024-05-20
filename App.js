@@ -9,8 +9,11 @@ import SignupScreen from './app/screens/SignUpScreen';
 import VerifyForgotPassword from './app/screens/VerifyForgotPassword';
 import VerifySignup from './app/screens/VerifySignup';
 import ResetPassword from './app/screens/ResetPassword';
-import DashboardScreen from './app/screens/DashboardScreen';
+import HomeScreen from './app/screens/HomeScreen';
+import SavingsScreen from './app/screens/SavingsScreen';
+
 import Text from './app/screens/Text';
+import NavButtons from './app/components/NavButtons';
 
 const Stack = createStackNavigator();
 
@@ -18,49 +21,54 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Landing"
           component={Landingscreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Welcome"
           component={WelcomeScreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="SignUp"
           component={SignupScreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Login"
           component={Loginscreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="ForgotPassword"
           component={ForgotPasswordScreen}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="VerifyForgotPassword"
           component={VerifyForgotPassword}
           options={{ headerShown: false }}
-        />
+        /> */}
         {/* <Stack.Screen
           name="VerifySignup"
           component={VerifySignup}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ResetPassword"
           component={ResetPassword}
           options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="NavButtons"
+          component={NavButtons}
+          options={{ headerShown: false}}
         />
         <Stack.Screen
-          name="Dashboard"
-          component={DashboardScreen}
+          name="HomeScreen"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         {/* <Stack.Screen
