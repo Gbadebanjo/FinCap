@@ -4,6 +4,7 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar,
   Image,
   StyleSheet,
   ScrollView,
@@ -94,6 +95,7 @@ const SignupScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
       <ScrollView>
         <TouchableOpacity
           style={styles.anleleft}
