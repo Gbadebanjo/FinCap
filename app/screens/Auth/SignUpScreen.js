@@ -14,11 +14,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-
-import GoogleLogo from '../assets/googleicon.png';
-import StyledButton from '../components/StyledButton';
-import InputField from '../components/InputField';
-import ErrorAlert from '../components/ErrorAlert';
+import GoogleLogo from '../../assets/googleicon.png';
+import StyledButton from '../../components/StyledButton';
+import InputField from '../../components/InputField';
+import ErrorAlert from '../../components/ErrorAlert';
 
 const validationSchema = Yup.object().shape({
   userName: Yup.string().required().label('Username'),

@@ -11,11 +11,11 @@ import { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
-import InputField from '../components/InputField';
-import StyledButton from '../components/StyledButton';
+import InputField from '../../components/InputField';
+import StyledButton from '../../components/StyledButton';
 import { FontAwesome5 } from '@expo/vector-icons';
-import ErrorAlert from '../components/ErrorAlert';
-import ResponseModal from '../components/ResponseModal';
+import ErrorAlert from '../../components/ErrorAlert';
+import ResponseModal from '../../components/ResponseModal';
 
 const validationSchema = Yup.object().shape({
   newPassword: Yup.string()

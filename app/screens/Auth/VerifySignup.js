@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import InputField from '../components/InputField';
-import StyledButton from '../components/StyledButton';
+import InputField from '../../components/InputField';
+import StyledButton from '../../components/StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import ErrorAlert from '../components/ErrorAlert';
-import ResponseModal from '../components/ResponseModal';
+import ErrorAlert from '../../components/ErrorAlert';
+import ResponseModal from '../../components/ResponseModal';
 
 const validationSchema = Yup.object().shape({
   code: Yup.string().min(6).max(6).required(),
@@ -76,7 +76,7 @@ function VerifySignup(props) {
     };
     try {
       const response = await axios.get(
-        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/confirmemail?email=${data.email}&code=${data.verificationCode}`
+        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/confirmemail?email=${data.email}&code=${data.verificationCode}`,
       );
       if (response.code === 200) {
         isSuccess(true);

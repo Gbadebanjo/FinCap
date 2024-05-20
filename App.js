@@ -1,16 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import Landingscreen from './app/screens/Landingscreen';
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import Loginscreen from './app/screens/Loginscreen';
-import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
-import SignupScreen from './app/screens/SignUpScreen';
-import VerifyForgotPassword from './app/screens/VerifyForgotPassword';
-import VerifySignup from './app/screens/VerifySignup';
-import ResetPassword from './app/screens/ResetPassword';
-import DashboardScreen from './app/screens/DashboardScreen';
-import Text from './app/screens/Text';
+import Landingscreen from './app/screens/Auth/Landingscreen';
+import WelcomeScreen from './app/screens/Auth/WelcomeScreen';
+import Loginscreen from './app/screens/Auth/Loginscreen';
+import ForgotPasswordScreen from './app/screens/Auth/ForgotPasswordScreen';
+import SignupScreen from './app/screens/Auth/SignUpScreen';
+import VerifyForgotPassword from './app/screens/Auth/VerifyForgotPassword';
+import VerifySignup from './app/screens/Auth/VerifySignup';
+import ResetPassword from './app/screens/Auth/ResetPassword';
+import DashboardScreen from './app/screens/Auth/DashboardScreen';
+import FundingSourceModal from './app/components/FundingSourceModal';
+import Plans from './app/screens/Investment/Plans';
+import Review from './app/screens/Investment/Review';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Landing"
           component={Landingscreen}
           options={{ headerShown: false }}
@@ -53,20 +54,31 @@ export default function App() {
           component={VerifySignup}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="ResetPassword"
           component={ResetPassword}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
+        /> */}
+        {/* <Stack.Screen
           name="Dashboard"
           component={DashboardScreen}
           options={{ headerShown: false }}
-        />
+        />  */}
         {/* <Stack.Screen
-        name='Text'
-        component={Text}
+          name="FundingSource"
+          component={FundingSourceModal}
+          options={{ headerShown: false }}
         /> */}
+        {/* <Stack.Screen
+          name="InvestmentPlans"
+          component={Plans}
+          options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="InvestmentReview"
+          component={Review}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
