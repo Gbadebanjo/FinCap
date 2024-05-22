@@ -7,10 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {
-  Entypo,
-  AntDesign,
   FontAwesome,
-  Feather,
   Ionicons,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';

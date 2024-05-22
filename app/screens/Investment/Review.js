@@ -5,10 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import StyledButton from '../../components/StyledButton';
-import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const Review = props => {
   function handleSubmit() {
@@ -18,7 +17,7 @@ const Review = props => {
     <SafeAreaView>
       <View style={styles.Container}>
         <TouchableOpacity style={styles.anleleft} onPress={handleSubmit}>
-          <FontAwesome name="arrow-left" size={15} color="#001020" />
+          <AntDesign name="arrowleft" size={15} color="#101828" />
         </TouchableOpacity>
         <Text style={styles.pageHeader}>Review your investment</Text>
         <View style={styles.plansBody}>
@@ -40,10 +39,7 @@ const Review = props => {
           </View>
         </View>
       </View>
-      <StyledButton
-        title={'Continue'}
-        onPress={handleSubmit}
-      />
+      <StyledButton title={'Continue'} onPress={handleSubmit} />
     </SafeAreaView>
   );
 };
@@ -61,7 +57,6 @@ const styles = StyleSheet.create({
   },
   plansBody: {
     marginTop: 35,
-    // marginBottom: '40%',
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 10,

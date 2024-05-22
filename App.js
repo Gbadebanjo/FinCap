@@ -13,6 +13,8 @@ import FundingSourceModal from './app/components/FundingSourceModal';
 import Plans from './app/screens/Investment/Plans';
 import Review from './app/screens/Investment/Review';
 import InvestmentHome from './app/screens/Investment/InvestmentHome';
+import InvestmentSummary from './app/screens/Investment/Earnings';
+import ChangeCard from './app/screens/Investment/ChangeCard';
 
 const Stack = createStackNavigator();
 
@@ -80,9 +82,19 @@ export default function App() {
           component={Review}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="InvestmentHome"
           component={InvestmentHome}
+          options={{ headerShown: false }}
+        /> */}
+        {/* <Stack.Screen
+          name="Earnings"
+          component={Earnings}
+          options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="ChangeCard"
+          component={ChangeCard}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
