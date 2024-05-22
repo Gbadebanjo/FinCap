@@ -12,6 +12,7 @@ import DashboardScreen from './app/screens/Auth/DashboardScreen';
 import FundingSourceModal from './app/components/FundingSourceModal';
 import Plans from './app/screens/Investment/Plans';
 import Review from './app/screens/Investment/Review';
+import InvestmentHome from './app/screens/Investment/InvestmentHome';
 
 const Stack = createStackNavigator();
 
@@ -74,9 +75,14 @@ export default function App() {
           component={Plans}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="InvestmentReview"
           component={Review}
+          options={{ headerShown: false }}
+        /> */}
+        <Stack.Screen
+          name="InvestmentHome"
+          component={InvestmentHome}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
