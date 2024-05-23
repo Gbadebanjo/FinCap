@@ -12,6 +12,7 @@ export default function SavingsInputScreen({ route }) {
     const [loading, setLoading] = useState(false);
     const [selectedDuration, setSelectedDuration] = useState(null);
     const [selectedButton, setSelectedButton] = useState(null);
+    const [inputAmount, setInputAmount] = useState('');
 
     const buttons = ['Daily', 'Weekly', 'Monthly'];
 
@@ -22,7 +23,8 @@ export default function SavingsInputScreen({ route }) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.main}>
+        <View style={styles.container}>
             <TouchableOpacity
                 style={styles.icon}
                 onPress={() => navigation.navigate('SavingsScreen')}>
@@ -35,10 +37,9 @@ export default function SavingsInputScreen({ route }) {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter Amount"
-                    // secureTextEntry={secureTextEntry}
-                    // onChangeText={onChangeText}
+                    onChangeText={text => setInputAmount(text)} 
                     placeholderTextColor="#d2d2d4"
-                // value={value}
+                    value={inputAmount}
                 />
                 <Text style={[styles.label, { color: '#475467' }]}>Your interest rate would be 10% per annum</Text>
                 <Text style={styles.label}>Select duration</Text>
@@ -78,23 +79,35 @@ export default function SavingsInputScreen({ route }) {
                         <Text style={{ color: selectedButton === button ? '#fff' : "#766B80" }}>{button}</Text>
                     </TouchableOpacity>
                 ))}
-            </View>
-
-            <StyledButton
+            </View>            
+        </View>
+        <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
-            // onPress={handleSubmit}
+                onPress={() => {
+                    navigation.navigate('SavingsReviewScreen', {
+                        title: title,
+                        interest: interest,
+                        amount: inputAmount,
+                        selectedDuration: selectedDuration,
+                        selectedButton: selectedButton
+                    });
+                }}
             />
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 30,
-        paddingLeft: 20,
+    main: {
+        flex: 1,
         backgroundColor: '#fff',
+        paddingTop: 30,
         height: '100%',
     },
+    container: {
+        paddingLeft: 20,
+        marginBottom: 'auto',
+        },
     icon: {
         paddingVertical: 10,
     },
@@ -159,7 +172,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 10,
-        marginBottom: 'auto',
         padding: 5,
 
     },
