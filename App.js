@@ -15,6 +15,7 @@ import SavingsScreen from './app/screens/SavingsScreen';
 import Text from './app/screens/Text';
 import NavButtons from './app/components/NavButtons';
 import SavingsInputScreen from './app/screens/SavingsInputScreen';
+import SavingsReviewScreen from './app/screens/SavingsReviewScreen';
 
 const Stack = createStackNavigator();
 
@@ -80,6 +81,11 @@ export default function App() {
         <Stack.Screen
           name="SavingsInputScreen"
           component={SavingsInputScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SavingsReviewScreen"
+          component={SavingsReviewScreen}
           options={{ headerShown: false }}
         />
         {/* <Stack.Screen
