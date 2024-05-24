@@ -11,8 +11,11 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const InvestmentHome = props => {
+  const navigation = useNavigation();
+
   function handleSubmit() {
     alert('Continue button clicked');
   }
@@ -45,13 +48,15 @@ const InvestmentHome = props => {
             color="#FC1D1D"
           />
         </View>
-        <View style={styles.HoldTextCont}>
+        <TouchableOpacity
+          style={styles.HoldTextCont}
+          onPress={() => navigation.navigate('ChangeCard')}>
           <Text style={styles.HoldHeading}>Your Investment is on hold</Text>
           <Text style={styles.HoldText}>
             You don’t have sufficient funds on your card for running
             investments, click to change debit card
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.ActionCont}>
@@ -61,7 +66,7 @@ const InvestmentHome = props => {
             name="receipt-sharp"
             size={24}
             color="#541592"
-            onPress={handleSubmit}
+            onPress={() => navigation.navigate('InvestmentEarnings')}
           />
           <Text style={styles.ViewEarnings}>View Earnings</Text>
         </TouchableOpacity>
@@ -71,7 +76,7 @@ const InvestmentHome = props => {
             name="send"
             size={24}
             color="#541592"
-            onPress={handleSubmit}
+            onPress={() => navigation.navigate('InvestmentEarnings')}
           />
           <Text style={styles.ViewEarnings}>Withdraw Earnings</Text>
         </TouchableOpacity>

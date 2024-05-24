@@ -1,15 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-const ConfirmModal = ({ onCancel, onConfirm }) => {
+const ConfirmModal = ({ onCancel, onConfirm, title, message }) => {
   return (
     <View style={styles.overlay}>
       <View style={styles.container}>
-        <Text style={styles.title}>Please Confirm</Text>
-        <Text style={styles.message}>
-          Your card will be charged for the months you missed. Do you agree to
-          this transaction?
-        </Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.message}>{message}</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={onCancel}>
             <Text style={styles.cancelText}>Cancel</Text>

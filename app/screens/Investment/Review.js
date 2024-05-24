@@ -8,15 +8,20 @@ import {
 } from 'react-native';
 import StyledButton from '../../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Review = props => {
+  const navigation = useNavigation();
+
   function handleSubmit() {
-    alert('Continue button clicked');
+    navigation.navigate('InvestmentHome');
   }
   return (
     <SafeAreaView>
       <View style={styles.Container}>
-        <TouchableOpacity style={styles.anleleft} onPress={handleSubmit}>
+        <TouchableOpacity
+          style={styles.anleleft}
+          onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={15} color="#101828" />
         </TouchableOpacity>
         <Text style={styles.pageHeader}>Review your investment</Text>
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
   },
   calculatedCont: {
     marginTop: 15,
-  }
+  },
 });
 
 export default Review;

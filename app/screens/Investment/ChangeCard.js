@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -26,7 +26,7 @@ const ChangeCard = () => {
 
   function handleConfirmCardChange() {
     // Handle card change confirmation logic here (e.g., API call, navigation)
-    alert('Card changed successfully!'); 
+    navigation.navigate('InvestmentHome');
     setIsConfirmModalVisible(false);
   }
 
@@ -36,7 +36,7 @@ const ChangeCard = () => {
         <View style={styles.arrowChange}>
           <TouchableOpacity
             style={styles.angleleft}
-            onPress={() => navigation.navigate('Login')}>
+            onPress={() => navigation.goBack()}>
             <AntDesign name="arrowleft" size={15} color="#101828" />
           </TouchableOpacity>
           <Text style={styles.pageHeader}>Change Card</Text>
@@ -102,9 +102,10 @@ const ChangeCard = () => {
       {isConfirmModalVisible && (
         <ConfirmModal
           title="Confirm Change Card"
-          message="Are you sure you want to change your card?"
+          message=" Your card will be charged for the months you missed. Do you agree to
+          this transaction?"
           onCancel={() => setIsConfirmModalVisible(false)}
-          onConfirm={handleConfirmCardChange} // Pass handleConfirmCardChange function
+          onConfirm={handleConfirmCardChange}
         />
       )}
     </SafeAreaView>

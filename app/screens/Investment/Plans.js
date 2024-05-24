@@ -6,12 +6,17 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Plans = props => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.Container}>
       <Text style={styles.pageHeader}>Investment Plans</Text>
-      <TouchableOpacity style={styles.plansBody}>
+      <TouchableOpacity
+        style={styles.plansBody}
+        onPress={() => navigation.navigate('InvestmentReview')}>
         <View>
           <Text style={styles.planName}>Basic Plan</Text>
           <Text style={styles.interestRate}>10% interest p.a</Text>
@@ -31,7 +36,9 @@ const Plans = props => {
           <Text style={styles.Date}>12 months</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.plansBody}>
+      <TouchableOpacity
+        style={styles.plansBody}
+        onPress={() => navigation.navigate('InvestmentReview')}>
         <View>
           <Text style={styles.planName}>Standard Plan</Text>
           <Text style={styles.interestRate}>10% interest p.a</Text>
@@ -51,7 +58,9 @@ const Plans = props => {
           <Text style={styles.Date}>12 months</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.plansBody}>
+      <TouchableOpacity
+        style={styles.plansBody}
+        onPress={() => navigation.navigate('InvestmentReview')}>
         <View>
           <Text style={styles.planName}>Premium</Text>
           <Text style={styles.interestRate}>10% interest p.a</Text>

@@ -7,17 +7,21 @@ import {
   View,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const Earnings = props => {
+  const navigation = useNavigation();
 
   function handleSubmit() {
     alert('Continue button clicked');
   }
-  
+
   return (
     <SafeAreaView style={styles.Container}>
       <View style={styles.arrowEarning}>
-        <TouchableOpacity style={styles.anleleft} onPress={handleSubmit}>
+        <TouchableOpacity
+          style={styles.anleleft}
+          onPress={() => navigation.goBack()}>
           <AntDesign name="arrowleft" size={15} color="#101828" />
         </TouchableOpacity>
         <Text style={styles.pageHeader}>Earnings</Text>
