@@ -9,9 +9,11 @@ import {
 import { AntDesign } from '@expo/vector-icons';
 
 const Earnings = props => {
+
   function handleSubmit() {
     alert('Continue button clicked');
   }
+  
   return (
     <SafeAreaView style={styles.Container}>
       <View style={styles.arrowEarning}>

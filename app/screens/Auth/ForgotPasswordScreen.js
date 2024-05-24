@@ -12,7 +12,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import InputField from '../../components/InputField';
 import StyledButton from '../../components/StyledButton';
-import ResponseModal from '../../components/ResponseModal';
+import ResponseModal from '../../components/Modals/ResponseModal';
 import ErrorAlert from '../../components/ErrorAlert';
 import axios from 'axios';
 

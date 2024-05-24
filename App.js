@@ -9,7 +9,7 @@ import VerifyForgotPassword from './app/screens/Auth/VerifyForgotPassword';
 import VerifySignup from './app/screens/Auth/VerifySignup';
 import ResetPassword from './app/screens/Auth/ResetPassword';
 import DashboardScreen from './app/screens/Auth/DashboardScreen';
-import FundingSourceModal from './app/components/FundingSourceModal';
+import FundingSourceModal from './app/components/Modals/FundingSourceModal';
 import Plans from './app/screens/Investment/Plans';
 import Review from './app/screens/Investment/Review';
 import InvestmentHome from './app/screens/Investment/InvestmentHome';

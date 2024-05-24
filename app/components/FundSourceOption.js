@@ -9,7 +9,7 @@ const FundSourceOption = ({ title, balance, isSelected, onPress }) => {
     onPress && onPress(isActive);
   };
 
-  const backgroundColor = isActive ? '#fff' : '#5dae64';
+   const backgroundColor = isActive ? '#7538EC' : '#fff';
 
   return (
     <View style={styles.container}>

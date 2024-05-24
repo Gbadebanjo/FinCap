@@ -16,7 +16,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import ErrorAlert from '../../components/ErrorAlert';
-import ResponseModal from '../../components/ResponseModal';
+import ResponseModal from '../../components/Modals/ResponseModal';
 
 const validationSchema = Yup.object().shape({
   code: Yup.string().min(6).max(6).required(),

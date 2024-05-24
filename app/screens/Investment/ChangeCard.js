@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,23 +6,37 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import StyledButton from '../../components/StyledButton';
 import {
   AntDesign,
   FontAwesome,
-  FontAwesome6,
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
+import ConfirmModal from '../../components/Modals/ConfirmModal';
 
-const ChangeCard = props => {
-  function handleSubmit() {
-    alert('Continue button clicked');
+const ChangeCard = () => {
+  const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
+  const navigation = useNavigation();
+
+  function handleConfirmButton() {
+    // Show confirm modal here
+    setIsConfirmModalVisible(true);
   }
+
+  function handleConfirmCardChange() {
+    // Handle card change confirmation logic here (e.g., API call, navigation)
+    alert('Card changed successfully!'); 
+    setIsConfirmModalVisible(false);
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.Container}>
         <View style={styles.arrowChange}>
-          <TouchableOpacity style={styles.angleleft} onPress={handleSubmit}>
+          <TouchableOpacity
+            style={styles.angleleft}
+            onPress={() => navigation.navigate('Login')}>
             <AntDesign name="arrowleft" size={15} color="#101828" />
           </TouchableOpacity>
           <Text style={styles.pageHeader}>Change Card</Text>
@@ -82,7 +96,17 @@ const ChangeCard = props => {
           </TouchableOpacity>
         </View>
       </View>
-      <StyledButton title={'Confirm'} onPress={handleSubmit} />
+      <StyledButton title={'Confirm'} onPress={handleConfirmButton} />
+
+      {/* Conditionally render ConfirmModal */}
+      {isConfirmModalVisible && (
+        <ConfirmModal
+          title="Confirm Change Card"
+          message="Are you sure you want to change your card?"
+          onCancel={() => setIsConfirmModalVisible(false)}
+          onConfirm={handleConfirmCardChange} // Pass handleConfirmCardChange function
+        />
+      )}
     </SafeAreaView>
   );
 };
