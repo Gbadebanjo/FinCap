@@ -12,10 +12,10 @@ import ResetPassword from './app/screens/ResetPassword';
 import HomeScreen from './app/screens/HomeScreen';
 import SavingsScreen from './app/screens/SavingsScreen';
 
-import Text from './app/screens/Text';
 import NavButtons from './app/components/NavButtons';
 import SavingsInputScreen from './app/screens/SavingsInputScreen';
 import SavingsReviewScreen from './app/screens/SavingsReviewScreen';
+import SavingsDashboardScreen from './app/screens/SavingsDashboardScreen';
 
 const Stack = createStackNavigator();
 
@@ -88,10 +88,11 @@ export default function App() {
           component={SavingsReviewScreen}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-        name='Text'
-        component={Text}
-        /> */}
+        <Stack.Screen
+          name="SavingsDashboardScreen"
+          component={SavingsDashboardScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

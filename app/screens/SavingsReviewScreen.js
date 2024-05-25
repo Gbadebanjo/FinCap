@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import StyledButton from '../components/StyledButton';
 const SavingsReviewScreen = ({ route }) => {
-  console.log(route.params);
+  // console.log(route.params);
   const { title, interest, amount, selectedDuration, selectedButton } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ const SavingsReviewScreen = ({ route }) => {
         <View style={styles.reviewbox}>
           <Text style={styles.reviewtitle}>Amount</Text>
           <Text style={styles.reviewbold}>
-            {'\u20A6'}{new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount)}
+            {new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount)}
           </Text>
           <Text style={styles.reviewtitle}>Saving Schedule</Text>
           <Text style={styles.reviewbold}>{selectedButton}</Text>
@@ -34,6 +34,12 @@ const SavingsReviewScreen = ({ route }) => {
       <View>
         <StyledButton
           title={loading ? <ActivityIndicator color="#fff" /> : 'Create Savings Plans'}
+          onPress={() => {
+            navigation.navigate('SavingsDashboardScreen', {
+                title: title,
+                interest: interest,
+            });
+        }}
         />
         <TouchableOpacity
           style={styles.newbutton}
