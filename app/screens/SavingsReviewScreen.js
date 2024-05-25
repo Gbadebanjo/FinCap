@@ -22,7 +22,9 @@ const SavingsReviewScreen = ({ route }) => {
         <Text style={styles.planbold}>Review your savings plans</Text>
         <View style={styles.reviewbox}>
           <Text style={styles.reviewtitle}>Amount</Text>
-          <Text style={styles.reviewbold}>{'\u20A6'}{amount}</Text>
+          <Text style={styles.reviewbold}>
+            {'\u20A6'}{new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount)}
+          </Text>
           <Text style={styles.reviewtitle}>Saving Schedule</Text>
           <Text style={styles.reviewbold}>{selectedButton}</Text>
           <Text style={styles.reviewtitle}>Interest</Text>
