@@ -23,10 +23,10 @@ export default function SavingsDashboardScreen() {
                 </TouchableOpacity>
             </View>
             <View style={styles.ButtonContainer}>
-                <TouchableOpacity onPress={() => navigation.navigate('SavingsScreen')} style={styles.Button}>
+                <TouchableOpacity onPress={() => navigation.navigate('Savings')} style={styles.Button}>
                     <Text style={styles.ButtonText}>Create Saving Plan</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('SavingsScreen')} style={[styles.Button, { backgroundColor: '#fff', borderColor: '#7538EC', borderWidth: 1 }]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Savings')} style={[styles.Button, { backgroundColor: '#fff', borderColor: '#7538EC', borderWidth: 1 }]}>
                     <Text style={[styles.ButtonText, { color: "#7538EC" }]}>Withdraw</Text>
                 </TouchableOpacity>
             </View>

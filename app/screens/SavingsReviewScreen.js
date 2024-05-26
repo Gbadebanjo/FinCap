@@ -12,7 +12,6 @@ const SavingsReviewScreen = ({ route }) => {
   const { goal, interest, amountToSave, duration, frequency } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  console.log(goal, amountToSave, duration, frequency);
 
   const createSavingsPlan = async () => {
     setLoading(true);
@@ -29,18 +28,18 @@ const SavingsReviewScreen = ({ route }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data && response.data.isSuccessful) {
         Alert.alert('Success', 'Savings plan created successfully!');
-      navigation.navigate('SavingsDashboardScreen', {
-        goal,
-      });
+        navigation.navigate('SavingsDashboard', {
+          goal,
+        });
       } else {
-        console.log(response.errors);
+        // console.log(response.errors);
         Alert.alert('Error', response.data.message || 'An error occurred. Please try again');
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       Alert.alert('Error', 'An error occurred. Please try again');
     } finally {
       setLoading(false);
@@ -52,7 +51,7 @@ const SavingsReviewScreen = ({ route }) => {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.icon}
-          onPress={() => navigation.navigate('SavingsScreen')}>
+          onPress={() => navigation.navigate('Savings')}>
           <AntDesign name="left" size={16} color="black" />
         </TouchableOpacity>
         <Text style={styles.plantitle}>{goal}</Text>
@@ -75,7 +74,7 @@ const SavingsReviewScreen = ({ route }) => {
         />
         <TouchableOpacity
           style={styles.newbutton}
-          onPress={() => navigation.navigate('SavingsScreen')}
+          onPress={() => navigation.navigate('Savings')}
         >
           <Text style={{ color: '#7538EC' }}>Go Back</Text>
         </TouchableOpacity>
@@ -138,7 +137,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
   }
 })
 

@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import StyledButton from '../components/StyledButton';
+
 export default function SavingsInputScreen({ route }) {
     const { title, interest, amount } = route.params;
     const navigation = useNavigation();
@@ -27,7 +28,7 @@ export default function SavingsInputScreen({ route }) {
         <View style={styles.container}>
             <TouchableOpacity
                 style={styles.icon}
-                onPress={() => navigation.navigate('SavingsScreen')}>
+                onPress={() => navigation.navigate('Savings')}>
                 <AntDesign name="left" size={16} color="black" />
             </TouchableOpacity>
             <Text style={styles.plantitle}>{title} plan </Text>
@@ -87,7 +88,7 @@ export default function SavingsInputScreen({ route }) {
                     if (!inputAmount || !selectedDuration || !selectedButton) {
                         alert('Please fill all the fields');
                     } else {
-                        navigation.navigate('SavingsReviewScreen', {
+                        navigation.navigate('SavingsReview', {
                             goal: title,
                             interest: interest,
                             amountToSave: inputAmount,

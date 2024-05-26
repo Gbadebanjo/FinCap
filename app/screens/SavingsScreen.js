@@ -7,7 +7,7 @@ export default function SavingsScreen() {
     const navigation = useNavigation();
 
     const handlePress = (title, interest, amount) => {
-        navigation.navigate('SavingsInputScreen', { title, interest, amount });
+        navigation.navigate('SavingsInput', { title, interest, amount });
     };
 
     return (
