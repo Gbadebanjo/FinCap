@@ -10,9 +10,9 @@ export default function SavingsInputScreen({ route }) {
     const { title, interest, amount } = route.params;
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    const [selectedDuration, setSelectedDuration] = useState(null);
+    const [selectedDuration, setSelectedDuration] = useState();
     const [selectedButton, setSelectedButton] = useState(null);
-    const [inputAmount, setInputAmount] = useState('');
+    const [inputAmount, setInputAmount] = useState();
 
     const buttons = ['Daily', 'Weekly', 'Monthly'];
 
@@ -30,7 +30,7 @@ export default function SavingsInputScreen({ route }) {
                 onPress={() => navigation.navigate('SavingsScreen')}>
                 <AntDesign name="left" size={16} color="black" />
             </TouchableOpacity>
-            <Text style={styles.plantitle}>{title}</Text>
+            <Text style={styles.plantitle}>{title} plan </Text>
             <Text style={styles.planbold}>How much do you want to save?</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.label}>Amount</Text>
@@ -48,10 +48,10 @@ export default function SavingsInputScreen({ route }) {
             <RNPickerSelect
                 placeholder={placeholder}
                 items={[
-                    { label: '1 month', value: '1' },
-                    { label: '3 months', value: '3' },
-                    { label: '6 months', value: '6' },
-                    { label: '12 months', value: '12' },
+                    { label: '12 month', value: '12' },
+                    { label: '24 months', value: '24' },
+                    { label: '36 months', value: '36' },
+                    { label: '48 months', value: '48' },
                 ]}
                 onValueChange={(value) => setSelectedDuration(value)}
                 style={{
@@ -84,13 +84,17 @@ export default function SavingsInputScreen({ route }) {
         <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
                 onPress={() => {
-                    navigation.navigate('SavingsReviewScreen', {
-                        title: title,
-                        interest: interest,
-                        amount: inputAmount,
-                        selectedDuration: selectedDuration,
-                        selectedButton: selectedButton
-                    });
+                    if (!inputAmount || !selectedDuration || !selectedButton) {
+                        alert('Please fill all the fields');
+                    } else {
+                        navigation.navigate('SavingsReviewScreen', {
+                            goal: title,
+                            interest: interest,
+                            amountToSave: inputAmount,
+                            duration: selectedDuration,
+                            frequency: selectedButton
+                        });
+                    }
                 }}
             />
         </SafeAreaView>

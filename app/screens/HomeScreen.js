@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#7538EC',
     },
      text: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#7538EC',
+        color: '#fff',
      },
 })
 

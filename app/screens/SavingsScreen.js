@@ -16,7 +16,7 @@ export default function SavingsScreen() {
             <Text style={styles.heading}>Savings plan</Text>
             <View style={styles.box}>
                 <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#F6F8FF' }]}
-                    onPress={() => handlePress('Flex save plan', '10% intrest p.a', '\u20A6 0')}
+                    onPress={() => handlePress('Flex save', '10% intrest p.a', '\u20A6 0')}
 
                 >
                     <View style={styles.iconbackground} >
@@ -28,7 +28,7 @@ export default function SavingsScreen() {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#fef1ef' }]}
-                    onPress={() => handlePress('Goals plan', '10% intrest p.a', '\u20A6 0')}
+                    onPress={() => handlePress('Goals', '10% intrest p.a', '\u20A6 0')}
                 >
                     <View style={styles.iconbackground} >
                         <FontAwesome name="flag" size={24} color="#F9A699" borderRadius='0' />
@@ -39,7 +39,7 @@ export default function SavingsScreen() {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.eachbox, { backgroundColor: '#ebf8f1' }]}
-                    onPress={() => handlePress('Fixed plan', '10% intrest p.a', '\u20A6 0')}
+                    onPress={() => handlePress('Fixed', '10% intrest p.a', '\u20A6 0')}
                 >
                     <View style={styles.iconbackground} >
                         <FontAwesome name="flag" size={24} color="#1146FF" borderRadius='0' />
