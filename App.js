@@ -2,14 +2,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Landingscreen from './app/screens/Landingscreen';
-import WelcomeScreen from './app/screens/WelcomeScreen';
-import Loginscreen from './app/screens/Loginscreen';
-import ForgotPasswordScreen from './app/screens/ForgotPasswordScreen';
-import SignupScreen from './app/screens/SignUpScreen';
-import VerifyForgotPassword from './app/screens/VerifyForgotPassword';
-import VerifySignup from './app/screens/VerifySignup';
-import ResetPassword from './app/screens/ResetPassword';
+import Landingscreen from './app/screens/Auth/Landingscreen';
+import WelcomeScreen from './app/screens/Auth/WelcomeScreen';
+import Loginscreen from './app/screens/Auth/Loginscreen';
+import ForgotPasswordScreen from './app/screens/Auth/ForgotPasswordScreen';
+import SignupScreen from './app/screens/Auth/SignUpScreen';
+import VerifyForgotPassword from './app/screens/Auth/VerifyForgotPassword';
+import VerifySignup from './app/screens/Auth/VerifySignup';
+import ResetPassword from './app/screens/Auth/ResetPassword';
 import HomeScreen from './app/screens/HomeScreen';
 import SavingsScreen from './app/screens/SavingsScreen';
 
