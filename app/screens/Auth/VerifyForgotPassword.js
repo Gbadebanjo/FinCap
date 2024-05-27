@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import InputField from '../components/InputField';
-import StyledButton from '../components/StyledButton';
+import InputField from '../../components/InputField';
+import StyledButton from '../../components/StyledButton';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import ErrorAlert from '../components/ErrorAlert';
+import ErrorAlert from '../../components/ErrorAlert';
 
 const validationSchema = Yup.object().shape({
   code: Yup.string().min(6).max(6).required(),
@@ -42,44 +42,53 @@ function VerifyForgotPassword(props) {
     }
   }, [countdown, resendDisabled]);
 
-  const handleCodeSubmit = async (values) => {
+  const handleCodeSubmit = async values => {
     setLoading(true);
     const data = {
       email: props.route.params.email,
       verificationCode: values.code,
     };
     try {
-      const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/VerifyResetCode`, data);
+      const response = await axios.post(
+        `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/VerifyResetCode`,
+        data,
+      );
       if (response.status === 200) {
-        navigation.navigate('ResetPassword', {data});
+        navigation.navigate('ResetPassword', { data });
       } else {
-        setError('An error occurred while verifying the code. Please try again.');
+        setError(
+          'An error occurred while verifying the code. Please try again.',
+        );
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setError(error.response.data.error);
       } else {
-        setError('An error occurred while verifying the code. Please try again.');
+        setError(
+          'An error occurred while verifying the code. Please try again.',
+        );
       }
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <SafeAreaView style={styles.Container}>
-      <TouchableOpacity style={styles.Icon} onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity
+        style={styles.Icon}
+        onPress={() => navigation.navigate('Login')}>
         <AntDesign name="left" size={16} color="black" />
       </TouchableOpacity>
       <Text style={styles.Heading}>Verify email address</Text>
-      <Text style={styles.SubHeading}>Please enter the code we've sent to {email} </Text>
+      <Text style={styles.SubHeading}>
+        Please enter the code we've sent to {email}{' '}
+      </Text>
       <ErrorAlert error={error} showIcon justifyContent="center" />
       <Formik
         initialValues={{ code: '' }}
         onSubmit={handleCodeSubmit}
-        validationSchema={validationSchema}
-      >
+        validationSchema={validationSchema}>
         {({ handleChange, handleSubmit, values, errors }) => (
           <>
             <InputField
@@ -94,13 +103,7 @@ function VerifyForgotPassword(props) {
               error={errors.code}
             />
             <StyledButton
-              title={
-                loading ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  'Submit'
-                )
-              }
+              title={loading ? <ActivityIndicator color="#fff" /> : 'Submit'}
               onPress={handleSubmit}
             />
           </>
@@ -146,12 +149,10 @@ const styles = StyleSheet.create({
   resendView: {
     flexDirection: 'row',
     paddingVertical: 0,
-    
   },
   resendEnabled: {
     color: '#7538EC',
     textAlign: 'center',
-    
   },
   resendDisabled: {
     color: 'gray',

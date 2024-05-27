@@ -36,7 +36,7 @@ const Landingscreen = () => {
     <Swiper loop={true}>
       <View style={styles.container}>
         <Animated.Image
-          source={require('./../assets/Gradient Logo@3x 1.png')}
+          source={require('../../assets/Gradient Logo@3x 1.png')}
           style={{ ...styles.image, opacity: fadeAnim }}
         />
       </View>
