@@ -22,42 +22,42 @@ const Stack = createStackNavigator();
 
 function HomeStack() {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        {/* Add more screens for HomeStack here if needed */}
-      </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+            {/* Add more screens for HomeStack here if needed */}
+        </Stack.Navigator>
     );
-  }
-  
-  function SavingsStack() {
+}
+
+function SavingsStack() {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="Savings" component={SavingsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="SavingsInput" component={SavingsInputScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="SavingsReview" component={SavingsReviewScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="SavingsDashboard" component={SavingsDashboardScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="SavingsDashboard" component={SavingsDashboardScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Savings" component={SavingsScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="SavingsInput" component={SavingsInputScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="SavingsReview" component={SavingsReviewScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
     );
-  }
-  
-  function InvestStack() {
+}
+
+function InvestStack() {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="Invest" component={InvestScreen} options={{ headerShown: false }} />
-        {/* Add more screens for InvestStack here if needed */}
-      </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="Invest" component={InvestScreen} options={{ headerShown: false }} />
+            {/* Add more screens for InvestStack here if needed */}
+        </Stack.Navigator>
     );
-  }
-  
-  function LoanStack() {
+}
+
+function LoanStack() {
     return (
-      <Stack.Navigator>
-        <Stack.Screen name="Loan" component={LoanScreen} options={{ headerShown: false }} />
-        {/* Add more screens for LoanStack here if needed */}
-      </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="Loan" component={LoanScreen} options={{ headerShown: false }} />
+            {/* Add more screens for LoanStack here if needed */}
+        </Stack.Navigator>
     );
-  }
-  
+}
+
 //   function MoreStack() {
 //     return (
 //       <Stack.Navigator>
@@ -86,16 +86,16 @@ function NavButtons() {
                     tabBarIcon: ({ focused, color, size }) => (<Ionicons name="cash-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
                     tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Invest</Text>),
                 }} />
-            <Tab.Screen name="LoanTab" component={LoanStack} 
-            options={{ 
-                tabBarIcon: ({ focused, color, size }) => (<Ionicons name="pricetag-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Loans</Text>),
+            <Tab.Screen name="LoanTab" component={LoanStack}
+                options={{
+                    tabBarIcon: ({ focused, color, size }) => (<Ionicons name="pricetag-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
+                    tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Loans</Text>),
 
                 }} />
-            <Tab.Screen name="MoreTab" component={HomeStack} 
-            options={{ 
-                tabBarIcon: ({ focused, color, size }) => (<Ionicons name="menu" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>More</Text>),
+            <Tab.Screen name="MoreTab" component={HomeStack}
+                options={{
+                    tabBarIcon: ({ focused, color, size }) => (<Ionicons name="menu" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
+                    tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>More</Text>),
 
                 }} />
         </Tab.Navigator>
