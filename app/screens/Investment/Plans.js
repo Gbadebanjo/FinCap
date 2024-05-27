@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     width: '80%',
-    marginTop: 50,
+    marginTop: 40,
     marginHorizontal: '10%',
   },
   plansBody: {

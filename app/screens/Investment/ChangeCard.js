@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     width: '90%',
-    marginTop: 50,
+    marginTop: 40,
     marginHorizontal: '5%',
     justifyContent: 'space-between',
     marginBottom: '60%',

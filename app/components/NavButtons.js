@@ -65,6 +65,11 @@ function InvestStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="InvestmentPlans"
+        component={InvestmentPlans}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="InvestmentHome"
         component={InvestmentHome}
         options={{ headerShown: false }}
@@ -72,11 +77,6 @@ function InvestStack() {
       <Stack.Screen
         name="InvestmentReview"
         component={InvestmentReview}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="InvestmentPlans"
-        component={InvestmentPlans}
         options={{ headerShown: false }}
       />
       <Stack.Screen
