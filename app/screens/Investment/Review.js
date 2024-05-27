@@ -22,7 +22,7 @@ const Review = props => {
         <TouchableOpacity
           style={styles.anleleft}
           onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={15} color="#101828" />
+          <AntDesign name="left" size={16} color="black" />
         </TouchableOpacity>
         <Text style={styles.pageHeader}>Review your investment</Text>
         <View style={styles.plansBody}>
@@ -51,9 +51,9 @@ const Review = props => {
 
 const styles = StyleSheet.create({
   Container: {
-    height: '100%',
+    height: '77%',
     width: '90%',
-    marginTop: 50,
+    marginTop: 40,
     marginHorizontal: '5%',
   },
   anleleft: {

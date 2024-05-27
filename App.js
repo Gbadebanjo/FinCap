@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Landingscreen from './app/screens/Auth/Landingscreen';
 import WelcomeScreen from './app/screens/Auth/WelcomeScreen';
@@ -10,13 +9,8 @@ import SignupScreen from './app/screens/Auth/SignUpScreen';
 import VerifyForgotPassword from './app/screens/Auth/VerifyForgotPassword';
 import VerifySignup from './app/screens/Auth/VerifySignup';
 import ResetPassword from './app/screens/Auth/ResetPassword';
-import HomeScreen from './app/screens/HomeScreen';
-import SavingsScreen from './app/screens/SavingsScreen';
 
 import NavButtons from './app/components/NavButtons';
-import SavingsInputScreen from './app/screens/SavingsInputScreen';
-import SavingsReviewScreen from './app/screens/SavingsReviewScreen';
-import SavingsDashboardScreen from './app/screens/SavingsDashboardScreen';
 
 const Stack = createStackNavigator();
 
