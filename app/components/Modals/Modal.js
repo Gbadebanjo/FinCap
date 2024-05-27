@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, View, Text, Button, StyleSheet } from 'react-native';
-import StyledButton from '../components/StyledButton';
+import StyledButton from '../StyledButton';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const ResponseModal = ({
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
   },
   modalView: {
     margin: 0,

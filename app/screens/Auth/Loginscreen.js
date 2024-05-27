@@ -14,10 +14,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import InputField from '../components/InputField';
-import StyledButton from '../components/StyledButton';
-import GoogleLogo from '../assets/googleicon.png';
-import ErrorAlert from '../components/ErrorAlert';
+import InputField from '../../components/InputField';
+import StyledButton from '../../components/StyledButton';
+import GoogleLogo from '../../assets/googleicon.png';
+import ErrorAlert from '../../components/ErrorAlert';
 
 // Validation schema with Yup
 const validationSchema = Yup.object().shape({
@@ -31,12 +31,11 @@ function Loginscreen(props) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (values) => {
+  const handleLogin = async values => {
     setLoading(true);
     try {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/login`, values);
@@ -57,21 +56,24 @@ function Loginscreen(props) {
     }
   };
 
-
-
   return (
     <SafeAreaView style={styles.container}>
       <>
         <Text style={styles.welcometext}>Welcome back !</Text>
         <Text style={styles.subtext}>Login to continue</Text>
-        <ErrorAlert error={error} showIcon justifyContent="center"  />
+        <ErrorAlert error={error} showIcon justifyContent="center" />
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={handleLogin}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-
+          onSubmit={handleLogin}>
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
             <View>
               <InputField
                 label="Email address"
@@ -106,9 +108,16 @@ function Loginscreen(props) {
               </View>
               <ErrorAlert error={errors.password} />
               <TouchableOpacity>
-                <Text style={styles.forgotText} onPress={() => navigation.navigate('ForgotPassword')}>Forgot Pin?</Text>
+                <Text
+                  style={styles.forgotText}
+                  onPress={() => navigation.navigate('ForgotPassword')}>
+                  Forgot Pin?
+                </Text>
               </TouchableOpacity>
-              <StyledButton title={loading ? <ActivityIndicator color="#fff" /> : "Login"} onPress={handleSubmit} />
+              <StyledButton
+                title={loading ? <ActivityIndicator color="#fff" /> : 'Login'}
+                onPress={handleSubmit}
+              />
             </View>
           )}
         </Formik>

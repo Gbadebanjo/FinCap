@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
   return (
     <Swiper loop={true}>
       <ImageBackground
-        source={require('./../assets/image1.jpeg')}
+        source={require('../../assets/image1.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.bigText}>Secure your Finance</Text>
@@ -37,7 +37,7 @@ const WelcomeScreen = () => {
         </View>
       </ImageBackground>
       <ImageBackground
-        source={require('./../assets/image2.jpeg')}
+        source={require('../../assets/image2.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.bigText}>Fast and easy loans</Text>
@@ -57,7 +57,7 @@ const WelcomeScreen = () => {
         </View>
       </ImageBackground>
       <ImageBackground
-        source={require('./../assets/image3.jpeg')}
+        source={require('../../assets/image3.jpeg')}
         style={styles.image}>
         <View style={styles.textContainer}>
           <Text style={styles.bigText}>Earn</Text>

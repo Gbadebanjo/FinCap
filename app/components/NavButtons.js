@@ -4,60 +4,108 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 import HomeScreen from '../screens/HomeScreen';
 import SavingsScreen from '../screens/SavingsScreen';
-import InvestScreen from '../screens/InvestScreen';
 import LoanScreen from '../screens/LoanScreen';
-// import MoreScreen from '../screens/MoreScreen';
-
 
 // Import SavingsInputScreen and others
 import SavingsInputScreen from '../screens/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/SavingsReviewScreen';
 import SavingsDashboardScreen from '../screens/SavingsDashboardScreen';
+import InvestmentHome from '../screens/Investment/InvestmentHome';
+import InvestmentReview from '../screens/Investment/Review';
+import InvestmentPlans from '../screens/Investment/Plans';
+import InvestmentEarnings from '../screens/Investment/Earnings';
+import InvestmentChangeCard from '../screens/Investment/ChangeCard';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function HomeStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        {/* Add more screens for HomeStack here if needed */}
-      </Stack.Navigator>
-    );
-  }
-  
-  function SavingsStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="Savings" component={SavingsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="SavingsInput" component={SavingsInputScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="SavingsReview" component={SavingsReviewScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="SavingsDashboard" component={SavingsDashboardScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    );
-  }
-  
-  function InvestStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="Invest" component={InvestScreen} options={{ headerShown: false }} />
-        {/* Add more screens for InvestStack here if needed */}
-      </Stack.Navigator>
-    );
-  }
-  
-  function LoanStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen name="Loan" component={LoanScreen} options={{ headerShown: false }} />
-        {/* Add more screens for LoanStack here if needed */}
-      </Stack.Navigator>
-    );
-  }
-  
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      {/* Add more screens for HomeStack here if needed */}
+    </Stack.Navigator>
+  );
+}
+
+function SavingsStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Savings"
+        component={SavingsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SavingsInput"
+        component={SavingsInputScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SavingsReview"
+        component={SavingsReviewScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SavingsDashboard"
+        component={SavingsDashboardScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function InvestStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="InvestmentHome"
+        component={InvestmentHome}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InvestmentReview"
+        component={InvestmentReview}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InvestmentPlans"
+        component={InvestmentPlans}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InvestmentEarnings"
+        component={InvestmentEarnings}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="InvestmentChangeCard"
+        component={InvestmentChangeCard}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function LoanStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Loan"
+        component={LoanScreen}
+        options={{ headerShown: false }}
+      />
+      {/* Add more screens for LoanStack here if needed */}
+    </Stack.Navigator>
+  );
+}
+
 //   function MoreStack() {
 //     return (
 //       <Stack.Navigator>
@@ -68,50 +116,106 @@ function HomeStack() {
 //   }
 
 function NavButtons() {
-    return (
-        <Tab.Navigator screenOptions={{ tabBarHideOnKeyboard: true, headerShown: false, tabBarShowLabel: true, tabBarStyle: styles.tabBar }}>
-            <Tab.Screen name="HomeTab" component={HomeStack}
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (<Ionicons name="home-outline" size={25} color={focused ? "#7538EC" : "#766B80"} ></Ionicons>),
-                    tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Home</Text>),
-                }} />
-            <Tab.Screen name="SavingsTab" component={SavingsStack}
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (<Ionicons name="wallet-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                    tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Savings</Text>),
-
-                }} />
-            <Tab.Screen name="InvestTab" component={InvestStack}
-                options={{
-                    tabBarIcon: ({ focused, color, size }) => (<Ionicons name="cash-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                    tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Invest</Text>),
-                }} />
-            <Tab.Screen name="LoanTab" component={LoanStack} 
-            options={{ 
-                tabBarIcon: ({ focused, color, size }) => (<Ionicons name="pricetag-outline" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>Loans</Text>),
-
-                }} />
-            <Tab.Screen name="MoreTab" component={HomeStack} 
-            options={{ 
-                tabBarIcon: ({ focused, color, size }) => (<Ionicons name="menu" size={25} color={focused ? "#7538EC" : "#766B80"}></Ionicons>),
-                tabBarLabel: ({ focused, color, size }) => (<Text style={{ color: focused ? "#7538EC" : "#766B80" }}>More</Text>),
-
-                }} />
-        </Tab.Navigator>
-
-    );
-};
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarHideOnKeyboard: true,
+        headerShown: false,
+        tabBarShowLabel: true,
+        tabBarStyle: styles.tabBar,
+      }}>
+      <Tab.Screen
+        name="HomeTab"
+        component={HomeStack}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="home-outline"
+              size={25}
+              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>Home</Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="SavingsTab"
+        component={SavingsStack}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="wallet-outline"
+              size={25}
+              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>
+              Savings
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="InvestTab"
+        component={InvestStack}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="cash-outline"
+              size={25}
+              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>
+              Invest
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="LoanTab"
+        component={LoanStack}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="pricetag-outline"
+              size={25}
+              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>
+              Loans
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MoreTab"
+        component={HomeStack}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name="menu"
+              size={25}
+              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+          ),
+          tabBarLabel: ({ focused, color, size }) => (
+            <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>More</Text>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 const styles = StyleSheet.create({
-    tabBar: {
-        height: 80,
-        paddingBottom: 15,
-        borderTopWidth: 0,
-        // borderTopColor: '#ddd',
-        backgroundColor: '#fff',
-    }
-
+  tabBar: {
+    height: 80,
+    paddingBottom: 15,
+    borderTopWidth: 0,
+    backgroundColor: '#fff',
+  },
 });
 
 export default NavButtons;
