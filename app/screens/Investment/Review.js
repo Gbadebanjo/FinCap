@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -8,48 +8,59 @@ import {
 } from 'react-native';
 import StyledButton from '../../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import FundingSource from '../../components/Modals/FundingSourceModal';
 
-const Review = props => {
-  const navigation = useNavigation();
+const Review = ({ route, navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const { planName, interestRate, fixedAmount, calculatedReturns, duration } =
+    route.params;
 
   function handleSubmit() {
-    navigation.navigate('InvestmentHome');
+    setModalVisible(true);
   }
   return (
-    <SafeAreaView>
-      <View style={styles.Container}>
-        <TouchableOpacity
-          style={styles.anleleft}
-          onPress={() => navigation.goBack()}>
-          <AntDesign name="left" size={16} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.pageHeader}>Review your investment</Text>
-        <View style={styles.plansBody}>
-          <View style={styles.nameAndInterest}>
-            <Text style={styles.planName}>Basic Plan</Text>
-            <Text style={styles.interestRate}>10% interest p.a</Text>
-          </View>
-          <View style={styles.amountCont}>
-            <Text style={styles.fixedAmount}>Amount</Text>
-            <Text style={styles.perMonth}>25,000/ month</Text>
-          </View>
-          <View style={styles.durationCont}>
-            <Text style={styles.Duration}>Duration</Text>
-            <Text style={styles.Date}>12 months</Text>
-          </View>
-          <View style={styles.calculatedCont}>
-            <Text style={styles.fixedAmount}>Calculated returns</Text>
-            <Text style={styles.perMonth}>330,000</Text>
+    <SafeAreaView style={styles.OuterContainer}>
+      <>
+        <View style={styles.Container}>
+          <TouchableOpacity
+            style={styles.anleleft}
+            onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={16} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.pageHeader}>Review your investment</Text>
+          <View style={styles.plansBody}>
+            <View style={styles.nameAndInterest}>
+              <Text style={styles.planName}>{planName}</Text>
+              <Text style={styles.interestRate}>{interestRate}</Text>
+            </View>
+            <View style={styles.amountCont}>
+              <Text style={styles.fixedAmount}>Amount</Text>
+              <Text style={styles.perMonth}>{fixedAmount}</Text>
+            </View>
+            <View style={styles.durationCont}>
+              <Text style={styles.Duration}>Duration</Text>
+              <Text style={styles.Date}>{duration}</Text>
+            </View>
+            <View style={styles.calculatedCont}>
+              <Text style={styles.fixedAmount}>Calculated returns</Text>
+              <Text style={styles.perMonth}>{calculatedReturns}</Text>
+            </View>
           </View>
         </View>
-      </View>
-      <StyledButton title={'Continue'} onPress={handleSubmit} />
+        <StyledButton title={'Continue'} onPress={handleSubmit} />
+      </>
+      <FundingSource
+        visible={modalVisible}
+        onDismiss={() => setModalVisible(false)}
+      />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  OuterContainer: {
+    backgroundColor: '#ffffff',
+  },
   Container: {
     height: '77%',
     width: '90%',
@@ -58,14 +69,15 @@ const styles = StyleSheet.create({
   },
   anleleft: {
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   plansBody: {
-    marginTop: 35,
+    marginTop: 30,
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 10,
     padding: '5%',
+    backgroundColor: '#E0E0E0',
   },
   nameAndInterest: {
     marginBottom: 20,
