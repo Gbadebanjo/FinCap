@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-function StyledButton({ title, onPress, children }) {
+function StyledButton({ title, onPress, width = ' 90%', margin = 20 }) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styles.button, { width }, { margin }]}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -15,9 +17,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 17,
     justifyContent: 'center',
-    width: '90%',
     alignItems: 'center',
-    margin: 20,
     textAlign: 'center',
   },
   text: {

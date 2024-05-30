@@ -17,54 +17,56 @@ const Earnings = props => {
   }
 
   return (
-    <SafeAreaView style={styles.Container}>
-      <View style={styles.arrowEarning}>
-        <TouchableOpacity
-          style={styles.anleleft}
-          onPress={() => navigation.goBack()}>
-          <AntDesign name="left" size={16} color="black" />
-        </TouchableOpacity>
-        <Text style={styles.pageHeader}>Earnings</Text>
-      </View>
+    <SafeAreaView style={styles.OuterContainer}>
+      <View style={styles.Container}>
+        <View style={styles.arrowEarning}>
+          <TouchableOpacity
+            style={styles.anleleft}
+            onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={16} color="black" />
+          </TouchableOpacity>
+          <Text style={styles.pageHeader}>Earnings</Text>
+        </View>
 
-      <View style={styles.plansBody}>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>
-            Start date - 25th February 2022
-          </Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>26th February 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>27th February 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>28th February 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>29th February 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>30th February 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>1st March 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>2nd March 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
-        </View>
-        <View style={styles.nameAndEarning}>
-          <Text style={styles.EarningDate}>3rd March 2022</Text>
-          <Text style={styles.Earning}>904.10</Text>
+        <View style={styles.plansBody}>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>
+              Start date - 25th February 2022
+            </Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>26th February 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>27th February 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>28th February 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>29th February 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>30th February 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>1st March 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>2nd March 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
+          <View style={styles.nameAndEarning}>
+            <Text style={styles.EarningDate}>3rd March 2022</Text>
+            <Text style={styles.Earning}>904.10</Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -72,6 +74,9 @@ const Earnings = props => {
 };
 
 const styles = StyleSheet.create({
+  OuterContainer: {
+    backgroundColor: '#ffffff',
+  },
   Container: {
     height: '100%',
     width: '90%',

@@ -14,6 +14,7 @@ import {
   MaterialCommunityIcons,
 } from '@expo/vector-icons';
 import ConfirmModal from '../../components/Modals/ConfirmModal';
+import { Card } from '../../components/FundSourceOption';
 
 const ChangeCard = () => {
   const [isConfirmModalVisible, setIsConfirmModalVisible] = useState(false);
@@ -43,40 +44,13 @@ const ChangeCard = () => {
         </View>
 
         <View style={styles.plansBody}>
-          <TouchableOpacity style={styles.eachCard}>
-            <View style={styles.icons}>
-              <FontAwesome
-                style={styles.icon2}
-                name="circle"
-                size={17}
-                color="#F9A000"
-              />
-              <FontAwesome
-                style={styles.icon1}
-                name="circle"
-                size={17}
-                color="#ED0006"
-              />
-            </View>
-            <Text style={styles.CardNumber}>***7463</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.eachCard}>
-            <View style={styles.icons}>
-              <FontAwesome
-                style={styles.icon2}
-                name="circle"
-                size={17}
-                color="#F9A000"
-              />
-              <FontAwesome
-                style={styles.icon1}
-                name="circle"
-                size={17}
-                color="#ED0006"
-              />
-            </View>
-            <Text style={styles.CardNumber}>***7463</Text>
-          </TouchableOpacity>
+          <View style={styles.eachCard}>
+            <Card />
+          </View>
+          <View style={styles.eachCard}>
+            <Card />
+          </View>
+
           <TouchableOpacity style={styles.addCardCont}>
             <View style={styles.cardCont}>
               <MaterialCommunityIcons
@@ -89,6 +63,7 @@ const ChangeCard = () => {
             <Text style={styles.CardText}> Add a new card</Text>
             <AntDesign
               style={styles.card}
+              a
               name="right"
               size={15}
               color="#96959A"
@@ -114,7 +89,6 @@ const ChangeCard = () => {
 
 const styles = StyleSheet.create({
   Container: {
-    flex: 1,
     width: '90%',
     marginTop: 40,
     marginHorizontal: '5%',
@@ -139,36 +113,16 @@ const styles = StyleSheet.create({
   },
   plansBody: {
     width: '100%',
-    marginTop: 20,
+    marginTop: 50,
   },
   eachCard: {
     marginBottom: 15,
     borderWidth: 1,
     borderColor: '#EAECF0',
-    borderRadius: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    borderRadius: 20,
     alignItems: 'center',
     padding: 22,
-  },
-  icons: {
-    position: 'relative',
-    height: 15,
-    width: 30,
-  },
-  icon1: {
-    position: 'absolute',
-    left: 0,
-  },
-  icon2: {
-    position: 'absolute',
-    left: 9,
-  },
-  CardNumber: {
-    fontSize: 13,
-    width: '90%',
-    color: '#344054',
-    fontWeight: '500px',
+    color: '#000000',
   },
   addCardCont: {
     marginBottom: 15,
