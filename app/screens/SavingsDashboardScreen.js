@@ -40,7 +40,7 @@ export default function SavingsDashboardScreen() {
                 <Text style={styles.Heading}>Savings Plan</Text>
                 <View style={styles.PlanBox}>
                     <Text style={styles.PlanName}>Flex Save</Text>
-                    {isAmountVisible ? <Text style={styles.PlanAmount}>$10,000.00</Text> : <Text style={styles.PlanAmount}>****</Text>}
+                    {isAmountVisible ? <Text style={styles.PlanAmount}>₦0.00</Text> : <Text style={styles.PlanAmount}>****</Text>}
                     <TouchableOpacity onPress={toggleAmountVisibility} style={styles.EyeIcon}>
                         <Icon name={isAmountVisible ? 'eye' : 'eye-off'} size={20} color="#fff" />
                     </TouchableOpacity>
@@ -57,7 +57,7 @@ export default function SavingsDashboardScreen() {
                 <View style={styles.InterestBox}>
                     <View style={styles.Each}>
                         <Text style={styles.InterestTitle}>Amount</Text>
-                        <Text style={styles.InterestAmount}>$10,000.00</Text>
+                        <Text style={styles.InterestAmount}>₦0.00</Text>
                     </View>
                     <View style={styles.Each}>
                         <Text style={styles.InterestTitle}>Saving Schedule</Text>
@@ -77,7 +77,7 @@ export default function SavingsDashboardScreen() {
                         <Text style={styles.InterestTextDate}>29th September, 04:09am</Text>
                     </View>
                     <View style={styles.TransactionAmountBox}>
-                        <Text style={styles.TransactionAmount}>N 100</Text>
+                        <Text style={styles.TransactionAmount}>₦ 100</Text>
                     </View>
                 </View>
             </ScrollView>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '700',
         color: '#111827',
-        paddingTop: 20,
+        paddingTop: 30,
         paddingBottom: 5,
         alignSelf: 'center',
     },

@@ -38,6 +38,11 @@ function SavingsStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="SavingsDashboard"
+        component={SavingsDashboardScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Savings"
         component={SavingsScreen}
         options={{ headerShown: false }}
@@ -52,11 +57,7 @@ function SavingsStack() {
         component={SavingsReviewScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="SavingsDashboard"
-        component={SavingsDashboardScreen}
-        options={{ headerShown: false }}
-      />
+      
     </Stack.Navigator>
   );
 }
