@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -16,7 +17,8 @@ import InvestmentHome from '../screens/Investment/InvestmentHome';
 import InvestmentReview from '../screens/Investment/Review';
 import InvestmentPlans from '../screens/Investment/Plans';
 import InvestmentEarnings from '../screens/Investment/Earnings';
-import InvestmentChangeCard from '../screens/Investment/ChangeCard';
+import ChangeCards from '../screens/Investment/ChangeCards';
+// import FundingSource from './Modals/FundingSourceModal';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,13 +67,13 @@ function InvestStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="InvestmentPlans"
-        component={InvestmentPlans}
+        name="InvestmentHome"
+        component={InvestmentHome}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="InvestmentHome"
-        component={InvestmentHome}
+        name="InvestmentPlans"
+        component={InvestmentPlans}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -85,8 +87,8 @@ function InvestStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="InvestmentChangeCard"
-        component={InvestmentChangeCard}
+        name="ChangeCards"
+        component={ChangeCards}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -161,10 +163,10 @@ function NavButtons() {
         component={InvestStack}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
-            <Ionicons
-              name="cash-outline"
+            <FontAwesome6
+              name="coins"
               size={25}
-              color={focused ? '#7538EC' : '#766B80'}></Ionicons>
+              color={focused ? '#7538EC' : '#766B80'}></FontAwesome6>
           ),
           tabBarLabel: ({ focused, color, size }) => (
             <Text style={{ color: focused ? '#7538EC' : '#766B80' }}>
