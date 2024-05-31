@@ -53,7 +53,6 @@ function VerifySignup(props) {
 
   const resendCode = async () => {
     const email = props.route.params.email;
-    console.log('got here');
     const response = await axios.post(
       `http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/resendcode?email=${email}`,
     );
