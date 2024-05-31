@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,22 +6,59 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-import {
-  FontAwesome,
-  Ionicons,
-  Octicons,
-  FontAwesome5,
-} from '@expo/vector-icons';
+import { FontAwesome, Ionicons, Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const InvestmentHome = props => {
   const navigation = useNavigation();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  function handleSubmit() {
-    alert('Continue button clicked');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/investments/earnings',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setData(response.data);
+        setLoading(false);
+        console.log(response.data.data.investmentPlansWithEarnings);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const formatAmount = amount => {
+    return (
+      '₦' +
+      Number(amount).toLocaleString('en-NG', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
+  };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#7538EC" />
+      </View>
+    );
   }
-  const totalInvestments = 100;
 
   return (
     <SafeAreaView style={styles.OuterContainer}>
@@ -31,12 +68,31 @@ const InvestmentHome = props => {
           <View style={styles.investmentSummary}>
             <View style={styles.totalInvestment}>
               <Text style={styles.totalInvestment}>Total Investment</Text>
-              <Text style={styles.totalAmount}>{totalInvestments}</Text>
+              <Text style={styles.totalAmount}>
+                {data && data.data ? (
+                  <Text style={styles.PlanAmount}>
+                    {formatAmount(data.data.totalInvestment)}
+                  </Text>
+                ) : (
+                  <Text style={styles.PlanAmount}>****</Text>
+                )}
+              </Text>
             </View>
+
             <View style={styles.EarningsCleared}>
               <View style={styles.EarningsCont}>
                 <Text style={styles.Earnings}>Earnings</Text>
-                <Text style={styles.EarningAmount}>15,000</Text>
+                <Text style={styles.EarningAmount}>
+                  {data && data.data ? (
+                    <Text style={styles.PlanAmount}>
+                      {formatAmount(
+                        data.data.totalAccruedEarningsAllInvestmentPlans,
+                      )}
+                    </Text>
+                  ) : (
+                    <Text style={styles.PlanAmount}>****</Text>
+                  )}
+                </Text>
               </View>
               <View style={styles.ClearedCont}>
                 <Text style={styles.Cleared}>Cleared Months</Text>
@@ -44,7 +100,6 @@ const InvestmentHome = props => {
               </View>
             </View>
           </View>
-
           <View style={styles.HoldCont}>
             <View style={styles.HoldIconCont}>
               <View style={styles.HoldIcon}>
@@ -61,7 +116,6 @@ const InvestmentHome = props => {
               </Text>
             </TouchableOpacity>
           </View>
-
           <View style={styles.ActionCont}>
             <TouchableOpacity
               style={styles.Action}
@@ -97,79 +151,38 @@ const InvestmentHome = props => {
               <Text style={styles.ViewEarnings}>Withdraw Earnings</Text>
             </TouchableOpacity>
           </View>
-
           <View style={styles.RecentCont}>
             <View style={styles.RecentHeading}>
               <Text style={styles.RecentTrans}>Recent transactions</Text>
               <Text style={styles.RecentView}>View all</Text>
             </View>
           </View>
-
-          <View style={styles.EachTrans}>
-            <View style={styles.Icon_Name}>
-              <View style={styles.Icon_cont}>
-                <Octicons
-                  style={[
-                    styles.RecentIcon,
-                    { transform: [{ rotate: '90deg' }] },
-                  ]}
-                  name="arrow-switch"
-                  size={24}
-                  color="#541592"
-                  onPress={handleSubmit}
-                />
+          {data &&
+            data.data &&
+            data.data.investmentPlansWithEarnings.map((plan, index) => (
+              <View key={index} style={styles.EachTrans}>
+                <View style={styles.Icon_Name}>
+                  <View style={styles.Icon_cont}>
+                    <Octicons
+                      style={[
+                        styles.RecentIcon,
+                        { transform: [{ rotate: '90deg' }] },
+                      ]}
+                      name="arrow-switch"
+                      size={20}
+                      color="#541592"
+                    />
+                  </View>
+                  <View style={styles.TransDetails}>
+                    <Text style={styles.DetailName}>{plan.planName}</Text>
+                    <Text style={styles.DetailDate}>{plan.date}</Text>
+                  </View>
+                </View>
+                <Text style={styles.TransAmount}>
+                  + {formatAmount(plan.dailyEarnings)}
+                </Text>
               </View>
-              <View style={styles.TransDetails}>
-                <Text style={styles.DetailName}>Loan</Text>
-                <Text style={styles.DetailDate}>29 September, 04:09PM</Text>
-              </View>
-            </View>
-            <Text style={styles.TransAmount}>-N195</Text>
-          </View>
-
-          <View style={styles.EachTrans}>
-            <View style={styles.Icon_Name}>
-              <View style={styles.Icon_cont}>
-                <Octicons
-                  style={[
-                    styles.RecentIcon,
-                    { transform: [{ rotate: '90deg' }] },
-                  ]}
-                  name="arrow-switch"
-                  size={24}
-                  color="#541592"
-                  onPress={handleSubmit}
-                />
-              </View>
-              <View style={styles.TransDetails}>
-                <Text style={styles.DetailName}>Loan</Text>
-                <Text style={styles.DetailDate}>29 September, 04:09PM</Text>
-              </View>
-            </View>
-            <Text style={styles.TransAmount}>-N195</Text>
-          </View>
-
-          <View style={styles.EachTrans}>
-            <View style={styles.Icon_Name}>
-              <View style={styles.Icon_cont}>
-                <Octicons
-                  style={[
-                    styles.RecentIcon,
-                    { transform: [{ rotate: '90deg' }] },
-                  ]}
-                  name="arrow-switch"
-                  size={24}
-                  color="#541592"
-                  onPress={handleSubmit}
-                />
-              </View>
-              <View style={styles.TransDetails}>
-                <Text style={styles.DetailName}>Loan</Text>
-                <Text style={styles.DetailDate}>29 September, 04:09PM</Text>
-              </View>
-            </View>
-            <Text style={styles.TransAmount}>-N195</Text>
-          </View>
+            ))}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -178,6 +191,7 @@ const InvestmentHome = props => {
 
 const styles = StyleSheet.create({
   OuterContainer: {
+    flex: 1,
     backgroundColor: '#ffffff',
   },
   Container: {
@@ -285,7 +299,7 @@ const styles = StyleSheet.create({
   ActionCont: {
     marginTop: 30,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   Icon: {
     marginHorizontal: '35%',
@@ -295,7 +309,7 @@ const styles = StyleSheet.create({
     width: '22%',
     marginHorizontal: 5,
     height: 'auto',
-    backgroundColor: '#dedee385',
+    backgroundColor: '#f7f7f7',
     borderRadius: '8px',
   },
   ViewEarnings: {
@@ -326,7 +340,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 2,
-    // marginLeft: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
   },
   Icon_Name: {
     flexDirection: 'row',
@@ -335,12 +350,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   Icon_cont: {
-    backgroundColor: '#dedee385',
+    backgroundColor: '#f7f7f7',
     borderRadius: '50%',
     paddingHorizontal: 12,
     paddingVertical: 9,
   },
-  RecentIcon: {},
   TransDetails: {
     width: '75%',
     marginLeft: 20,

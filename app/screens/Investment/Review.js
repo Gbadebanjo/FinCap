@@ -9,23 +9,78 @@ import {
 } from 'react-native';
 import StyledButton from '../../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
-import FundingSource from '../../components/Modals/FundingSourceModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+// import FundingSource from '../../components/Modals/FundingSourceModal';
+import ResponseModal from '../../components/Modals/ResponseModal';
 
 const Review = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { planName, interestRate, fixedAmount, calculatedReturns, duration } =
+  const { planName, fixedAmount, duration, interestRate, calculatedReturns } =
     route.params;
+  const [success, isSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const wallet = new Intl.NumberFormat('en-NG', {
     style: 'currency',
     currency: 'NGN',
   }).format(50000);
 
-  function handleSubmit() {
-    setLoading(true)
-    setModalVisible(true);
-  }
+  const createInvestmentPlan = async () => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await axios
+        .post(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/investments/create',
+          {
+            type: 'fixed',
+            plan: planName,
+            amount: parseInt(fixedAmount.replace(/,/g, '')),
+            duration: parseInt(duration),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .catch(networkError => {
+          console.log('Network error:', networkError);
+          setError('A network error occurred. Please try again');
+          isSuccess(false);
+          setModalVisible(true);
+          setLoading(false);
+        });
+
+      if (response && response.data && response.data.isSuccessful) {
+        isSuccess(true);
+        setModalVisible(true);
+      } else {
+        isSuccess(false);
+        setError(
+          response.data.message || 'An error occurred. Please try again',
+        );
+        setModalVisible(true);
+      }
+    } catch (error) {
+      let errorMessage = 'An error occurred. Please try again';
+      if (error.response && error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      }
+      console.log(
+        'Server response data:',
+        error.response && error.response.data,
+      );
+      setError(errorMessage);
+      isSuccess(false);
+      setModalVisible(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.OuterContainer}>
       <>
@@ -38,16 +93,16 @@ const Review = ({ route, navigation }) => {
           <Text style={styles.pageHeader}>Review your investment</Text>
           <View style={styles.plansBody}>
             <View style={styles.nameAndInterest}>
-              <Text style={styles.planName}>{planName}</Text>
+              <Text style={styles.planName}>{planName} Plan</Text>
               <Text style={styles.interestRate}>{interestRate}</Text>
             </View>
             <View style={styles.amountCont}>
               <Text style={styles.fixedAmount}>Amount</Text>
-              <Text style={styles.perMonth}>{fixedAmount}</Text>
+              <Text style={styles.perMonth}>{fixedAmount}/ month</Text>
             </View>
             <View style={styles.durationCont}>
               <Text style={styles.Duration}>Duration</Text>
-              <Text style={styles.Date}>{duration}</Text>
+              <Text style={styles.Date}>{duration} months</Text>
             </View>
             <View style={styles.calculatedCont}>
               <Text style={styles.fixedAmount}>Calculated returns</Text>
@@ -57,18 +112,23 @@ const Review = ({ route, navigation }) => {
         </View>
         <StyledButton
           title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
-          onPress={handleSubmit}
+          onPress={createInvestmentPlan}
         />
       </>
-      <FundingSource
+      <ResponseModal
         visible={modalVisible}
-        onDismiss={() => setModalVisible(false)}
-        planName={planName}
-        interestRate={interestRate}
-        fixedAmount={fixedAmount}
-        calculatedReturns={calculatedReturns}
-        duration={duration}
-        wallet={wallet}
+        title={success ? 'Success' : 'Error!'}
+        message={error || 'Investment Plan created successfully!'}
+        isSuccess={success}
+        onDismiss={() => {
+          setModalVisible(false);
+          if (success) {
+            navigation.navigate('InvestmentHome');
+          } else {
+            navigation.navigate('InvestmentPlans');
+          }
+        }}
+        buttonTitle={success ? 'Continue' : 'Try again'}
       />
     </SafeAreaView>
   );

@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
-import StyledButton from '../components/StyledButton';
+import StyledButton from '../../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
-import ResponseModal from '../components/Modals/ResponseModal';
+import ResponseModal from '../../components/Modals/ResponseModal';
 
 const SavingsReviewScreen = ({ route }) => {
   const { goal, interest, amountToSave, duration, frequency } = route.params;

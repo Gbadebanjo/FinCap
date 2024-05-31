@@ -7,30 +7,13 @@ import FundSourceOption from '../FundSourceOption';
 import { useNavigation } from '@react-navigation/native';
 import { Card } from '../FundSourceOption';
 
-const FundingSource = ({
-  visible,
-  onDismiss,
-  wallet,
-  planName,
-  interestRate,
-  fixedAmount,
-  calculatedReturns,
-  duration,
-}) => {
+const FundingSource = ({ visible, onDismiss }) => {
   const [selectedFundSource, setSelectedFundSource] = useState('wallet');
   const [loading, setLoading] = useState(false);
   const iconColor = '#D0D5DD';
   const navigation = useNavigation();
 
   const handleAddCard = () => {
-    alert(
-      wallet,
-      planName,
-      interestRate,
-      interestRate,
-      calculatedReturns,
-      duration,
-    );
     onDismiss();
     navigation.navigate('InvestTab', { screen: 'ChangeCards' });
   };

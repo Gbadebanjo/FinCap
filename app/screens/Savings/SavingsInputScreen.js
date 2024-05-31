@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
-import StyledButton from '../components/StyledButton';
+import StyledButton from '../../components/StyledButton';
 
 export default function SavingsInputScreen({ route }) {
     const { title, interest, amount } = route.params;
