@@ -39,8 +39,6 @@ function Loginscreen(props) {
     setLoading(true);
     try {
       const response = await axios.post(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/auth/login`, values);
-      console.log(response.data)
-      console.log(response.data.data.token)
       if (response.data && response.data.data.token) {
         // Save token in AsyncStorage
         await AsyncStorage.setItem('userToken', response.data.data.token);
