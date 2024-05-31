@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import StyledButton from '../../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
@@ -12,10 +13,17 @@ import FundingSource from '../../components/Modals/FundingSourceModal';
 
 const Review = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { planName, interestRate, fixedAmount, calculatedReturns, duration } =
     route.params;
 
+  const wallet = new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+  }).format(50000);
+
   function handleSubmit() {
+    setLoading(true)
     setModalVisible(true);
   }
   return (
@@ -47,11 +55,20 @@ const Review = ({ route, navigation }) => {
             </View>
           </View>
         </View>
-        <StyledButton title={'Continue'} onPress={handleSubmit} />
+        <StyledButton
+          title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
+          onPress={handleSubmit}
+        />
       </>
       <FundingSource
         visible={modalVisible}
         onDismiss={() => setModalVisible(false)}
+        planName={planName}
+        interestRate={interestRate}
+        fixedAmount={fixedAmount}
+        calculatedReturns={calculatedReturns}
+        duration={duration}
+        wallet={wallet}
       />
     </SafeAreaView>
   );

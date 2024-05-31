@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 import StyledButton from '../StyledButton';
@@ -7,14 +7,37 @@ import FundSourceOption from '../FundSourceOption';
 import { useNavigation } from '@react-navigation/native';
 import { Card } from '../FundSourceOption';
 
-const FundingSource = ({ visible, onDismiss }) => {
+const FundingSource = ({
+  visible,
+  onDismiss,
+  wallet,
+  planName,
+  interestRate,
+  fixedAmount,
+  calculatedReturns,
+  duration,
+}) => {
   const [selectedFundSource, setSelectedFundSource] = useState('wallet');
+  const [loading, setLoading] = useState(false);
   const iconColor = '#D0D5DD';
   const navigation = useNavigation();
 
   const handleAddCard = () => {
+    alert(
+      wallet,
+      planName,
+      interestRate,
+      interestRate,
+      calculatedReturns,
+      duration,
+    );
     onDismiss();
     navigation.navigate('InvestTab', { screen: 'ChangeCards' });
+  };
+
+  const handleCreate = () => {
+    setLoading(true);
+    navigation.navigate('InvestTab', { screen: 'InvestmentHome' });
   };
 
   return (
@@ -39,7 +62,7 @@ const FundingSource = ({ visible, onDismiss }) => {
             <FundSourceOption
               id="wallet"
               title="Wallet"
-              balance="21,000"
+              balance={wallet}
               isSelected={selectedFundSource === 'wallet'}
               onSelect={setSelectedFundSource}
             />
@@ -56,10 +79,14 @@ const FundingSource = ({ visible, onDismiss }) => {
           </Text>
 
           <StyledButton
-            title={'Create Investment Plans'}
-            onPress={() =>
-              navigation.navigate('InvestTab', { screen: 'InvestmentHome' })
+            title={
+              loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                'Create Investment Plans'
+              )
             }
+            onPress={handleCreate}
             width="100%"
             margin={0}
           />
