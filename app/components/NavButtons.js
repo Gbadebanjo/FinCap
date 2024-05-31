@@ -6,13 +6,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
-import SavingsScreen from '../screens/SavingsScreen';
-import LoanScreen from '../screens/LoanScreen';
+import SavingsScreen from '../screens/Savings/SavingsScreen';
+import LoanScreen from '../screens/Loans/LoanScreen';
 
 // Import SavingsInputScreen and others
-import SavingsInputScreen from '../screens/SavingsInputScreen';
-import SavingsReviewScreen from '../screens/SavingsReviewScreen';
-import SavingsDashboardScreen from '../screens/SavingsDashboardScreen';
+import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
+import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
+import SavingsDashboardScreen from '../screens/Savings/SavingsDashboardScreen';
 import InvestmentHome from '../screens/Investment/InvestmentHome';
 import InvestmentReview from '../screens/Investment/Review';
 import InvestmentPlans from '../screens/Investment/Plans';

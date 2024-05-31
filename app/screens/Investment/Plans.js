@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
 
 const Plans = ({ navigation }) => {
   return (
@@ -19,16 +18,16 @@ const Plans = ({ navigation }) => {
             style={styles.plansBody1}
             onPress={() =>
               navigation.navigate('InvestmentReview', {
-                planName: 'Basic Plan',
-                interestRate: '10% interest p.a',
-                fixedAmount: '25,000/ month',
-                calculatedReturns: '330,000',
-                duration: '12 months',
+                planName: 'Basic',
+                interestRate: '15% interest p.a',
+                fixedAmount: '25,000',
+                calculatedReturns: '345,000',
+                duration: '12',
               })
             }>
             <View>
               <Text style={styles.planName}>Basic Plan</Text>
-              <Text style={styles.interestRate}>10% interest p.a</Text>
+              <Text style={styles.interestRate}>15% interest p.a</Text>
             </View>
             <View style={styles.secondCont}>
               <View style={styles.amountCont}>
@@ -37,7 +36,7 @@ const Plans = ({ navigation }) => {
               </View>
               <View style={styles.amountCont}>
                 <Text style={styles.perMonth}>25,000/ month</Text>
-                <Text style={styles.perMonth}>330,000</Text>
+                <Text style={styles.perMonth}>345,000</Text>
               </View>
             </View>
             <View style={styles.durationCont}>
@@ -49,16 +48,16 @@ const Plans = ({ navigation }) => {
             style={styles.plansBody2}
             onPress={() =>
               navigation.navigate('InvestmentReview', {
-                planName: 'Standard Plan',
-                interestRate: '15% interest p.a',
-                fixedAmount: '50,000/ month',
+                planName: 'Standard',
+                interestRate: '20% interest p.a',
+                fixedAmount: '50,000',
                 calculatedReturns: '690,000',
-                duration: '12 months',
+                duration: '12',
               })
             }>
             <View>
               <Text style={styles.planName}>Standard Plan</Text>
-              <Text style={styles.interestRate}>15% interest p.a</Text>
+              <Text style={styles.interestRate}>20% interest p.a</Text>
             </View>
             <View style={styles.secondCont}>
               <View style={styles.amountCont}>
@@ -67,7 +66,7 @@ const Plans = ({ navigation }) => {
               </View>
               <View style={styles.amountCont}>
                 <Text style={styles.perMonth}>50,000/ month</Text>
-                <Text style={styles.perMonth}>690,000</Text>
+                <Text style={styles.perMonth}>720,000</Text>
               </View>
             </View>
             <View style={styles.durationCont}>
@@ -79,16 +78,16 @@ const Plans = ({ navigation }) => {
             style={styles.plansBody3}
             onPress={() =>
               navigation.navigate('InvestmentReview', {
-                planName: 'Premium Plan',
-                interestRate: '20% interest p.a',
-                fixedAmount: '100,000/ month',
-                calculatedReturns: '1,440,000',
-                duration: '12 months',
+                planName: 'Premium',
+                interestRate: '25% interest p.a',
+                fixedAmount: '100,000',
+                calculatedReturns: '1,500,000',
+                duration: '12',
               })
             }>
             <View>
               <Text style={styles.planName}>Premium</Text>
-              <Text style={styles.interestRate}>20% interest p.a</Text>
+              <Text style={styles.interestRate}>25% interest p.a</Text>
             </View>
             <View style={styles.secondCont}>
               <View style={styles.amountCont}>
@@ -97,7 +96,7 @@ const Plans = ({ navigation }) => {
               </View>
               <View style={styles.amountCont}>
                 <Text style={styles.perMonth}>100,000/ month</Text>
-                <Text style={styles.perMonth}>1,440,000</Text>
+                <Text style={styles.perMonth}>1,500,000</Text>
               </View>
             </View>
             <View style={styles.durationCont}>

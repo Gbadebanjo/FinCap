@@ -1,19 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import {
   SafeAreaView,
   Text,
   StyleSheet,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Earnings = props => {
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [earnings, setEarnings] = useState([]);
 
-  function handleSubmit() {
-    alert('Continue button clicked');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/investments/earnings',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setData(response.data);
+        setEarnings(prevEarnings => [
+          ...prevEarnings,
+          ...response.data.data.investmentPlansWithEarnings,
+        ]);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const formatAmount = amount => {
+    return (
+      '₦' +
+      Number(amount).toLocaleString('en-NG', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
+  };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#7538EC" />
+      </View>
+    );
   }
 
   return (
@@ -29,44 +77,16 @@ const Earnings = props => {
         </View>
 
         <View style={styles.plansBody}>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>
-              Start date - 25th February 2022
-            </Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>26th February 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>27th February 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>28th February 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>29th February 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>30th February 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>1st March 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>2nd March 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
-          <View style={styles.nameAndEarning}>
-            <Text style={styles.EarningDate}>3rd March 2022</Text>
-            <Text style={styles.Earning}>904.10</Text>
-          </View>
+          {earnings.map((earning, index) => (
+            <View key={index} style={styles.nameAndEarning}>
+              <Text style={styles.EarningDate}>
+                {index === 0 ? `Start date - ${earning.date}` : earning.date}
+              </Text>
+              <Text style={styles.Earning}>
+                {formatAmount(earning.dailyEarnings)}
+              </Text>
+            </View>
+          ))}
         </View>
       </View>
     </SafeAreaView>
@@ -75,6 +95,7 @@ const Earnings = props => {
 
 const styles = StyleSheet.create({
   OuterContainer: {
+    flex: 1,
     backgroundColor: '#ffffff',
   },
   Container: {
