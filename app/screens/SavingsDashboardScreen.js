@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -21,11 +21,11 @@ export default function SavingsDashboardScreen() {
                 const token = await AsyncStorage.getItem('userToken');
                 const response = await axios.get('http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/savings/earnings', {
                     headers: {
-                        'Authorization': `Bearer ${token}` 
+                        'Authorization': `Bearer ${token}`
                     }
                 });
                 setData(response.data);
-                console.log(response.data)
+                // console.log(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -34,13 +34,28 @@ export default function SavingsDashboardScreen() {
         fetchData();
     }, []);
 
+    const formatAmount = (amount) => {
+        return '₦' + Number(amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+
     return (
         <SafeAreaView style={styles.Container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Text style={styles.Heading}>Savings Plan</Text>
                 <View style={styles.PlanBox}>
                     <Text style={styles.PlanName}>Flex Save</Text>
-                    {isAmountVisible ? <Text style={styles.PlanAmount}>₦0.00</Text> : <Text style={styles.PlanAmount}>****</Text>}
+                    {isAmountVisible ? (
+                        data && data.data ? (
+                            <Text style={styles.PlanAmount}>
+                                {formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}
+                            </Text>
+                        ) : (
+                            <Text style={styles.PlanAmount}>Loading...</Text>
+                        )
+                    ) : (
+                        <Text style={styles.PlanAmount}>****</Text>
+                    )}
                     <TouchableOpacity onPress={toggleAmountVisibility} style={styles.EyeIcon}>
                         <Icon name={isAmountVisible ? 'eye' : 'eye-off'} size={20} color="#fff" />
                     </TouchableOpacity>
@@ -57,7 +72,13 @@ export default function SavingsDashboardScreen() {
                 <View style={styles.InterestBox}>
                     <View style={styles.Each}>
                         <Text style={styles.InterestTitle}>Amount</Text>
-                        <Text style={styles.InterestAmount}>₦0.00</Text>
+                        {data && data.data ? (
+                            <Text style={styles.InterestAmount}>
+                                {formatAmount(data.data.totalDailyEarningsAllSavingPlans)}
+                            </Text>
+                        ) : (
+                            <Text style={styles.InterestAmount}>Loading...</Text>
+                        )}
                     </View>
                     <View style={styles.Each}>
                         <Text style={styles.InterestTitle}>Saving Schedule</Text>
@@ -65,21 +86,23 @@ export default function SavingsDashboardScreen() {
                     </View>
                 </View>
                 <View style={styles.HistoryBox}>
-                    <Text style={[styles.InterestAmount, { fontWeight: '600', fontSize: 14, }]}>History</Text>
+                    <Text style={[styles.InterestAmount, { fontWeight: '600', fontSize: 14 }]}>History</Text>
                     <Text style={[styles.InterestTitle, { fontSize: 12 }]}>View all</Text>
                 </View>
-                <View style={styles.TransactionBox}>
-                    <View style={styles.IntrestIcon}>
-                        <Icon name="analytics-outline" size={20} color="#7538EC" />
+                {data && data.data && data.data.savingsPlansWithEarnings.map((plan, index) => (
+                    <View key={plan.planId} style={styles.TransactionBox}>
+                        <View style={styles.IntrestIcon}>
+                            <Icon name="analytics-outline" size={20} color="#7538EC" />
+                        </View>
+                        <View style={styles.IntrestTextBox}>
+                            <Text style={styles.InterestTextTitle}>{plan.planName} interest</Text>
+                            <Text style={styles.InterestTextDate}>{plan.date}</Text>
+                        </View>
+                        <View style={styles.TransactionAmountBox}>
+                            <Text style={styles.TransactionAmount}>{formatAmount(plan.dailyEarnings)}</Text>
+                        </View>
                     </View>
-                    <View style={styles.IntrestTextBox}>
-                        <Text style={styles.InterestTextTitle}>Daily interest</Text>
-                        <Text style={styles.InterestTextDate}>29th September, 04:09am</Text>
-                    </View>
-                    <View style={styles.TransactionAmountBox}>
-                        <Text style={styles.TransactionAmount}>₦ 100</Text>
-                    </View>
-                </View>
+                ))}
             </ScrollView>
         </SafeAreaView>
     )
@@ -223,12 +246,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '700',
     },
-    IntrestIcon : {
-        backgroundColor: '#f7f7f7', 
-        borderRadius: 30, 
-        width: 40, 
-        height: 40, 
-        justifyContent: 'center', 
+    IntrestIcon: {
+        backgroundColor: '#f7f7f7',
+        borderRadius: 30,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
         alignItems: 'center'
     },
-})
+});

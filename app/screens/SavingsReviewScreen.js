@@ -7,11 +7,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import StyledButton from '../components/StyledButton';
 import { AntDesign } from '@expo/vector-icons';
+import ResponseModal from '../components/Modals/ResponseModal';
 
 const SavingsReviewScreen = ({ route }) => {
   const { goal, interest, amountToSave, duration, frequency } = route.params;
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [success, isSuccess] = useState(false);
+  const [modal, setModalVisible] = useState(false);
+  const [error, setError] = useState('');
 
   const createSavingsPlan = async () => {
     setLoading(true);
@@ -28,19 +32,22 @@ const SavingsReviewScreen = ({ route }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(response.data);
       if (response.data && response.data.isSuccessful) {
-        Alert.alert('Success', 'Savings plan created successfully!');
-        navigation.navigate('SavingsDashboard', {
-          goal,
-        });
+        isSuccess(true);
+        setModalVisible(true);
       } else {
-        // console.log(response.errors);
-        Alert.alert('Error', response.data.message || 'An error occurred. Please try again');
-      }
+        isSuccess(false);
+        setError(response.data.message || 'An error occurred. Please try again');
+        setModalVisible(true);}
     } catch (error) {
-      // console.log(error.message);
-      Alert.alert('Error', 'An error occurred. Please try again');
+      let errorMessage = 'An error occurred. Please try again';
+      if (error.response && error.response.data && error.response.data.error) {
+        errorMessage = error.response.data.error;
+      }
+      setError(errorMessage);
+      isSuccess(false);
+      setModalVisible(true);
+      console.log('Server response data:', error.response && error.response.data);
     } finally {
       setLoading(false);
     }
@@ -79,6 +86,24 @@ const SavingsReviewScreen = ({ route }) => {
           <Text style={{ color: '#7538EC' }}>Go Back</Text>
         </TouchableOpacity>
       </View>
+
+      <ResponseModal
+        visible={modal}
+        title={success ? 'Success' : 'Error!'}
+        message={error || 'Savings plan created successfully!'}
+        isSuccess={success}
+        onDismiss={() => {
+          setModalVisible(false);
+          if (success) {
+            navigation.navigate('SavingsDashboard', {
+              goal,
+            });
+          } else {
+            navigation.navigate('Savings');
+          }
+        }}
+        buttonTitle={success ? 'Continue' : 'Try again'}
+      />
 
     </SafeAreaView>
   )

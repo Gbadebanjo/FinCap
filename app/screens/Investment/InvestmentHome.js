@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   Container: {
     width: '90%',
-    marginTop: 40,
+    marginTop: 30,
     marginHorizontal: '5%',
   },
   investmentSummary: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   pageHeader: {
     fontSize: 18,
-    fontWeight: '500',
+    fontWeight: '700',
     textAlign: 'center',
     color: '#111827',
   },
