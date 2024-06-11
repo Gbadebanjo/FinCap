@@ -7,9 +7,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
-import LoanScreen from '../screens/Loans/LoanScreen';
-
-// Import SavingsInputScreen and others
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
 import SavingsDashboardScreen from '../screens/Savings/SavingsDashboardScreen';
@@ -18,6 +15,8 @@ import InvestmentReview from '../screens/Investment/Review';
 import InvestmentPlans from '../screens/Investment/Plans';
 import InvestmentEarnings from '../screens/Investment/Earnings';
 import ChangeCards from '../screens/Investment/ChangeCards';
+import LoanDashboard from '../screens/Loans/LoanDashboard';
+import LoanApplication from '../screens/Loans/LoanApplication';
 // import FundingSource from './Modals/FundingSourceModal';
 
 const Tab = createBottomTabNavigator();
@@ -59,7 +58,7 @@ function SavingsStack() {
         component={SavingsReviewScreen}
         options={{ headerShown: false }}
       />
-      
+
     </Stack.Navigator>
   );
 }
@@ -100,8 +99,13 @@ function LoanStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Loan"
-        component={LoanScreen}
+        name="LoanDashboard"
+        component={LoanDashboard}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanApplication"
+        component={LoanApplication}
         options={{ headerShown: false }}
       />
       {/* Add more screens for LoanStack here if needed */}

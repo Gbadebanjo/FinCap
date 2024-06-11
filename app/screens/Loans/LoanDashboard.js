@@ -1,50 +1,20 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ScrollView, ActivityIndicator, Text } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-export default function SavingsDashboardScreen() {
+export default function LoanDashboard() {
   const navigation = useNavigation();
   const [isAmountVisible, setIsAmountVisible] = useState(true);
-  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
 
   const toggleAmountVisibility = () => {
     setIsAmountVisible(!isAmountVisible);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = await AsyncStorage.getItem('userToken');
-        const response = await axios.get(
-          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/savings/earnings',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
-        setData(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const formatAmount = amount => {
     return (
@@ -56,18 +26,18 @@ export default function SavingsDashboardScreen() {
     );
   };
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#7538EC" />
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+  //       <ActivityIndicator size="large" color="#7538EC" />
+  //     </View>
+  //   );
+  // }
 
   return (
     <SafeAreaView style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.Heading}>Savings Plan</Text>
+        <Text style={styles.Heading}>Loans</Text>
         <View style={styles.PlanBox}>
           <Text style={styles.PlanName}>Flex Save</Text>
           {isAmountVisible ? (
@@ -93,9 +63,9 @@ export default function SavingsDashboardScreen() {
         </View>
         <View style={styles.ButtonContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Savings')}
+            onPress={() => navigation.navigate('LoanApplication')}
             style={styles.Button}>
-            <Text style={styles.ButtonText}>Create Saving Plan</Text>
+            <Text style={styles.ButtonText}>Apply For loan</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('Savings')}
@@ -112,21 +82,13 @@ export default function SavingsDashboardScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.InterestHead}>Interest overview</Text>
         <View style={styles.InterestBox}>
-          <View style={styles.Each}>
-            <Text style={styles.InterestTitle}>Amount</Text>
-            {data && data.data ? (
-              <Text style={styles.InterestAmount}>
-                {formatAmount(data.data.totalDailyEarningsAllSavingPlans)}
-              </Text>
-            ) : (
-              <Text style={styles.InterestAmount}>Loading...</Text>
-            )}
+          <View style={styles.iconbackground} >
+            <FontAwesome name="flag" size={24} color="#ba9fed" borderRadius='0' />
           </View>
-          <View style={styles.Each}>
-            <Text style={styles.InterestTitle}>Saving Schedule</Text>
-            <Text style={styles.InterestAmount}>Daily</Text>
+          <View style={styles.IntrestTextBox}>
+            <Text style={styles.InterestTitle}>Credit granted</Text>
+            <Text style={styles.InterestAmount}>You have a loan credit limit of NGN 20,000.</Text>
           </View>
         </View>
         <View style={styles.HistoryBox}>
@@ -135,30 +97,11 @@ export default function SavingsDashboardScreen() {
               styles.InterestAmount,
               { fontWeight: '600', fontSize: 14 },
             ]}>
-            History
+            Loan History
           </Text>
           <Text style={[styles.InterestTitle, { fontSize: 12 }]}>View all</Text>
         </View>
-        {data &&
-          data.data &&
-          data.data.savingsPlansWithEarnings.map((plan, index) => (
-            <View key={plan.planId} style={styles.TransactionBox}>
-              <View style={styles.IntrestIcon}>
-                <Icon name="analytics-outline" size={20} color="#7538EC" />
-              </View>
-              <View style={styles.IntrestTextBox}>
-                <Text style={styles.InterestTextTitle}>
-                  {plan.planName} interest
-                </Text>
-                <Text style={styles.InterestTextDate}>{plan.date}</Text>
-              </View>
-              <View style={styles.TransactionAmountBox}>
-                <Text style={styles.TransactionAmount}>
-                  {formatAmount(plan.dailyEarnings)}
-                </Text>
-              </View>
-            </View>
-          ))}
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -180,7 +123,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   PlanBox: {
-    backgroundColor: '#0D7FE9',
+    backgroundColor: '#27AE60',
     paddingVertical: 26,
     paddingHorizontal: 30,
     width: '100%',
@@ -231,10 +174,14 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     alignSelf: 'flex-start',
   },
+  InterestTitle: {
+    color: '#000',
+    fontSize: 14,
+    fontWeight: '400',
+  },
   InterestBox: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
     paddingHorizontal: 20,
     paddingVertical: 15,
@@ -243,18 +190,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: 'flex-start',
   },
-  Each: {
-    gap: 10,
-  },
   InterestTitle: {
     color: '#000',
-    fontSize: 14,
-    fontWeight: '400',
+    fontSize: 16,
+    fontWeight: '600',
   },
   InterestAmount: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '500',
+    color: '#494E57',
+    fontSize: 12,
+    fontWeight: '400',
   },
   HistoryBox: {
     display: 'flex',
@@ -265,16 +209,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     marginTop: 10,
   },
-  TransactionBox: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
   IntrestTextBox: {
     paddingLeft: 20,
     display: 'flex',
@@ -282,32 +216,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 40,
   },
-  InterestTextTitle: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  InterestTextDate: {
-    color: '#000',
-    fontSize: 12,
-    fontWeight: '400',
-  },
-  TransactionAmountBox: {
-    position: 'absolute',
-    right: 4,
-    top: 15,
-  },
-  TransactionAmount: {
-    color: '#000',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  IntrestIcon: {
-    backgroundColor: '#f7f7f7',
+  iconbackground: {
+    backgroundColor: '#e8e3ed',
     borderRadius: 30,
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-  },
+  }
 });
