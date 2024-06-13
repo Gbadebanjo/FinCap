@@ -48,7 +48,7 @@ export default function LoanApplyPro() {
                 <View style={styles.Submit}>
                 <StyledButton
                     title="Apply for Loan"
-                    onPress={() => navigation.navigate('LoanApplyPro')}
+                    onPress={() => navigation.navigate('RepayLoan')}
                 />
                 </View>
     </SafeAreaView>
