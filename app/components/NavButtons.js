@@ -17,6 +17,7 @@ import InvestmentEarnings from '../screens/Investment/Earnings';
 import ChangeCards from '../screens/Investment/ChangeCards';
 import LoanDashboard from '../screens/Loans/LoanDashboard';
 import LoanApplication from '../screens/Loans/LoanApplication';
+import LoanApplyPro from '../screens/Loans/LoanApplyPro';
 // import FundingSource from './Modals/FundingSourceModal';
 
 const Tab = createBottomTabNavigator();
@@ -106,6 +107,11 @@ function LoanStack() {
       <Stack.Screen
         name="LoanApplication"
         component={LoanApplication}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanApplyPro"
+        component={LoanApplyPro}
         options={{ headerShown: false }}
       />
       {/* Add more screens for LoanStack here if needed */}
