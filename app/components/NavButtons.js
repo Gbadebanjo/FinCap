@@ -21,7 +21,7 @@ import LoanApplyPro from '../screens/Loans/LoanApplyPro';
 import RepayLoan from '../screens/Loans/RepayLoan';
 import LoanPaymentMethod from '../screens/Loans/LoanPaymentMethod';
 import RepayLoanByTransfer from '../screens/Loans/RepayLoanByTransfer';
-
+import LoanDetails from '../screens/Loans/LoanDetails';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -132,6 +132,13 @@ function LoanStack() {
         component={RepayLoanByTransfer}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="LoanDetails"
+        component={LoanDetails}
+        options={{ headerShown: false }}
+      />
+     
+       
       {/* Add more screens for LoanStack here if needed */}
     </Stack.Navigator>
   );
