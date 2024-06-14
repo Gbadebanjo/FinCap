@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import SelectInput from '../../components/SelectInput';
 import InputField from '../../components/InputField';
 import StyledButton from '../../components/StyledButton';
+
+
 export default function LoanApplyPro() {
     const placeholder = { label: 'Select duration', value: null, color: '#9EA0A4', };
     const navigation = useNavigation();
@@ -48,7 +50,7 @@ export default function LoanApplyPro() {
                 <View style={styles.Submit}>
                 <StyledButton
                     title="Apply for Loan"
-                    onPress={() => navigation.navigate('RepayLoan')}
+                    onPress={() => navigation.navigate('LoanDetailScreen')}
                 />
                 </View>
     </SafeAreaView>
