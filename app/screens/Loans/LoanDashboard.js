@@ -78,7 +78,7 @@ export default function LoanDashboard() {
               },
             ]}>
             <Text style={[styles.ButtonText, { color: '#7538EC' }]}>
-              Withdraw
+              Repay loan
             </Text>
           </TouchableOpacity>
         </View>
