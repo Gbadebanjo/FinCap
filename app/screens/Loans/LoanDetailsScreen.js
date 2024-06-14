@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import StyledButton from '../../components/StyledButton';
+
 
 export default function LoanDetailScreen() {
   const navigation = useNavigation();
@@ -37,16 +39,21 @@ export default function LoanDetailScreen() {
   return (
     <SafeAreaView style={styles.Container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.Heading}>Loans</Text>
+      <View style={styles.topcontainer}>
+            <TouchableOpacity
+                style={styles.anleleft}
+                onPress={() => navigation.navigate('Welcome')}>
+                <FontAwesome name="angle-left" size={22} color="#808080" />
+            </TouchableOpacity>
+                <Text style={styles.Heading}>Loans</Text>
+        </View>
         <View style={styles.PlanBox}>
           <Text style={styles.PlanName}>Recieve Amount</Text>
-          
-              {/* <Text style={styles.PlanAmount}>
-                {formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}
-              </Text> */}
-       
               <Text style={styles.PlanAmount}>N28,910</Text>
         </View>
+        <View style={[
+              { marginBottom: 15 },
+            ]}>
         <View style={styles.HistoryBox}>
           <Text
             style={[
@@ -57,6 +64,7 @@ export default function LoanDetailScreen() {
           </Text>
           <Text style={[styles.InterestTitle, { fontSize: 16 }]}>N24,500</Text>
         </View>
+        <View>
         <View style={styles.HistoryDetails}>
           <Text
             style={[
@@ -87,6 +95,49 @@ export default function LoanDetailScreen() {
           </Text>
           <Text style={[styles.CouponAmount, { fontSize: 16 }]}>N0</Text>
         </View>
+        </View>
+        </View>
+        <View style={styles.HistoryBox}>
+          <Text
+            style={[
+              styles.InterestAmount,
+              { fontWeight: '600', fontSize: 14 },
+            ]}>
+            Repayment Plan
+          </Text>
+          <Text style={[styles.InterestTitle, { fontSize: 16 }]}>1 installment</Text>
+        </View>
+        <View style={[
+              { marginBottom: 50 },
+            ]}>
+        <View style={styles.HistoryDetails}>
+          <Text
+            style={[
+              styles.InterestAmount,
+              { fontWeight: '400', fontSize: 14 },
+            ]}>
+            1/1 Due date
+          </Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>12 Oct 2023</Text>
+        </View>
+        <View style={styles.HistoryDetails}>
+          <Text
+            style={[
+              styles.InterestAmount,
+              { fontWeight: '400', fontSize: 14 },
+            ]}>
+                Due amount
+          </Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>N24,399</Text>
+        </View>
+        </View>
+
+            <View style={styles.Submit}>
+                <StyledButton
+                    title="Back to Loan Dashboard"
+                    onPress={() => navigation.navigate('LoanDashboard')}
+                />
+            </View>
 
       </ScrollView>
     </SafeAreaView>
@@ -99,11 +150,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '100%',
   },
+  topcontainer:{
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+},
+  anleleft: {
+    marginLeft: 20,
+    marginTop: 20,
+},
   Heading: {
     fontSize: 18,
     fontWeight: '700',
     color: '#111827',
-    paddingTop: 30,
+    paddingTop: 20,
+    paddingLeft: '35%',
     paddingBottom: 5,
     alignSelf: 'center',
   },
@@ -160,5 +220,10 @@ const styles = StyleSheet.create({
   CouponAmount: {
     color: '#111827',
     fontWeight: '600',
-  }
+  },
+  Submit: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+},
 });
