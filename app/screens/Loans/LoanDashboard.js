@@ -68,7 +68,7 @@ export default function LoanDashboard() {
             <Text style={styles.ButtonText}>Apply For loan</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Savings')}
+            onPress={() => navigation.navigate('RepayLoan')}
             style={[
               styles.Button,
               {
@@ -78,7 +78,7 @@ export default function LoanDashboard() {
               },
             ]}>
             <Text style={[styles.ButtonText, { color: '#7538EC' }]}>
-              Withdraw
+              Repay loan
             </Text>
           </TouchableOpacity>
         </View>

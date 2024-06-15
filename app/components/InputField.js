@@ -37,10 +37,11 @@ const getStyles = (width, marginLeft) =>
     label: {
       color: '#111827',
       width: 500,
-      fontSize: 16,
+      fontSize: 14,
       marginTop: 2,
       alignSelf: 'flex-start',
       paddingLeft: '5%',
+      
     },
     input: {
       height: 48,

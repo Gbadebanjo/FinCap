@@ -17,7 +17,13 @@ import InvestmentEarnings from '../screens/Investment/Earnings';
 import ChangeCards from '../screens/Investment/ChangeCards';
 import LoanDashboard from '../screens/Loans/LoanDashboard';
 import LoanApplication from '../screens/Loans/LoanApplication';
-// import FundingSource from './Modals/FundingSourceModal';
+import LoanApplyPro from '../screens/Loans/LoanApplyPro';
+import RepayLoan from '../screens/Loans/RepayLoan';
+import LoanPaymentMethod from '../screens/Loans/LoanPaymentMethod';
+import RepayLoanByTransfer from '../screens/Loans/RepayLoanByTransfer';
+import LoanDetailScreen from '../screens/Loans/LoanDetailsScreen';
+import LoanDetails from '../screens/Loans/LoanDetails';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +112,36 @@ function LoanStack() {
       <Stack.Screen
         name="LoanApplication"
         component={LoanApplication}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanApplyPro"
+        component={LoanApplyPro}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RepayLoan"
+        component={RepayLoan}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanPaymentMethod"
+        component={LoanPaymentMethod}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RepayLoanByTransfer"
+        component={RepayLoanByTransfer}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanDetailScreen"
+        component={LoanDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LoanDetails"
+        component={LoanDetails}
         options={{ headerShown: false }}
       />
       {/* Add more screens for LoanStack here if needed */}
