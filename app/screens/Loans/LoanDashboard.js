@@ -2,19 +2,70 @@ import { StyleSheet, View, TouchableOpacity, ScrollView, ActivityIndicator, Text
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Octicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function LoanDashboard() {
   const navigation = useNavigation();
   const [isAmountVisible, setIsAmountVisible] = useState(true);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [loanData, setLoanData] = useState(null);
 
   const toggleAmountVisibility = () => {
     setIsAmountVisible(!isAmountVisible);
   };
+
+  useEffect(() => {
+    const fetchLoanData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/Loan/latest-loan-application',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setLoanData(response.data);
+        console.log(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchLoanData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/savings/earnings',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setData(response.data);
+        console.log(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const formatAmount = amount => {
     return (
@@ -26,13 +77,17 @@ export default function LoanDashboard() {
     );
   };
 
-  // if (loading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <ActivityIndicator size="large" color="#7538EC" />
-  //     </View>
-  //   );
-  // }
+  const formatDate = (dateString) => {
+    return moment(dateString, 'DD MMMM, hh:mm A').format('DD MMMM YYYY');
+  }
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#7538EC" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.Container}>
@@ -41,14 +96,8 @@ export default function LoanDashboard() {
         <View style={styles.PlanBox}>
           <Text style={styles.PlanName}>Flex Save</Text>
           {isAmountVisible ? (
-            data && data.data ? (
-              <Text style={styles.PlanAmount}>
-                {formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}
-              </Text>
+              <Text style={styles.PlanAmount}>{data && formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}</Text>
             ) : (
-              <Text style={styles.PlanAmount}>Loading...</Text>
-            )
-          ) : (
             <Text style={styles.PlanAmount}>****</Text>
           )}
           <TouchableOpacity
@@ -101,6 +150,32 @@ export default function LoanDashboard() {
           </Text>
           <Text style={[styles.InterestTitle, { fontSize: 12 }]}>View all</Text>
         </View>
+        <View style={styles.EachTrans}>
+                <View style={styles.Icon_Name}>
+                  <View style={styles.Icon_cont}>
+                    <Octicons
+                      style={[
+                        styles.RecentIcon,
+                        { transform: [{ rotate: '90deg' }] },
+                      ]}
+                      name="arrow-switch"
+                      size={20}
+                      color="#541592"
+                    />
+                  </View>
+                  <View style={styles.TransDetails}>
+                    <Text style={styles.DetailName}>Loan</Text>
+                    <Text style={styles.DetailDate}>
+                      { loanData && loanData.data.loanAmount >= 0
+                        ? 'Loan repaid in full'
+                     :  `Repayment due: ${formatDate(loanData.data.dueDate)}`
+                    }</Text>                        
+                  </View>
+                </View>
+                <Text style={styles.TransAmount}>
+                  {loanData && formatAmount(loanData.data.totalRepaymentAmount)}
+                </Text>
+              </View>
 
       </ScrollView>
     </SafeAreaView>
@@ -223,5 +298,46 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  EachTrans: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 2,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    width: '90%',
+  },
+  Icon_Name: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+    paddingVertical: 10,
+  },
+  Icon_cont: {
+    backgroundColor: '#f7f7f7',
+    borderRadius: '50%',
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+  },
+  TransDetails: {
+    width: '75%',
+    marginLeft: 10,
+  },
+  DetailName: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#0E0F11',
+    marginBottom: 8,
+  },
+  DetailDate: {
+    fontSize: 12,
+    fontWeight: '300',
+    color: '#494E57',
+  },
+  TransAmount: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+    alignSelf: 'center',
+  },
 });

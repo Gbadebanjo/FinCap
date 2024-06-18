@@ -1,15 +1,123 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react'; 
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-// import SelectInput from '../../components/SelectInput';
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
 import InputField from '../../components/InputField';
-import StyledButton from '../../components/StyledButton';
+import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ResponseModal from '../../components/Modals/ResponseModal';
+import ErrorAlert from '../../components/ErrorAlert';
+
+
+const validationSchema = Yup.object().shape({
+    amount: Yup.number().required('required').positive('Amount must be positive').integer('Amount must be an integer'),
+  });
 
 export default function RepayLoan() {
-    const placeholder = { label: 'Select duration', value: null, color: '#9EA0A4', };
+    const [fullRepayment, setFullRepayment] = useState(false);
+    const [loanData, setLoanData] = useState(null);
     const navigation = useNavigation();
+    const [amount, setAmount] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
+
+
+    useEffect(() => {
+        const fetchLoanData = async () => {
+            try {
+            const token = await AsyncStorage.getItem('userToken');
+            const response = await axios.get(
+                'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/Loan/latest-loan-application',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            setLoanData(response.data);
+            console.log(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
+        };
+    };
+        fetchLoanData();
+    }, []);
+
+    const handleRepayLoan = async (values) => { 
+        setLoading(true);
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            const response = await axios.post(
+                'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/Loan/repay-loan',
+                {
+                    amount: Number(values.amount),               
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            console.log('Loan repayment successful:', response.data);
+            setModalTitle('Success');
+            setModalMessage('Loan repayment successful.');
+            setIsSuccess(true);
+            setModalVisible(true);
+        } catch (error) {
+            const errorMessage = error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0
+            ? error.response.data.errors[0].message
+            : error.message;
+        console.error('Loan repayment error:', errorMessage);
+        setModalTitle(errorMessage);
+        setModalMessage('Add Funds to wallet to continue');
+        setIsSuccess(false);
+        setModalVisible(true);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const formatAmount = amount => {
+        return (
+          '₦' +
+          Number(amount).toLocaleString('en-NG', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        );
+      };
+
+    useEffect(() => {
+        if (fullRepayment) {
+            handleRepayLoan({ amount: loanData.data.loanAmount + loanData.data.administrativeFee + loanData.data.interestRate });
+            setFullRepayment(false);
+        }
+    }, [fullRepayment]); 
+    
+      const formatDate = (dateString) => {
+        return moment(dateString, 'DD MMMM, hh:mm A').format('DD MMMM YYYY');
+      }
+
+      if (loading) {
+        return (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" color="#7538EC" />
+          </View>
+        );
+      }
+    
+      if (!loanData) {
+        return null; 
+    }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -17,7 +125,7 @@ export default function RepayLoan() {
       <View style={styles.topcontainer}>
             <TouchableOpacity
                 style={styles.anleleft}
-                onPress={() => navigation.navigate('Welcome')}>
+                onPress={() => navigation.navigate('LoanDashboard')}>
                 <FontAwesome name="angle-left" size={22} color="#808080" />
             </TouchableOpacity>
             <Text style={styles.repayloan}>Repay Loan</Text>
@@ -25,52 +133,106 @@ export default function RepayLoan() {
 
       <Text style={styles.subtext}>How much whould you like to pay?</Text>
 
-      <TouchableOpacity style={styles.payfull}>
+      <TouchableOpacity style={styles.payfull}
+      onPress={() => {
+        const fullAmount = loanData.data.loanAmount + loanData.data.administrativeFee + loanData.data.interestRate;
+        setAmount(fullAmount);
+        setFullRepayment(true);
+        }}
+        disabled={loanData && loanData.data.loanAmount === 0}
+      >
         <Text style={styles.payfullText}> Pay Full Amount</Text>
         <View style={styles.payfullAmount_check}>
-            <Text style={styles.payfullAmount}>N55,000</Text>
+            <Text style={styles.payfullAmount}>
+                {loanData && loanData.data.loanAmount === 0 
+                ? formatAmount(0)
+                : formatAmount(loanData.data.loanAmount + loanData.data.administrativeFee + loanData.data.interestRate)
+                 }
+            </Text>
             <View style={styles.payfullCheckview}>
                 <AntDesign style={styles.payfullCheck} name='check' size={10} color='000'  />
             </View>
         </View>
       </TouchableOpacity>
-       <InputField
-           label={'Enter a different amount'}
-           placeholder={'Enter amount'}
-           // onChangeText={handleChange('amount')}
-           // value={values.amount}
-           width="100%"
-       />
-       <View style={styles.loanDetails}>
+      <Formik
+          initialValues={{ amount: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleRepayLoan}>
+        {({
+            handleChange,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+            isValid,
+          }) => (
+            <View>
+                <InputField
+                label={'Enter a different amount'}
+                placeholder={'Enter amount'}
+                onChangeText={handleChange('amount')}
+                value={values.amount}
+                width="100%"
+            />
+            <ErrorAlert error={errors.amount}/>
+
+            <View style={styles.loanDetails}>
             <Text style={styles.DetailsHeader}>Loan Details</Text>
             <View style={styles.DetailsEach}>
                 <Text style={styles.DetailsKey}>Amount</Text>
-                <Text style={styles.DetailsValue}>N50,000.00</Text>
+                <Text style={styles.DetailsValue}>{formatAmount(loanData.data.loanAmount)}</Text>
             </View>
             <View style={styles.DetailsEach}>
                 <Text style={styles.DetailsKey}>Interest On Loan</Text>
-                <Text style={styles.DetailsValue}>N5,000.00</Text>
+                <Text style={styles.DetailsValue}>{formatAmount(loanData.data.interestRate + loanData.data.administrativeFee)}</Text>
             </View>
             <View style={styles.DetailsEach}>
                 <Text style={styles.DetailsKey}>Duration</Text>
-                <Text style={styles.DetailsValue}>30 Days</Text>
+                <Text style={styles.DetailsValue}>{loanData.data.repaymentDuration} days</Text>
             </View>
             <View style={styles.DetailsEach}>
                 <Text style={styles.DetailsKey}>Application Date</Text>
-                <Text style={styles.DetailsValue}>10th February 2022</Text>
+                <Text style={styles.DetailsValue}>{formatDate(loanData.data.dateApplied)}</Text>
             </View>
             <View style={styles.DetailsEach}>
                 <Text style={styles.DetailsKey}>Payback Date</Text>
-                <Text style={styles.DetailsValue}>10th March 2022</Text>
+                <Text style={styles.DetailsValue}>{formatDate(loanData.data.dueDate)}</Text>
             </View>
-        </View>
-        <View style={styles.Submit}>
-            <StyledButton
-                title="Proceed With Payment"
-                onPress={() => navigation.navigate('LoanPaymentMethod')}
+             </View>
+
+       <View style={styles.submit}>
+                <TouchableOpacity
+                    onPress={handleSubmit}
+                    style={[styles.button, { width: '90%', margin: 20 }]}
+                    disabled={!isValid || loading}
+                >
+                    {loading ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                        <Text style={styles.text}>Proceed With Payment</Text>
+                    )}
+                </TouchableOpacity>
+            </View>
+       </View>
+    )}
+       </Formik>
+        <ResponseModal
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+                title={modalTitle}
+                message={modalMessage}
+                isSuccess={isSuccess}
+                onDismiss={() => {
+                    setModalVisible(false);
+                    if (isSuccess) {
+                        navigation.navigate('LoanDashboard');
+                    } else {
+                        navigation.navigate('RepayLoan');
+                    }
+                }}
+                buttonTitle={isSuccess ? 'Continue' : 'Retry!'}
             />
-        </View>
-                </ScrollView>
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -124,7 +286,7 @@ const styles = StyleSheet.create({
     },
     payfullAmount_check:{
         flexDirection: 'row',
-        width: '24%',
+        width: '30%',
         justifyContent: 'space-between',
         marginRight: '2%',
     },
@@ -176,5 +338,21 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-   
+    submit: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    },
+    button: {
+        backgroundColor: '#7538EC',
+        borderRadius: 8,
+        padding: 17,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+    },
+    text: {
+        color: '#fff',
+        fontSize: 18,
+    },
 })

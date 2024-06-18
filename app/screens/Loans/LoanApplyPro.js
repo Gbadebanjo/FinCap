@@ -145,7 +145,7 @@ export default function LoanApplyPro() {
                 onDismiss={() => {
                     setModalVisible(false);
                     if (isSuccess) {
-                        navigation.navigate('LoanDetails', { loanDetails }); // Pass loan details
+                        navigation.navigate('LoanDetailScreen', { loanDetails }); // Pass loan details
                     } else {
                         navigation.navigate('LoanApplication');
                     }
