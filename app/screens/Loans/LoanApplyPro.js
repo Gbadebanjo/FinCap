@@ -69,9 +69,10 @@ export default function LoanApplyPro() {
             setLoanDetails(response.data); // Store loan details
             setModalVisible(true);
         } catch (error) {
-            console.error('Loan application error:', error.response ? error.response.data : error.message);
+            // console.error('Loan application error:', error.response ? error.response.data : error.message);
+            // console.error('Loan Error Message:', error.response.data.errors[0].message);
             setModalTitle('Error');
-            setModalMessage('Loan application failed. Please try again.');
+            setModalMessage(error.response.data.errors[0].message);
             setIsSuccess(false);
             setModalVisible(true);
         } finally {
@@ -79,12 +80,6 @@ export default function LoanApplyPro() {
         }
     };
 
-    const placeholder = { label: 'Select duration', value: null, color: '#9EA0A4' };
-    const durationItems = [
-        { label: '30 days', value: '30' },
-        { label: '90 days', value: '90' },
-        { label: '120 days', value: '120' },
-    ];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -103,14 +98,6 @@ export default function LoanApplyPro() {
                 onChangeText={setLoanAmount}
                 width="100%"
             />
-            {/* <SelectInput
-                label={'Duration'}
-                placeholder={placeholder}
-                items={durationItems}
-                value={loanDuration}
-                onValueChange={(value) => setLoanDuration(value)}
-                width="90%"
-            /> */}
             <View style={styles.bankDetails}>
                 <Text style={styles.bankText}>Bank account</Text>
                 <View style={styles.bankObjects}>

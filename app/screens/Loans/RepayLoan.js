@@ -253,9 +253,9 @@ const styles = StyleSheet.create({
     },
     repayloan: {
         paddingVertical: 5,
-        paddingLeft: '32%',
+        paddingLeft: '28%',
         marginTop: 20,
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '600',
         width: '90%',
         color: '#111827'
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginBottom: 20,
         fontWeight: '700',
-        fontSize: 24,
+        fontSize: 22,
     },
     payfull:{
         backgroundColor: '#7538EC',

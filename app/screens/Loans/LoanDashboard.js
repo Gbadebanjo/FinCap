@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   },
   DetailDate: {
     fontSize: 12,
-    fontWeight: '300',
+    fontWeight: '400',
     color: '#494E57',
   },
   TransAmount: {
