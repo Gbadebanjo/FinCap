@@ -140,12 +140,12 @@ const styles = StyleSheet.create({
   cardCont: {
     backgroundColor: '#EEE8F4',
     padding: 10,
-    borderRadius: '50%',
+    borderRadius: 50,
   },
   CardText: {
     fontSize: 14,
     color: '#3F4654',
-    fontWeight: 400,
+    fontWeight: '400',
     width: '80%',
   },
 });
