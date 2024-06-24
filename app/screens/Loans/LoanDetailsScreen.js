@@ -1,22 +1,51 @@
 import { StyleSheet, View, TouchableOpacity, ScrollView, ActivityIndicator, Text } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import StyledButton from '../../components/StyledButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 
 export default function LoanDetailScreen() {
   const navigation = useNavigation();
-  const [isAmountVisible, setIsAmountVisible] = useState(true);
-//   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(20000);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
 
-  const toggleAmountVisibility = () => {
-    setIsAmountVisible(!isAmountVisible);
-  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.get(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/Loan/latest-loan-application',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setData(response.data);
+        console.log(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    const totalRepaymentAmount = data?.data?.totalRepaymentAmount;
+    console.log(totalRepaymentAmount)
+
+    fetchData();
+  }, []);
+
+  const formatDate = (dateString) => {
+    return moment(dateString, 'DD MMMM, hh:mm A').format('DD MMMM YYYY');
+  }
 
   const formatAmount = amount => {
     return (
@@ -28,13 +57,13 @@ export default function LoanDetailScreen() {
     );
   };
 
-  // if (loading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <ActivityIndicator size="large" color="#7538EC" />
-  //     </View>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#7538EC" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.Container}>
@@ -49,7 +78,8 @@ export default function LoanDetailScreen() {
         </View>
         <View style={styles.PlanBox}>
           <Text style={styles.PlanName}>Recieve Amount</Text>
-              <Text style={styles.PlanAmount}>N28,910</Text>
+              <Text style={styles.PlanAmount}>{formatAmount(data.data.loanAmount)}</Text>
+              
         </View>
         <View style={[
               { marginBottom: 15 },
@@ -62,7 +92,7 @@ export default function LoanDetailScreen() {
             ]}>
             Loan History
           </Text>
-          <Text style={[styles.InterestTitle, { fontSize: 16 }]}>N24,500</Text>
+          <Text style={[styles.InterestTitle, { fontSize: 16 }]}>{formatAmount(data.data.loanAmount + data.data.administrativeFee + data.data.interestRate )}</Text>
         </View>
         <View>
         <View style={styles.HistoryDetails}>
@@ -73,7 +103,7 @@ export default function LoanDetailScreen() {
             ]}>
             Loan amount
           </Text>
-          <Text style={[styles.InterestText, { fontSize: 14 }]}>N24,500</Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>{formatAmount(data.data.loanAmount)}</Text>
         </View>
         <View style={styles.HistoryDetails}>
           <Text
@@ -83,7 +113,7 @@ export default function LoanDetailScreen() {
             ]}>
             Service fee
           </Text>
-          <Text style={[styles.InterestText, { fontSize: 14 }]}>N4,399</Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>{formatAmount(data.data.administrativeFee + data.data.interestRate)}</Text>
         </View>
         <View style={styles.HistoryDetails}>
           <Text
@@ -118,7 +148,7 @@ export default function LoanDetailScreen() {
             ]}>
             1/1 Due date
           </Text>
-          <Text style={[styles.InterestText, { fontSize: 14 }]}>12 Oct 2023</Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>{formatDate(data.data.dueDate)}</Text>
         </View>
         <View style={styles.HistoryDetails}>
           <Text
@@ -128,7 +158,7 @@ export default function LoanDetailScreen() {
             ]}>
                 Due amount
           </Text>
-          <Text style={[styles.InterestText, { fontSize: 14 }]}>N24,399</Text>
+          <Text style={[styles.InterestText, { fontSize: 14 }]}>{formatAmount(data.data.totalRepaymentAmount)}</Text>
         </View>
         </View>
 
@@ -138,7 +168,6 @@ export default function LoanDetailScreen() {
                     onPress={() => navigation.navigate('LoanDashboard')}
                 />
             </View>
-
       </ScrollView>
     </SafeAreaView>
   );
