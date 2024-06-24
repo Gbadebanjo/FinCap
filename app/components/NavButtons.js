@@ -248,7 +248,7 @@ function NavButtons() {
 const styles = StyleSheet.create({
   tabBar: {
     height: 80,
-    paddingBottom: 15,
+    paddingBottom: 23,
     borderTopWidth: 0,
     backgroundColor: '#fff',
   },

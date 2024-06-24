@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     height: 'auto',
     backgroundColor: '#f7f7f7',
-    borderRadius: '8px',
+    borderRadius: 8,
   },
   ViewEarnings: {
     color: '#3F4654',
