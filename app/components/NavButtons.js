@@ -22,6 +22,7 @@ import RepayLoan from '../screens/Loans/RepayLoan';
 import LoanPaymentMethod from '../screens/Loans/LoanPaymentMethod';
 import RepayLoanByTransfer from '../screens/Loans/RepayLoanByTransfer';
 import LoanDetailScreen from '../screens/Loans/LoanDetailsScreen';
+import AddBank from '../screens/HomeScreen/AddBank';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,11 +30,17 @@ const Stack = createStackNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator>
+        <Stack.Screen
+        name="Bank"
+        component={AddBank}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
+
       {/* Add more screens for HomeStack here if needed */}
     </Stack.Navigator>
   );
