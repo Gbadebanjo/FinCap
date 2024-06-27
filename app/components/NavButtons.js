@@ -5,7 +5,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
