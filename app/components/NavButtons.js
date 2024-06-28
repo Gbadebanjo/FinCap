@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import FundWallet from '../screens/HomeScreen/FundWallet';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
@@ -38,7 +39,7 @@ function HomeStack() {
         options={{ headerShown: false }}
       />
         <Stack.Screen
-        name="Bank"
+        name="AddBank"
         component={AddBank}
         options={{ headerShown: false }}
       />
@@ -53,6 +54,11 @@ function HomeStack() {
         options={{ headerShown: false }}
       />
 
+      <Stack.Screen
+        name="FundWallet"
+        component={FundWallet}
+        options={{ headerShown: false }}
+      />
       {/* Add more screens for HomeStack here if needed */}
     </Stack.Navigator>
   );
