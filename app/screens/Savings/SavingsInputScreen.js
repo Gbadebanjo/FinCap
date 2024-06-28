@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 10,
         padding: 5,
-
     },
     button: {
         paddingHorizontal: 30,
