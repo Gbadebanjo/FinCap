@@ -23,6 +23,9 @@ import RepayLoan from '../screens/Loans/RepayLoan';
 import LoanPaymentMethod from '../screens/Loans/LoanPaymentMethod';
 import RepayLoanByTransfer from '../screens/Loans/RepayLoanByTransfer';
 import LoanDetailScreen from '../screens/Loans/LoanDetailsScreen';
+import AddBank from '../screens/HomeScreen/AddBank';
+import SetupPin from '../screens/HomeScreen/SetupPin';
+import ConfirmPin from '../screens/HomeScreen/ConfirmPin';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -35,6 +38,22 @@ function HomeStack() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
+        <Stack.Screen
+        name="AddBank"
+        component={AddBank}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SetPin"
+        component={SetupPin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PinConfirm"
+        component={ConfirmPin}
+        options={{ headerShown: false }}
+      />
+
       <Stack.Screen
         name="FundWallet"
         component={FundWallet}

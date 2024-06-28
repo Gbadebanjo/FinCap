@@ -68,19 +68,22 @@ function HomeScreen(props) {
                 </TouchableOpacity>
             </View>
             <Text style={styles.Todo}>Todo</Text>
-            <View style={styles.Boxes} onPress={() => navigation.navigate('FundWallet')}>
-                <View style={styles.EachBox}>
+            <View style={styles.Boxes} >
+                <TouchableOpacity 
+                onPress={() => navigation.navigate('FundWallet')}
+                style={styles.EachBox}>
                     <View style={styles.Icon}>
                         <FontAwesome name="user-circle" size={20} color="#fff" />
                     </View>
                     <Text>Complete account setup</Text>
-                </View>
-                <View style={styles.EachBox} onPress={() => navigation.navigate('AddBank')}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.EachBox}
+                 onPress={() => navigation.navigate('AddBank')}>
                     <View style={styles.Icon}>
                         <FontAwesome name="bank" size={20} color="#fff" />
                     </View>
                     <Text>Add your bank details</Text>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={styles.PaymentBox}>
                 <View style={[styles.Icon, { backgroundColor: "#ffe6d4" }]} >
