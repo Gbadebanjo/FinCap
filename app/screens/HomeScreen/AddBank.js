@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Text, StyleSheet, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
 import StyledButton from '../../components/StyledButton';
@@ -23,19 +23,19 @@ export default function AddBank() {
 
   return (
     <SafeAreaView style={styles.container}>
-    <>
-     <View style={styles.topcontainer}>
-           <TouchableOpacity
-               style={styles.anleleft}
-               onPress={() => navigation.navigate('HomeScreen')}>
-               <FontAwesome name="angle-left" size={22} color="#808080" />
-           </TouchableOpacity>
-           <Text style={styles.pageTitle}>Add Bank Details</Text>
-     </View>
-     <Text style={styles.subtext}>Transfer to the account number below and your wallet will be credited instantly</Text>
-     <View style={styles.inputContainer}>
-     <Text style={styles.label}>Select Bank</Text>
-     <RNPickerSelect
+    <View style={styles.content}>
+        <View style={styles.topcontainer}>
+            <TouchableOpacity
+                style={styles.anleleft}
+                onPress={() => navigation.navigate('HomeScreen')}>
+                <FontAwesome name="angle-left" size={22} color="#808080" />
+            </TouchableOpacity>
+            <Text style={styles.pageTitle}>Add Bank Details</Text>
+        </View>
+         <Text style={styles.subtext}>Transfer to the account number below and your wallet will be credited instantly</Text>
+        <View style={styles.inputContainer}>
+        <Text style={styles.label}>Select Bank</Text>
+        <RNPickerSelect
         placeholder={placeholder}
         items={[
             { label: 'Access', value: 'Access Bank' },
@@ -56,8 +56,7 @@ export default function AddBank() {
             }}
         />
         </View>
-
-            <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
                 <Text style={styles.label}>Account Number</Text>
                 <TextInput
                     style={styles.input}
@@ -66,9 +65,8 @@ export default function AddBank() {
                     placeholderTextColor="#d2d2d4"
                     value={accountNumber}
                 />
-            </View>
-
-            <View style={styles.inputContainer}>
+        </View>
+        <View style={styles.inputContainer}>
                 <Text style={styles.label}>Account Name</Text>
                 <TextInput
                     style={styles.input}
@@ -77,13 +75,13 @@ export default function AddBank() {
                     placeholderTextColor="#d2d2d4"
                     value={accountName}
                 />
-            </View>
+        </View>
 
-            </> 
-            <View style={styles.addButton}>
+     </View> 
+         <View style={styles.addButtonContainer}>
                 <StyledButton
                     title={'Add Bank Detail'}
-                    onPress={() => alert('Bank Detail added successfully')}
+                    onPress={() => navigation.navigate('SetPin')}
                 />
             </View>
         </SafeAreaView>
@@ -94,6 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     marginTop: 20,
+  },
+  content: {
+    flex: 1,
   },
   topcontainer: {
     flexDirection: 'row',
@@ -117,15 +118,10 @@ const styles = StyleSheet.create({
   },
   subtext: {
     color: '#3F4654',
-    marginBottom: 10,
     width: '90%',
     marginLeft: '5%',
     fontWeight: '400',
     fontSize: 16,
-    marginTop: 15,
-  },
-  Submit: {
-    marginTop: 20,
   },
   inputIOS: {
     fontSize: 16,
@@ -137,7 +133,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    // marginLeft: '5%',
 },
 inputAndroid: {
     fontSize: 16,
@@ -149,7 +144,6 @@ inputAndroid: {
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    // marginLeft: '5%',
 },
 iconContainer: {
     top: 15,
@@ -166,7 +160,6 @@ label: {
     fontSize: 14,
     marginVertical: 10,
     alignSelf: 'flex-start',
-    // marginLeft: '5%',
 },
 input: {
     height: 48,
@@ -176,7 +169,8 @@ input: {
     borderWidth: 1,
     paddingLeft: 10,
 },
-addButton: {
+addButtonContainer: {
     justifyContent: 'flex-end',
-}
+    paddingBottom: 5,
+  },
 });
