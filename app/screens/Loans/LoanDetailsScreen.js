@@ -92,7 +92,7 @@ export default function LoanDetailScreen() {
             ]}>
             Loan History
           </Text>
-          <Text style={[styles.InterestTitle, { fontSize: 16 }]}>{formatAmount(data.data.loanAmount + data.data.administrativeFee + data.data.interestRate )}</Text>
+          <Text style={[styles.InterestTitle, { fontSize: 16 }]}>{formatAmount(data.data.loanAmount)}</Text>
         </View>
         <View>
         <View style={styles.HistoryDetails}>
