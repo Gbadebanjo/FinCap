@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     },
     payfullCheckview:{
         backgroundColor: '#ffffff',
-        borderRadius: '50%',
+        borderRadius: 50,
     },
     payfullCheck:{
         padding: 3,

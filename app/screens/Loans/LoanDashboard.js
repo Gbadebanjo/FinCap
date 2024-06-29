@@ -96,8 +96,12 @@ export default function LoanDashboard() {
         <View style={styles.PlanBox}>
           <Text style={styles.PlanName}>Flex Save</Text>
           {isAmountVisible ? (
+            data && data.data ? (
               <Text style={styles.PlanAmount}>{data && formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}</Text>
             ) : (
+              <Text style={styles.PlanAmount}>Loading...</Text>
+            )
+          ) : ( 
             <Text style={styles.PlanAmount}>****</Text>
           )}
           <TouchableOpacity
@@ -315,9 +319,9 @@ const styles = StyleSheet.create({
   },
   Icon_cont: {
     backgroundColor: '#f7f7f7',
-    borderRadius: '50%',
-    paddingHorizontal: 12,
-    paddingVertical: 9,
+    borderRadius: 30,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
   },
   TransDetails: {
     width: '75%',

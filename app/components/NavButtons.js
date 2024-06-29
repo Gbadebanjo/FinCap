@@ -5,7 +5,8 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import FundWallet from '../screens/HomeScreen/FundWallet';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
@@ -22,6 +23,9 @@ import RepayLoan from '../screens/Loans/RepayLoan';
 import LoanPaymentMethod from '../screens/Loans/LoanPaymentMethod';
 import RepayLoanByTransfer from '../screens/Loans/RepayLoanByTransfer';
 import LoanDetailScreen from '../screens/Loans/LoanDetailsScreen';
+import AddBank from '../screens/HomeScreen/AddBank';
+import SetupPin from '../screens/HomeScreen/SetupPin';
+import ConfirmPin from '../screens/HomeScreen/ConfirmPin';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,6 +36,27 @@ function HomeStack() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+        <Stack.Screen
+        name="AddBank"
+        component={AddBank}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SetPin"
+        component={SetupPin}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PinConfirm"
+        component={ConfirmPin}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="FundWallet"
+        component={FundWallet}
         options={{ headerShown: false }}
       />
       {/* Add more screens for HomeStack here if needed */}
@@ -248,7 +273,7 @@ function NavButtons() {
 const styles = StyleSheet.create({
   tabBar: {
     height: 80,
-    paddingBottom: 15,
+    paddingBottom: 23,
     borderTopWidth: 0,
     backgroundColor: '#fff',
   },
