@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MoreScreen() {
   const [imageUri, setImageUri] = useState(null);
   const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
+  const navigation = useNavigation();
 
   const toggleFaceIDSwitch = () => setIsFaceIDEnabled(previousState => !previousState);
 
@@ -23,7 +25,7 @@ export default function MoreScreen() {
         </View>
         <Text style={styles.userName}>Jakob Witz</Text>
         <TouchableOpacity
-          onPress={() => alert('View profile')}
+          onPress={() => navigation.navigate('Profile')}
           style={styles.viewProfileButton}>
           <Text style={styles.viewProfiletext}>View profile</Text>
         </TouchableOpacity>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: 70,
     paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingBottom: 10,
   },
   content: {
     flex: 1,
