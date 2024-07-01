@@ -26,6 +26,8 @@ import LoanDetailScreen from '../screens/Loans/LoanDetailsScreen';
 import AddBank from '../screens/HomeScreen/AddBank';
 import SetupPin from '../screens/HomeScreen/SetupPin';
 import ConfirmPin from '../screens/HomeScreen/ConfirmPin';
+import MoreScreen from '../screens/More/MoreScreen';
+import Profile from '../screens/More/Profile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -167,14 +169,24 @@ function LoanStack() {
   );
 }
 
-//   function MoreStack() {
-//     return (
-//       <Stack.Navigator>
-//         <Stack.Screen name="More" component={MoreScreen} options={{ headerShown: false }} />
-//         {/* Add more screens for MoreStack here if needed */}
-//       </Stack.Navigator>
-//     );
-//   }
+  function MoreStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen 
+        name="More" 
+        component={MoreScreen} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="Profile" 
+        component={Profile} 
+        options={{ headerShown: false }} 
+        />
+        
+        {/* Add more screens for MoreStack here if needed */}
+      </Stack.Navigator>
+    );
+  }
 
 function NavButtons() {
   return (
@@ -253,7 +265,7 @@ function NavButtons() {
       />
       <Tab.Screen
         name="MoreTab"
-        component={HomeStack}
+        component={MoreStack}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
