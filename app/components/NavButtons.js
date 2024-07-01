@@ -172,7 +172,7 @@ function LoanStack() {
     return (
       <Stack.Navigator>
         <Stack.Screen 
-        name="More" 
+        name="MoreScreen" 
         component={MoreScreen} 
         options={{ headerShown: false }} 
         />
