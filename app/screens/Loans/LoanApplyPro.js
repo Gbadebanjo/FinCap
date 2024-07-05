@@ -78,7 +78,6 @@ export default function LoanApplyPro() {
         }
     };
 
-
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity
