@@ -1,76 +1,85 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import RNPickerSelect from 'react-native-picker-select';
-import PhoneInput from 'react-native-phone-input';
-import CountryPicker from 'react-native-country-picker-modal';
+import { AntDesign } from '@expo/vector-icons';
+import InputField from '../../components/InputField';
+import PhoneInput from 'react-native-phone-number-input';
+import SelectInput from '../../components/SelectInput';
+import StyledButton from '../../components/StyledButton';
+import { useNavigation } from '@react-navigation/native';
 
 export default function KycProfile() {
-  const [countryCode, setCountryCode] = useState('NG');
   const [phoneNumber, setPhoneNumber] = useState('');
-
-  const phoneRef = useRef(null);
-  const countryPickerRef = useRef(null);
+  const phoneInputRef = useRef(null);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerText}>KYC/Profile update</Text>
-
-      <TextInput
-        style={styles.input}
+      <View style={styles.heading}>
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => navigation.navigate('Savings')}>
+          <AntDesign name="left" size={16} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>KYC/Profile update</Text>
+      </View>
+      <InputField
+        label="BVN"
         placeholder="Enter your BVN"
         keyboardType="numeric"
+        width="100%"
       />
       <Text style={styles.helperText}>Dial *565*0# to get your BVN</Text>
 
+      <Text style={styles.label}>Mobile number</Text>
       <View style={styles.phoneContainer}>
         <PhoneInput
-          ref={phoneRef}
-          onPressFlag={() => countryPickerRef.current.openModal()}
-          style={styles.phoneInput}
-          onChangePhoneNumber={(number) => setPhoneNumber(number)}
-        />
-        <CountryPicker
-          ref={countryPickerRef}
-          onChange={(value) => {
-            setCountryCode(value.cca2);
-            phoneRef.current.selectCountry(value.cca2.toLowerCase());
+          ref={phoneInputRef}
+          defaultValue={phoneNumber}
+          defaultCode="NG"
+          layout="first"
+          onChangeText={(text) => {
+            setPhoneNumber(text);
           }}
-          cca2={countryCode}
-          translation="eng"
-          hideAlphabetFilter
+          containerStyle={styles.phoneFlagContainer}
+          textContainerStyle={styles.phoneInputTextContainer}
+          withDarkTheme 
         />
       </View>
-
-      <TextInput
-        style={styles.input}
+      <InputField
+        label="Full address"
         placeholder="Enter address"
+        keyboardType="text"
+        width="100%"
       />
-
-      <View style={styles.row}>
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          onValueChange={(value) => console.log(value)}
-          items={[
-            { label: 'City 1', value: 'city1' },
-            { label: 'City 2', value: 'city2' },
-          ]}
-          placeholder={{ label: "City", value: null }}
-        />
-        <RNPickerSelect
-          style={pickerSelectStyles}
-          onValueChange={(value) => console.log(value)}
-          items={[
-            { label: 'State 1', value: 'state1' },
-            { label: 'State 2', value: 'state2' },
-          ]}
-          placeholder={{ label: "State", value: null }}
-        />
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, width: '90%'}}>
+      <SelectInput
+        label="City"
+        items={[
+          { label: 'Lagos', value: 'lagos' },
+          { label: 'Abuja', value: 'abuja' },
+          { label: 'Kano', value: 'kano' },
+        ]}
+        placeholder={{ label: 'Select city', value: null }}
+        onValueChange={(value) => console.log(value)}
+        width="100%"
+      />
+      <SelectInput
+        label="State"
+        items={[
+          { label: 'Ikeja', value: 'ikeja' },
+          { label: 'Surulere', value: 'surulere' },
+          { label: 'Yaba', value: 'yaba' },
+        ]}
+        placeholder={{ label: 'Select state', value: null }}
+        onValueChange={(value) => console.log(value)}
+        width="100%"
+      />
       </View>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Next</Text>
-      </TouchableOpacity>
+      <StyledButton
+        title="Next"
+        onPress={() => console.log('Profile updated')}
+      />
+      
     </SafeAreaView>
   );
 }
@@ -78,8 +87,19 @@ export default function KycProfile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
+  },
+  heading: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 50,
+    paddingHorizontal: 20,
+    gap: 15,
+  },
+  icon: {
+    color: '#96959A',
+    marginTop: 4,
+
   },
   headerText: {
     fontSize: 18,
@@ -97,63 +117,32 @@ const styles = StyleSheet.create({
   helperText: {
     color: '#888',
     marginBottom: 20,
+    paddingLeft: 20,
+  },
+  label: {
+    paddingLeft: 20,
+    marginBottom: 10,
   },
   phoneContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
     height: 50,
-  },
-  phoneInput: {
-    flex: 1,
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  picker: {
-    flex: 1,
-    height: 50,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
+    width: '90%',
+    marginHorizontal: 20,
     marginBottom: 20,
   },
-  button: {
-    height: 50,
-    backgroundColor: '#7538EC',
+  phoneFlagContainer: {
+    height: "100%",
+    borderColor: 'gray',
+    borderRadius: 8,
+    borderWidth: 1,
+    width: '100%',
+  },
+  phoneInputTextContainer: {
+    height: "100%",
+    paddingHorizontal: 10,
+    paddingVertical: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    height: 50,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    flex: 1,
-  },
-  inputAndroid: {
-    height: 50,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    flex: 1,
+    backgroundColor: '#fff',
+    borderRadius: 8,
   },
 });
