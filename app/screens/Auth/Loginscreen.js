@@ -79,6 +79,9 @@ function Loginscreen(props) {
                 onChangeText={handleChange('email')}
                 value={values.email}
                 error={errors.email}
+                width='100%'
+                marginLeft="22px"
+                // paddingLeft='5%'
               />
               <ErrorAlert error={errors.email} />
 
@@ -115,6 +118,8 @@ function Loginscreen(props) {
               <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Login'}
                 onPress={handleSubmit}
+                width='100%'
+                margin= '0px'
               />
             </View>
           )}
@@ -146,14 +151,16 @@ function Loginscreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     height: '100%',
+    marginLeft: '5%',
     paddingTop: 60,
   },
   forgotText: {
-    paddingLeft: 20,
+    // paddingLeft: 20,
     color: '#7538EC',
     fontSize: 13,
+    marginBottom: 20
   },
   oauthbutton: {
     borderWidth: 1,
@@ -162,9 +169,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     justifyContent: 'center',
-    width: '90%',
+    width: '100%',
     alignItems: 'center',
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 8,
     textAlign: 'center',
   },
@@ -188,7 +195,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 16,
-    paddingLeft: 20,
+    // paddingLeft: 20,
     paddingTop: 7,
     paddingBottom: 30,
     color: '#3F4654',
@@ -196,7 +203,7 @@ const styles = StyleSheet.create({
   welcometext: {
     fontSize: 24,
     fontWeight: 'bold',
-    paddingLeft: 20,
+    // paddingLeft: 20,
     paddingTop: 30,
   },
   passwordContainer: {

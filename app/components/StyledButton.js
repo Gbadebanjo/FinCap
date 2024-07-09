@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-function StyledButton({ title, onPress, width = ' 90%', margin = 20 }) {
+function StyledButton({ title, onPress, width = width, margin = 20, marginLeft = marginLeft }) {
   return (
     <TouchableOpacity
       onPress={onPress}

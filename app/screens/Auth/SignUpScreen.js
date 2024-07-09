@@ -119,7 +119,7 @@ const SignupScreen = props => {
           validationSchema={validationSchema}
           onSubmit={handleSignup}>
           {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-            <View>
+            <View style={styles.form}>
               <InputField
                 label="Username"
                 style={styles.input}
@@ -139,7 +139,7 @@ const SignupScreen = props => {
                 value={values.email}
                 onChangeText={handleChange('email')}
                 width="100%"
-                marginLeft="22px"
+                // marginLeft="22px"
                 error={errors.email}
               />
               <ErrorAlert error={errors.email} />
@@ -149,8 +149,8 @@ const SignupScreen = props => {
                   placeholder="First Name"
                   value={values.firstName}
                   onChangeText={handleChange('firstName')}
-                  width="47.5%"
-                  marginLeft="10px"
+                  width="50%"
+                  paddingLeft="0px"
                   error={errors.firstName}
                 />
                 <InputField
@@ -158,8 +158,9 @@ const SignupScreen = props => {
                   placeholder="Last Name"
                   value={values.lastName}
                   onChangeText={handleChange('lastName')}
-                  width="47.5%"
-                  marginLeft="10px"
+                  width="40%"
+                  marginLeft="0px"
+                  paddingLeft="0px"
                   error={errors.lastName}
                 />
               </View>
@@ -254,14 +255,18 @@ const SignupScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     height: '100vh',
+    marginLeft: '5%'
     // marginTop: 90,
   },
   anleleft: {
     marginTop: 40,
-    marginLeft: 30,
+    // marginLeft: 30,
     marginBottom: 30,
+  },
+  form:{
+    width: '100%',
   },
   input: {
     height: 40,
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 16,
-    paddingLeft: 20,
+    // paddingLeft: 20,
     paddingTop: 7,
     paddingBottom: 30,
     color: '#3F4654',
@@ -281,11 +286,15 @@ const styles = StyleSheet.create({
   welcometext: {
     fontSize: 32,
     fontWeight: 'bold',
-    paddingLeft: 20,
+    // paddingLeft: 20,
   },
   names: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    backgroundColor: '#000',
+    margin: 0
+    
   },
   passwordContainer: {
     flexDirection: 'row',

@@ -28,6 +28,7 @@ import SetupPin from '../screens/HomeScreen/SetupPin';
 import ConfirmPin from '../screens/HomeScreen/ConfirmPin';
 import MoreScreen from '../screens/More/MoreScreen';
 import Profile from '../screens/More/Profile';
+import SetNewPassword from '../screens/More/SetNewPassword';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -180,6 +181,11 @@ function LoanStack() {
         <Stack.Screen 
         name="Profile" 
         component={Profile} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="SetNewPassword" 
+        component={SetNewPassword} 
         options={{ headerShown: false }} 
         />
         
