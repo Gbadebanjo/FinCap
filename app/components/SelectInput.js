@@ -27,6 +27,7 @@ const SelectInput = ({ label, items, placeholder, onValueChange, width }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginBottom: 20, // Adjust as needed
   },
   label: {

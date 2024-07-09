@@ -12,6 +12,8 @@ export default function KycProfile() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneInputRef = useRef(null);
 
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.heading}>
@@ -51,7 +53,7 @@ export default function KycProfile() {
         keyboardType="text"
         width="100%"
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', gap: 10, width: '90%'}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '90%'}}>
       <SelectInput
         label="City"
         items={[
@@ -72,14 +74,14 @@ export default function KycProfile() {
         ]}
         placeholder={{ label: 'Select state', value: null }}
         onValueChange={(value) => console.log(value)}
-        width="100%"
+        width= "100%"
       />
       </View>
+      
       <StyledButton
         title="Next"
-        onPress={() => console.log('Profile updated')}
+        onPress={() => navigation.navigate('VerifyProfile')}
       />
-      
     </SafeAreaView>
   );
 }
