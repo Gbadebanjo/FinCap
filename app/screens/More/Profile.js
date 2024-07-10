@@ -36,12 +36,13 @@ export default function Profile() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.content}>
       <StatusBar backgroundColor="transparent" barStyle="dark-content" />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.titleContainer}>
           <TouchableOpacity
             style={styles.angleLeft}
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate('MoreScreen')}
           >
             <FontAwesome name="angle-left" size={22} color="#808080" />
           </TouchableOpacity>
@@ -78,17 +79,19 @@ export default function Profile() {
                   placeholder="First Name"
                   value={values.firstName}
                   onChangeText={handleChange('firstName')}
-                  width="49.5%"
+                  width="100%"
                   marginLeft=""
                   error={errors.firstName}
+                  flex={1}
                 />
                 <InputField
                   label="Last Name"
                   placeholder="Last Name"
                   value={values.lastName}
                   onChangeText={handleChange('lastName')}
-                  width="49.5%"
+                  width="100%"
                   marginLeft=""
+                  flex={1}
                   error={errors.lastName}
                 />
               </View>
@@ -99,7 +102,7 @@ export default function Profile() {
                 value={values.phoneNumber}
                 onChangeText={handleChange('phoneNumber')}
                 width="100%"
-                marginLeft="22px"
+                // marginLeft="22px"
                 error={errors.phoneNumber}
               />
               <ErrorAlert error={errors.phoneNumber} />
@@ -111,7 +114,7 @@ export default function Profile() {
                 value={values.email}
                 onChangeText={handleChange('email')}
                 width="100%"
-                marginLeft="22px"
+                // marginLeft="22px"
                 error={errors.email}
               />
               <ErrorAlert error={errors.email} />
@@ -156,6 +159,7 @@ export default function Profile() {
           )}
         </Formik>
       </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -163,21 +167,29 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '90%',
+    width: '100%',
+    backgroundColor: '#fff',
+  },
+  content:{
+    flex: 1,
+    width: '100%',
     marginTop: 40,
-    marginLeft: '5%'
+    // marginLeft: '5%',
+    paddingHorizontal: 20,
+    // alignItems: 'center',
   },
   titleContainer: {
     flexDirection: 'row',
   },
   angleLeft: {
-    marginLeft: 30,
+    // marginLeft: 30,
     marginBottom: 30,
   },
   welcomeText: {
     fontSize: 16,
     fontWeight: '700',
     width: '80%',
+    marginLeft: '8%',
     color: '#101828',
     textAlign: 'center',
   },
@@ -210,15 +222,14 @@ const styles = StyleSheet.create({
   },
   names: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginHorizontal: 10,
+    gap: 20,
     width: '100%',
   },
   input: {
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
-    marginBottom: 10,
+    marginBottom: 50,
     paddingLeft: 10,
     color: '#d2d2d4',
   },

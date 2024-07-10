@@ -94,8 +94,8 @@ const SignupScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor="transparent" barStyle="dark-content" />
-      <ScrollView>
+      <StatusBar backgroundColor="transparent" barStyle="dark-content"/>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <TouchableOpacity
           style={styles.anleleft}
           onPress={() => navigation.navigate('Welcome')}>
@@ -149,8 +149,8 @@ const SignupScreen = props => {
                   placeholder="First Name"
                   value={values.firstName}
                   onChangeText={handleChange('firstName')}
-                  width="50%"
-                  paddingLeft="0px"
+                  width="100%"
+                  flex={1}
                   error={errors.firstName}
                 />
                 <InputField
@@ -158,9 +158,8 @@ const SignupScreen = props => {
                   placeholder="Last Name"
                   value={values.lastName}
                   onChangeText={handleChange('lastName')}
-                  width="40%"
-                  marginLeft="0px"
-                  paddingLeft="0px"
+                  width="100%"
+                  flex={1}
                   error={errors.lastName}
                 />
               </View>
@@ -174,7 +173,6 @@ const SignupScreen = props => {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   width="100%"
-                  marginLeft="22px"
                   error={errors.password}
                 />
                 <TouchableOpacity
@@ -182,7 +180,7 @@ const SignupScreen = props => {
                   onPress={togglePasswordVisibility}>
                   <FontAwesome
                     name={showPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
@@ -207,7 +205,7 @@ const SignupScreen = props => {
                   onPress={toggleConfirmPasswordVisibility}>
                   <FontAwesome
                     name={showConfirmPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
@@ -257,7 +255,8 @@ const styles = StyleSheet.create({
   container: {
     width: '90%',
     height: '100vh',
-    marginLeft: '5%'
+    marginLeft: '5%',
+    marginBottom: 50,
     // marginTop: 90,
   },
   anleleft: {
@@ -291,19 +290,16 @@ const styles = StyleSheet.create({
   names: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 10,
     width: '100%',
-    backgroundColor: '#000',
-    margin: 0
-    
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   eyeIconContainer: {
-    position: 'absolute',
     right: 30,
-    bottom: 26,
+    top: 2,
   },
   LoginContainer: {
     flexDirection: 'row',

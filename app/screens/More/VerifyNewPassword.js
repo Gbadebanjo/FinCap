@@ -46,7 +46,7 @@ const validationSchema = Yup.object().shape({
       .label('Confirm Password'),
   });
 
-export default function SetNewPassword() {
+export default function VerifyNewPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [success, isSuccess] = useState(false);

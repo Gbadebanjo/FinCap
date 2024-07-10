@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-function StyledButton({ title, onPress, width = width, margin = 20, marginLeft = marginLeft }) {
+function StyledButton({ title, onPress, width, marginRight, marginLeft, marginTop, marginBottom }) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.button, { width }, { margin }]}>
+    style={[styles.button, { width }, { marginRight }, {marginLeft}, {marginTop}, {marginBottom}]}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );

@@ -72,16 +72,16 @@ function Loginscreen(props) {
             errors,
             touched,
           }) => (
-            <View>
+            <View >
+              <View> 
               <InputField
                 label="Email address"
-                placeholder="Enter your email adress "
+                placeholder="Enter your email adress"
                 onChangeText={handleChange('email')}
                 value={values.email}
                 error={errors.email}
                 width='100%'
-                marginLeft="22px"
-                // paddingLeft='5%'
+                style={styles.input}
               />
               <ErrorAlert error={errors.email} />
 
@@ -94,7 +94,7 @@ function Loginscreen(props) {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   width="100%"
-                  marginLeft="22px"
+                  style={styles.input}
                   error={errors.email}
                 />
                 <TouchableOpacity
@@ -102,12 +102,14 @@ function Loginscreen(props) {
                   onPress={togglePasswordVisibility}>
                   <FontAwesome
                     name={showPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
               </View>
               <ErrorAlert error={errors.password} />
+
+              </View>
               <TouchableOpacity>
                 <Text
                   style={styles.forgotText}
@@ -155,6 +157,14 @@ const styles = StyleSheet.create({
     height: '100%',
     marginLeft: '5%',
     paddingTop: 60,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
+    color: '#d2d2d4',
   },
   forgotText: {
     // paddingLeft: 20,
@@ -209,11 +219,11 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    // marginTop: 70,
   },
   eyeIconContainer: {
-    position: 'absolute',
     right: 30,
-    bottom: 26,
+    top: 2,
   },
 });
 

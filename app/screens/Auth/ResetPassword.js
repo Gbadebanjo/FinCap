@@ -125,7 +125,7 @@ function ResetPassword(props) {
                   onPress={togglePasswordVisibility}>
                   <FontAwesome5
                     name={showPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
@@ -150,7 +150,7 @@ function ResetPassword(props) {
                   onPress={togglePasswordVisibility}>
                   <FontAwesome5
                     name={showPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
@@ -224,9 +224,8 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   eyeIconContainer: {
-    position: 'absolute',
     right: 30,
-    bottom: 26,
+    top: 2,
   },
 });
 export default ResetPassword;

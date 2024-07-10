@@ -11,8 +11,9 @@ const InputField = ({
   marginLeft,
   paddingLeft,
   error,
+  flex = 0
 }) => {
-  const styles = getStyles(width, marginLeft, paddingLeft);
+  const styles = getStyles(width, marginLeft, paddingLeft, flex);
 
   return (
     <View style={styles.inputContainer}>
@@ -30,11 +31,13 @@ const InputField = ({
   );
 };
 
-const getStyles = (width, marginLeft, paddingLeft ) =>
+const getStyles = (width, marginLeft, paddingLeft, flex ) =>
   StyleSheet.create({
     inputContainer: {
+      flex: flex,
       width: width,
       alignItems: 'center',
+      marginBottom: 10
     },
     label: {
       color: '#111827',
@@ -46,7 +49,7 @@ const getStyles = (width, marginLeft, paddingLeft ) =>
     },
     input: {
       height: 48,
-      width: '90%',
+      width: '100%',
       borderRadius: 8,
       borderColor: 'gray',
       borderWidth: 1,
