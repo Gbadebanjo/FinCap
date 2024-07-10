@@ -44,7 +44,7 @@ export default function KycProfile() {
           }}
           containerStyle={styles.phoneFlagContainer}
           textContainerStyle={styles.phoneInputTextContainer}
-          withDarkTheme 
+          withDarkTheme
         />
       </View>
       <InputField
@@ -53,31 +53,31 @@ export default function KycProfile() {
         keyboardType="text"
         width="100%"
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '90%'}}>
-      <SelectInput
-        label="City"
-        items={[
-          { label: 'Lagos', value: 'lagos' },
-          { label: 'Abuja', value: 'abuja' },
-          { label: 'Kano', value: 'kano' },
-        ]}
-        placeholder={{ label: 'Select city', value: null }}
-        onValueChange={(value) => console.log(value)}
-        width="100%"
-      />
-      <SelectInput
-        label="State"
-        items={[
-          { label: 'Ikeja', value: 'ikeja' },
-          { label: 'Surulere', value: 'surulere' },
-          { label: 'Yaba', value: 'yaba' },
-        ]}
-        placeholder={{ label: 'Select state', value: null }}
-        onValueChange={(value) => console.log(value)}
-        width= "100%"
-      />
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '90%' }}>
+        <SelectInput
+          label="City"
+          items={[
+            { label: 'Lagos', value: 'lagos' },
+            { label: 'Abuja', value: 'abuja' },
+            { label: 'Kano', value: 'kano' },
+          ]}
+          placeholder={{ label: 'Select city', value: null }}
+          onValueChange={(value) => console.log(value)}
+          width="100%"
+        />
+        <SelectInput
+          label="State"
+          items={[
+            { label: 'Ikeja', value: 'ikeja' },
+            { label: 'Surulere', value: 'surulere' },
+            { label: 'Yaba', value: 'yaba' },
+          ]}
+          placeholder={{ label: 'Select state', value: null }}
+          onValueChange={(value) => console.log(value)}
+          width="100%"
+        />
       </View>
-      
+
       <StyledButton
         title="Next"
         onPress={() => navigation.navigate('VerifyProfile')}

@@ -28,9 +28,9 @@ export default function VerifyProfile() {
             </View>
             <View style={styles.buttonContainer}>
                 <StyledButton
-                title="Let's Start"
-                onPress={() => navigation.navigate('Selfie')}
-            />
+                    title="Let's Start"
+                    onPress={() => navigation.navigate('Selfie')}
+                />
             </View>
 
         </SafeAreaView>

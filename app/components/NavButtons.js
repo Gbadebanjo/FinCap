@@ -9,7 +9,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import FundWallet from '../screens/HomeScreen/FundWallet';
 import KycProfile from '../screens/HomeScreen/KycProfile';
 import VerifyProfile from '../screens/HomeScreen/VerifyProfile';
-import Selfie from '../screens/HomeScreen/Selfie';
+import UploadDocument from '../screens/HomeScreen/UploadDocument';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
@@ -75,10 +75,12 @@ function HomeStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Selfie"
-        component={Selfie}
+        name="UploadDocument"
+        component={UploadDocument}
         options={{ headerShown: false }}
       />
+
+      
       {/* Add more screens for HomeStack here if needed */}
     </Stack.Navigator>
   );
