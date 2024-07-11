@@ -31,18 +31,10 @@ const validationSchema = Yup.object().shape({
 export default function Profile() {
   const [imageUri, setImageUri] = useState(null);
     const [signupError, setSignupError] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setConfirmShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
   
     const navigation = useNavigation();
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-      };
-      const toggleConfirmPasswordVisibility = () => {
-        setConfirmShowPassword(!showConfirmPassword);
-      };
 
   return (
     <SafeAreaView style={styles.container}>
