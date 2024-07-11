@@ -3,17 +3,24 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import LogoutModal from '../../components/Modals/LogoutModal';
 
 export default function MoreScreen() {
   const [imageUri, setImageUri] = useState(null);
   const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
   const navigation = useNavigation();
+  const [success, isSuccess] = useState(false);
+  const [modalVisible, setModalVisible] = useState(true);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+  const [error, setError] = useState('');
 
   const toggleFaceIDSwitch = () => setIsFaceIDEnabled(previousState => !previousState);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
+    
         <View style={styles.imageContainer}>
           {imageUri ? (
             <Image source={{ uri: imageUri }} style={styles.image} />
@@ -37,7 +44,8 @@ export default function MoreScreen() {
         </TouchableOpacity>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Edit Personal Data</Text>
@@ -59,7 +67,8 @@ export default function MoreScreen() {
             />
           </View>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('VerifyNewPassword')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Change Password</Text>
@@ -67,7 +76,8 @@ export default function MoreScreen() {
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('SetUpNewPin')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Reset pin</Text>
@@ -75,7 +85,8 @@ export default function MoreScreen() {
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Withdrawal Bank Account</Text>
@@ -83,7 +94,8 @@ export default function MoreScreen() {
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont}         
+            onPress={() => navigation.navigate('NotificationSettings')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Notification Settings</Text>
@@ -91,7 +103,8 @@ export default function MoreScreen() {
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont}          
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Support</Text>
@@ -99,13 +112,29 @@ export default function MoreScreen() {
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.LogOutCont}>
+          <TouchableOpacity style={styles.LogOutCont}  
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#EC2F2F" />
               <Text style={styles.LogOutText}>Log Out</Text>
             </View>
           </TouchableOpacity>
         </ScrollView>
+        <LogoutModal
+          visible={modalVisible}
+          title={success ? 'Your new Password has been Saved' : 'Error!'}
+          message={error || 'Your can now login using your new password'}
+          isSuccess={success}
+          onDismiss={() => {
+            setModalVisible(false);
+            if (success) {
+              props.navigation.navigate('Login');
+            } else {
+              props.navigation.navigate('ForgotPassword');
+            }
+          }}
+          buttonTitle={success ? 'Go back to settings' : 'Try again'}
+        />
       </View>
     </SafeAreaView>
   );

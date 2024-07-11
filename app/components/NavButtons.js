@@ -28,6 +28,11 @@ import SetupPin from '../screens/HomeScreen/SetupPin';
 import ConfirmPin from '../screens/HomeScreen/ConfirmPin';
 import MoreScreen from '../screens/More/MoreScreen';
 import Profile from '../screens/More/Profile';
+import SetNewPassword from '../screens/More/SetNewPassword';
+import VerifyNewPassword from '../screens/More/VerifyNewPassword';
+import SetUpNewPin from '../screens/More/SetUpNewPin';
+import ConfirmNewPin from '../screens/More/ConfirmNewPin';
+import NotificationSettings from '../screens/More/NotificationSettings';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -93,7 +98,6 @@ function SavingsStack() {
     </Stack.Navigator>
   );
 }
-
 function InvestStack() {
   return (
     <Stack.Navigator>
@@ -173,13 +177,38 @@ function LoanStack() {
     return (
       <Stack.Navigator>
         <Stack.Screen 
-        name="More" 
+        name="MoreScreen" 
         component={MoreScreen} 
         options={{ headerShown: false }} 
         />
         <Stack.Screen 
         name="Profile" 
         component={Profile} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="SetNewPassword" 
+        component={SetNewPassword} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="VerifyNewPassword"  
+        component={VerifyNewPassword} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="SetUpNewPin"  
+        component={SetUpNewPin} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="ConfirmNewPin"  
+        component={ConfirmNewPin} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="NotificationSettings"  
+        component={NotificationSettings} 
         options={{ headerShown: false }} 
         />
         

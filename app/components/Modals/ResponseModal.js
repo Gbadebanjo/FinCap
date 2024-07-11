@@ -16,22 +16,25 @@ const ResponseModal = ({
   isSuccess,
   onDismiss,
   buttonTitle,
+  backgroundColor = '#F5F5F5',
+  color = '#7538EC',
+  width = '40%'
 }) => {
   const iconName = isSuccess ? 'check' : 'times';
   const iconColor = 'white';
-  const backgroundColor = isSuccess ? '#5dae64' : '#980D0D';
+  const iconBackgroundColor = isSuccess ? '#5dae64' : '#980D0D'; 
 
   return (
     <Modal visible={visible} animationType="slide">
       <SafeAreaView style={styles.centeredView}>
         <View style={styles.modalView}>
-          <View style={[styles.iconContainer, { backgroundColor }]}>
+          <View style={[styles.iconContainer, { backgroundColor: iconBackgroundColor }]}>
             <FontAwesome name={iconName} size={35} color={iconColor}/>
           </View>
           <Text style={styles.modalTitle}>{title}</Text>
           <Text style={styles.modalMessage}>{message}</Text>
-          <TouchableOpacity style={styles.button} onPress={onDismiss}>
-            <Text style={styles.buttonText}>{buttonTitle}</Text>
+          <TouchableOpacity style={[styles.button, {backgroundColor}, {width}]} onPress={onDismiss}>
+            <Text style={[styles.buttonText, {color}]}>{buttonTitle}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -78,14 +81,14 @@ const styles = StyleSheet.create({
   button: {
     borderColor: '#7538EC',
     borderWidth: 1,
-    backgroundColor: '#F5F5F5',
+    // backgroundColor: '#F5F5F5',
     borderRadius: 10,
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     elevation: 2,
   },
   buttonText: {
-    color: '#7538EC',
+    // color: '#7538EC',
     fontWeight: 'bold',
     textAlign: 'center',
   },

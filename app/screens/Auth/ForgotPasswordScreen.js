@@ -69,12 +69,13 @@ export default function ForgotPasswordScreen(props) {
               value={values.email}
               error={errors.email}
               width="100%"
-              marginLeft="22px"
+              // marginLeft="22px"
             />
 
             <StyledButton
               title={loading ? <ActivityIndicator color="#fff" /> : 'Submit'}
               onPress={handleSubmit}
+              width='100%'
             />
           </>
         )}
@@ -86,13 +87,14 @@ export default function ForgotPasswordScreen(props) {
 const styles = StyleSheet.create({
   Container: {
     height: '100%',
-    width: '100%',
+    width: '90%',
     paddingTop: 40,
     alignItems: 'center',
+    marginLeft: '5%'
   },
   Icon: {
     paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     alignSelf: 'flex-start',
   },
   Heading: {

@@ -72,13 +72,16 @@ function Loginscreen(props) {
             errors,
             touched,
           }) => (
-            <View>
+            <View >
+              <View> 
               <InputField
                 label="Email address"
-                placeholder="Enter your email adress "
+                placeholder="Enter your email adress"
                 onChangeText={handleChange('email')}
                 value={values.email}
                 error={errors.email}
+                width='100%'
+                style={styles.input}
               />
               <ErrorAlert error={errors.email} />
 
@@ -91,7 +94,7 @@ function Loginscreen(props) {
                   onBlur={handleBlur('password')}
                   value={values.password}
                   width="100%"
-                  marginLeft="22px"
+                  style={styles.input}
                   error={errors.email}
                 />
                 <TouchableOpacity
@@ -99,12 +102,14 @@ function Loginscreen(props) {
                   onPress={togglePasswordVisibility}>
                   <FontAwesome
                     name={showPassword ? 'eye' : 'eye-slash'}
-                    size={15}
+                    size={18}
                     color="#808080"
                   />
                 </TouchableOpacity>
               </View>
               <ErrorAlert error={errors.password} />
+
+              </View>
               <TouchableOpacity>
                 <Text
                   style={styles.forgotText}
@@ -115,6 +120,8 @@ function Loginscreen(props) {
               <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Login'}
                 onPress={handleSubmit}
+                width='100%'
+                margin= '0px'
               />
             </View>
           )}
@@ -146,14 +153,24 @@ function Loginscreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     height: '100%',
+    marginLeft: '5%',
     paddingTop: 60,
   },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 10,
+    color: '#d2d2d4',
+  },
   forgotText: {
-    paddingLeft: 20,
+    // paddingLeft: 20,
     color: '#7538EC',
     fontSize: 13,
+    marginBottom: 20
   },
   oauthbutton: {
     borderWidth: 1,
@@ -162,9 +179,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     justifyContent: 'center',
-    width: '90%',
+    width: '100%',
     alignItems: 'center',
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
     marginVertical: 8,
     textAlign: 'center',
   },
@@ -188,7 +205,7 @@ const styles = StyleSheet.create({
   },
   subtext: {
     fontSize: 16,
-    paddingLeft: 20,
+    // paddingLeft: 20,
     paddingTop: 7,
     paddingBottom: 30,
     color: '#3F4654',
@@ -196,17 +213,17 @@ const styles = StyleSheet.create({
   welcometext: {
     fontSize: 24,
     fontWeight: 'bold',
-    paddingLeft: 20,
+    // paddingLeft: 20,
     paddingTop: 30,
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    // marginTop: 70,
   },
   eyeIconContainer: {
-    position: 'absolute',
     right: 30,
-    bottom: 26,
+    top: 2,
   },
 });
 
