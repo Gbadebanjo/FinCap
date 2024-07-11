@@ -19,7 +19,6 @@ import InputField from '../../components/InputField';
 import StyledButton from '../../components/StyledButton';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ErrorAlert from '../../components/ErrorAlert';
-import ResponseModal from '../../components/Modals/ResponseModal';
 
 const validationSchema = Yup.object().shape({
     newPassword: Yup.string()

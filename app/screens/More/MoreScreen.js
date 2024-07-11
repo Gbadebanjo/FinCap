@@ -10,7 +10,7 @@ export default function MoreScreen() {
   const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
   const navigation = useNavigation();
   const [success, isSuccess] = useState(false);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   const [error, setError] = useState('');
@@ -86,7 +86,7 @@ export default function MoreScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.eachSettingCont} 
-            onPress={() => navigation.navigate('Profile')}>
+            onPress={() => navigation.navigate('BankAccount')}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#808080" />
               <Text style={styles.settingText}>Withdrawal Bank Account</Text>
@@ -113,7 +113,9 @@ export default function MoreScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.LogOutCont}  
-            onPress={() => navigation.navigate('Profile')}>
+            onPress={() => {
+              setModalVisible(true);
+            }}>
             <View style={styles.iconNtext}>
               <FontAwesome name="angle-left" size={22} color="#EC2F2F" />
               <Text style={styles.LogOutText}>Log Out</Text>
@@ -122,18 +124,18 @@ export default function MoreScreen() {
         </ScrollView>
         <LogoutModal
           visible={modalVisible}
-          title={success ? 'Your new Password has been Saved' : 'Error!'}
-          message={error || 'Your can now login using your new password'}
+          title='Logout'
+          message='Are you sure you want to logout?'
           isSuccess={success}
-          onDismiss={() => {
+          cancelText='No'
+          confirmText='Yes'
+          onCancel={() => {
             setModalVisible(false);
-            if (success) {
-              props.navigation.navigate('Login');
-            } else {
-              props.navigation.navigate('ForgotPassword');
-            }
           }}
-          buttonTitle={success ? 'Go back to settings' : 'Try again'}
+          onConfirm={() => {
+            setModalVisible(false);
+            alert('Logged out');
+          }}
         />
       </View>
     </SafeAreaView>

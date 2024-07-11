@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 20,
     elevation: 2,
+    marginTop: 10,
   },
   buttonText: {
     // color: '#7538EC',

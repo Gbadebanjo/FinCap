@@ -33,6 +33,8 @@ import VerifyNewPassword from '../screens/More/VerifyNewPassword';
 import SetUpNewPin from '../screens/More/SetUpNewPin';
 import ConfirmNewPin from '../screens/More/ConfirmNewPin';
 import NotificationSettings from '../screens/More/NotificationSettings';
+import BankAccount from '../screens/More/BankAccount';
+import AddBankForm from '../screens/More/AddBankForm';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -209,6 +211,16 @@ function LoanStack() {
         <Stack.Screen 
         name="NotificationSettings"  
         component={NotificationSettings} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="BankAccount"  
+        component={BankAccount} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="AddBankForm"  
+        component={AddBankForm} 
         options={{ headerShown: false }} 
         />
         

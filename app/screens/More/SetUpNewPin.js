@@ -29,7 +29,7 @@ export default function SetUpNewPin() {
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
         style={styles.anleleft}
-        onPress={() => navigation.navigate('HomeScreen')}>
+        onPress={() => navigation.navigate('MoreScreen')}>
         <FontAwesome name="angle-left" size={22} color="#808080" />
       </TouchableOpacity>
       <View style={styles.content}>
