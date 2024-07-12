@@ -22,16 +22,16 @@ const navigation = useNavigation();
 
 
 const bankList = [
-    // {
-    //     bankName: 'Access Bank',
-    //     accountNumber: '123456778',
-    //     accountName: 'John Doe'
-    // },
-    // {
-    //     bankName: 'Zenith Bank',
-    //     accountNumber: '7781224214',
-    //     accountName: 'Jack Robbinson'
-    // }
+    {
+        bankName: 'Access Bank',
+        accountNumber: '123456778',
+        accountName: 'John Doe'
+    },
+    {
+        bankName: 'Zenith Bank',
+        accountNumber: '7781224214',
+        accountName: 'Jack Robbinson'
+    }
 ];
 
 return (

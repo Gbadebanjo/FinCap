@@ -1,57 +1,39 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesome } from '@expo/vector-icons';
 
-const LogoutModal = ({ onCancel, onConfirm, title, message, visible, confirmText, cancelText }) => {
+const LogoutModal = ({ onCancel, onConfirm, title, message, visible}) => {
   return (
-    <SafeAreaView>      
-    <Modal visible={visible} transparent>
-      <View style={styles.fullScreenContainer}>
-        <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>{title}</Text>
-            <TouchableOpacity onPress={onCancel}>
-                <FontAwesome name="angle-left" size={22} color="#808080" />
-            </TouchableOpacity>
-          </View>
-       
-          <Text style={styles.message}>{message}</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={onConfirm} style={styles.confirmTextContainer}>
-              <Text style={styles.confirmText}>{confirmText}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={onCancel} style={styles.cancelTextContainer}>
-              <Text style={styles.cancelText}>{cancelText}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
+    <Modal visible={visible}>
+            <View style={styles.container}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.message}>{message}</Text>
+                <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={onCancel}>
+                    <Text style={styles.cancelText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onConfirm}>
+                    <Text style={styles.confirmText}>Confirm</Text>
+                </TouchableOpacity>
+                </View>
+            </View>
     </Modal>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  fullScreenContainer: {
+  container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor:  'rgba(0, 0, 0, 0.5)', 
-  },
-  container: {                  
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    maxWidth: '100%',
+    maxWidth: '90%',
     // maxHeight: '50%',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    // height: '50vh',
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 600,
+    lineHeight: 19.2,
     marginBottom: 10,
   },
   message: {
@@ -61,35 +43,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    marginTop: 20,
-    gap: 30,
-  },
-  cancelTextContainer: {
-    fontSize: 16,
-    fontWeight: 500,
-    paddingVertical: 20,
-    borderWidth: 1,
-    borderRadius:10,
-    textAlign: 'center',
-    borderColor: '#D0D5DD'
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   cancelText: {
-    // color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-  confirmText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-  confirmTextContainer: {
     fontSize: 16,
     fontWeight: 500,
-    paddingVertical: 20,
-    borderRadius:10,
-    backgroundColor: '#CC342E',
-    borderColor: '#CC342E'
+    color: '#96959A',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  confirmText: {
+    fontSize: 16,
+    fontWeight: 500,
+    color: '#541592',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
   },
 });
 

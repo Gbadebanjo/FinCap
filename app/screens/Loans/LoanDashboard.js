@@ -170,14 +170,16 @@ export default function LoanDashboard() {
                   <View style={styles.TransDetails}>
                     <Text style={styles.DetailName}>Loan</Text>
                     <Text style={styles.DetailDate}>
-                      { loanData && loanData.data.loanAmount >= 0
+                      {console.log(loanData.data.loanAmount)}
+                      {console.log(loanData.data.dueDate)}
+                      { loanData && loanData.data && loanData.data.loanAmount >= 0
                         ? 'Loan repaid in full'
                      :  `Repayment due: ${formatDate(loanData.data.dueDate)}`
                     }</Text>                        
                   </View>
                 </View>
                 <Text style={styles.TransAmount}>
-                  {loanData && formatAmount(loanData.data.totalRepaymentAmount)}
+                  {loanData &&  loanData.data && formatAmount(loanData.data.totalRepaymentAmount)}
                 </Text>
               </View>
 
