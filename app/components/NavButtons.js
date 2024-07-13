@@ -7,6 +7,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import FundWallet from '../screens/HomeScreen/FundWallet';
+import KycProfile from '../screens/HomeScreen/KycProfile';
+import VerifyProfile from '../screens/HomeScreen/VerifyProfile';
+import UploadDocument from '../screens/HomeScreen/UploadDocument';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
@@ -68,6 +71,23 @@ function HomeStack() {
         component={FundWallet}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="KycProfile"
+        component={KycProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="VerifyProfile"
+        component={VerifyProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UploadDocument"
+        component={UploadDocument}
+        options={{ headerShown: false }}
+      />
+
+      
       {/* Add more screens for HomeStack here if needed */}
     </Stack.Navigator>
   );

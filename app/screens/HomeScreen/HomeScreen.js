@@ -70,7 +70,7 @@ function HomeScreen(props) {
             <Text style={styles.Todo}>Todo</Text>
             <View style={styles.Boxes} >
                 <TouchableOpacity 
-                onPress={() => navigation.navigate('FundWallet')}
+                onPress={() => navigation.navigate('KycProfile')}
                 style={styles.EachBox}>
                     <View style={styles.Icon}>
                         <FontAwesome name="user-circle" size={20} color="#fff" />

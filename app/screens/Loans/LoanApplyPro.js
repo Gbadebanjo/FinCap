@@ -4,8 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import InputField from '../../components/InputField';
-import SelectInput from '../../components/SelectInput';
-import StyledButton from '../../components/StyledButton';
 import ResponseModal from '../../components/Modals/ResponseModal';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
