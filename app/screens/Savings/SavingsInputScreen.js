@@ -84,6 +84,8 @@ export default function SavingsInputScreen({ route }) {
         </View>
         <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
+                width='90%'
+                marginLeft='5%'
                 onPress={() => {
                     if (!inputAmount || !selectedDuration || !selectedButton) {
                         alert('Please fill all the fields');

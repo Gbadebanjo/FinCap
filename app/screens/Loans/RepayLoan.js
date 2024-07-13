@@ -167,53 +167,54 @@ export default function RepayLoan() {
             isValid,
           }) => (
             <View>
-                <InputField
-                label={'Enter a different amount'}
-                placeholder={'Enter amount'}
-                onChangeText={handleChange('amount')}
-                value={values.amount}
-                width="100%"
-            />
-            <ErrorAlert error={errors.amount}/>
+                    <InputField
+                        label={'Enter a different amount'}
+                        placeholder={'Enter amount'}
+                        onChangeText={handleChange('amount')}
+                        value={values.amount}
+                        width="100%"
+                        // marginLeft='10%'
+                    />
+                    <ErrorAlert error={errors.amount}/>
 
-            <View style={styles.loanDetails}>
-            <Text style={styles.DetailsHeader}>Loan Details</Text>
-            <View style={styles.DetailsEach}>
-                <Text style={styles.DetailsKey}>Amount</Text>
-                <Text style={styles.DetailsValue}>{formatAmount(loanData.data.loanAmount)}</Text>
-            </View>
-            <View style={styles.DetailsEach}>
-                <Text style={styles.DetailsKey}>Interest On Loan</Text>
-                <Text style={styles.DetailsValue}>{formatAmount(loanData.data.interestRate + loanData.data.administrativeFee)}</Text>
-            </View>
-            <View style={styles.DetailsEach}>
-                <Text style={styles.DetailsKey}>Duration</Text>
-                <Text style={styles.DetailsValue}>{loanData.data.repaymentDuration} days</Text>
-            </View>
-            <View style={styles.DetailsEach}>
-                <Text style={styles.DetailsKey}>Application Date</Text>
-                <Text style={styles.DetailsValue}>{formatDate(loanData.data.dateApplied)}</Text>
-            </View>
-            <View style={styles.DetailsEach}>
-                <Text style={styles.DetailsKey}>Payback Date</Text>
-                <Text style={styles.DetailsValue}>{formatDate(loanData.data.dueDate)}</Text>
-            </View>
-             </View>
+                    <View style={styles.loanDetails}>
+                    <Text style={styles.DetailsHeader}>Loan Details</Text>
+                    <View style={styles.DetailsEach}>
+                        <Text style={styles.DetailsKey}>Amount</Text>
+                        <Text style={styles.DetailsValue}>{formatAmount(loanData.data.loanAmount)}</Text>
+                    </View>
+                    <View style={styles.DetailsEach}>
+                        <Text style={styles.DetailsKey}>Interest On Loan</Text>
+                        <Text style={styles.DetailsValue}>{formatAmount(loanData.data.interestRate + loanData.data.administrativeFee)}</Text>
+                    </View>
+                    <View style={styles.DetailsEach}>
+                        <Text style={styles.DetailsKey}>Duration</Text>
+                        <Text style={styles.DetailsValue}>{loanData.data.repaymentDuration} days</Text>
+                    </View>
+                    <View style={styles.DetailsEach}>
+                        <Text style={styles.DetailsKey}>Application Date</Text>
+                        <Text style={styles.DetailsValue}>{formatDate(loanData.data.dateApplied)}</Text>
+                    </View>
+                    <View style={styles.DetailsEach}>
+                        <Text style={styles.DetailsKey}>Payback Date</Text>
+                        <Text style={styles.DetailsValue}>{formatDate(loanData.data.dueDate)}</Text>
+                    </View>
+                    </View>
 
-       <View style={styles.submit}>
-                <TouchableOpacity
-                    onPress={handleSubmit}
-                    style={[styles.button, { width: '90%', margin: 20 }]}
-                    disabled={!isValid || loading}
-                >
-                    {loading ? (
-                        <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                        <Text style={styles.text}>Proceed With Payment</Text>
-                    )}
-                </TouchableOpacity>
-            </View>
-       </View>
+                    <View style={styles.submit}>
+                                <TouchableOpacity
+                                    onPress={handleSubmit}
+                                    style={[styles.button, { width: '100%', margin: 20 }]}
+                                    disabled={!isValid || loading}
+                                >
+                                    {loading ? (
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    ) : (
+                                        <Text style={styles.text}>Proceed With Payment</Text>
+                                    )}
+                                </TouchableOpacity>
+                            </View>
+                    </View>
     )}
        </Formik>
         <ResponseModal
@@ -242,9 +243,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         marginTop: 40,
+        paddingHorizontal: 20
     },
     anleleft: {
-        marginLeft: 20,
+        // marginLeft: 20,
         marginTop: 20,
     },
     topcontainer:{
@@ -253,25 +255,25 @@ const styles = StyleSheet.create({
     },
     repayloan: {
         paddingVertical: 5,
-        paddingLeft: '28%',
+        paddingLeft: '35%',
         marginTop: 20,
         fontSize: 18,
         fontWeight: '600',
-        width: '90%',
+        width: '100%',
         color: '#111827'
     },
     subtext: {
         marginTop: 20,
         color: '#111827',
-        marginLeft: 20,
+        // marginLeft: 20,
         marginBottom: 20,
         fontWeight: '700',
         fontSize: 22,
     },
     payfull:{
         backgroundColor: '#7538EC',
-        width: '90%',
-        marginLeft: '5%',
+        width: '100%',
+        // marginLeft: '5%',
         borderRadius: 8,
         flexDirection: 'row',
         paddingVertical: 20,
@@ -304,8 +306,8 @@ const styles = StyleSheet.create({
     },
     loanDetails: {
         backgroundColor: '#F6F6F6',
-        width: '90%',
-        marginLeft: '5%',
+        width: '100%',
+        // marginLeft: '5%',
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderRadius: 10,

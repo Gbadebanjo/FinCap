@@ -133,6 +133,7 @@ function VerifySignup(props) {
             <StyledButton
               title={loading ? <ActivityIndicator color="#fff" /> : 'Submit'}
               onPress={handleSubmit}
+              width='100%'
             />
           </>
         )}
@@ -174,13 +175,13 @@ function VerifySignup(props) {
 const styles = StyleSheet.create({
   Container: {
     height: '100%',
-    width: '100%',
+    width: '90%',
     paddingTop: 40,
     alignItems: 'center',
   },
   Icon: {
     paddingTop: 40,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     alignSelf: 'flex-start',
   },
   Heading: {

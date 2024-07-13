@@ -97,7 +97,7 @@ export default function LoanDashboard() {
           <Text style={styles.PlanName}>Flex Save</Text>
           {isAmountVisible ? (
             data && data.data ? (
-              <Text style={styles.PlanAmount}>{data && formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}</Text>
+              <Text style={styles.PlanAmount}>{data && data.data && formatAmount(data.data.totalAccruedEarningsAllSavingPlans)}</Text>
             ) : (
               <Text style={styles.PlanAmount}>Loading...</Text>
             )
@@ -170,11 +170,9 @@ export default function LoanDashboard() {
                   <View style={styles.TransDetails}>
                     <Text style={styles.DetailName}>Loan</Text>
                     <Text style={styles.DetailDate}>
-                      {console.log(loanData.data.loanAmount)}
-                      {console.log(loanData.data.dueDate)}
                       { loanData && loanData.data && loanData.data.loanAmount >= 0
                         ? 'Loan repaid in full'
-                     :  `Repayment due: ${formatDate(loanData.data.dueDate)}`
+                        : loanData && loanData.data ? `Repayment due: ${formatDate(loanData.data.dueDate)}` : 'Loading loan details...'
                     }</Text>                        
                   </View>
                 </View>

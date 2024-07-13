@@ -87,7 +87,7 @@ export default function LoanApplication() {
                                 onValueChange={handleChange('employmentStatus')}
                                 onBlur={handleBlur('employmentStatus')}
                                 value={values.employmentStatus}
-                                width="90%"
+                                width="100%"
                                 error={errors.employmentStatus}
                             />
                             <InputField
@@ -107,7 +107,8 @@ export default function LoanApplication() {
                                     onChangeText={handleChange('salaryAmount')}
                                     onBlur={handleBlur('salaryAmount')}
                                     value={values.salaryAmount}
-                                    width="50%"
+                                    width="100%"
+                                    flex={1}
                                     error={errors.salaryAmount}
                                 />
                                 <InputField
@@ -116,7 +117,8 @@ export default function LoanApplication() {
                                     onChangeText={handleChange('salaryPayDay')}
                                     onBlur={handleBlur('salaryPayDay')}
                                     value={values.salaryPayDay}
-                                    width="50%"
+                                    width="100%"
+                                    flex={1}
                                     error={errors.salaryPayDay}
                                 />
                             </View>
@@ -234,7 +236,7 @@ export default function LoanApplication() {
                                 onValueChange={handleChange('loanDuration')}
                                 onBlur={handleBlur('loanDuration')}
                                 value={values.loanDuration}
-                                width="90%"
+                                width="100%"
                                 error={errors.loanDuration}
                             />
                             <StyledButton title="Submit" onPress={handleSubmit} disabled={isSubmitting} />
@@ -250,31 +252,33 @@ export default function LoanApplication() {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        paddingHorizontal: 20,
         flex: 1,
         backgroundColor: '#fff',
     },
     angleLeft: {
         marginTop: 40,
         marginBottom: 10,
-        marginLeft: 20,
+        // marginLeft: 20,
     },
     welcomeText: {
         fontSize: 24,
         fontWeight: 'bold',
         color: '#111827',
         paddingBottom: 5,
-        marginLeft: 20,
+        // marginLeft: 20,
     },
     subText: {
         fontSize: 15,
         color: '#96959A',
-        marginLeft: 20,
+        // marginLeft: 20,
         marginBottom: 20,
     },
     viewContainer: {
         flexDirection: 'row',
-        width: '95%',
-        marginHorizontal: 10,
+        width: '100%',
+        gap: '10%',
+        // marginHorizontal: 10,
         justifyContent: 'space-between',
     },
     labelHead: {
@@ -283,7 +287,7 @@ const styles = StyleSheet.create({
         color: '#111827',
         marginBottom: 5,
         marginTop: 20,
-        paddingLeft: 20,
+        // paddingLeft: 20,
     },
     error: {
         color: 'red',
