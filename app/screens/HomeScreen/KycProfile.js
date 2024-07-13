@@ -53,7 +53,7 @@ export default function KycProfile() {
         keyboardType="text"
         width="100%"
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '90%' }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 10, width: '100%' }}>
         <SelectInput
           label="City"
           items={[
@@ -90,18 +90,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    width: '100%',
+    paddingHorizontal: 20
   },
   heading: {
     display: 'flex',
     flexDirection: 'row',
     marginTop: 50,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     gap: 15,
   },
   icon: {
     color: '#96959A',
     marginTop: 4,
-
   },
   headerText: {
     fontSize: 18,
@@ -113,22 +114,22 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 5,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     marginBottom: 10,
   },
   helperText: {
     color: '#888',
     marginBottom: 20,
-    paddingLeft: 20,
+    // paddingLeft: 20,
   },
   label: {
-    paddingLeft: 20,
+    // paddingLeft: 20,
     marginBottom: 10,
   },
   phoneContainer: {
     height: 50,
-    width: '90%',
-    marginHorizontal: 20,
+    width: '100%',
+    // marginHorizontal: 20,
     marginBottom: 20,
   },
   phoneFlagContainer: {

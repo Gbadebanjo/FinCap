@@ -9,9 +9,11 @@ const InputField = ({
   value,
   width,
   marginLeft,
+  paddingLeft,
   error,
+  flex = 0
 }) => {
-  const styles = getStyles(width, marginLeft);
+  const styles = getStyles(width, marginLeft, paddingLeft, flex);
 
   return (
     <View style={styles.inputContainer}>
@@ -23,16 +25,19 @@ const InputField = ({
         onChangeText={onChangeText}
         placeholderTextColor="#d2d2d4"
         value={value}
+        width={width}
       />
     </View>
   );
 };
 
-const getStyles = (width, marginLeft) =>
+const getStyles = (width, marginLeft, paddingLeft, flex ) =>
   StyleSheet.create({
     inputContainer: {
+      flex: flex,
       width: width,
       alignItems: 'center',
+      marginBottom: 10
     },
     label: {
       color: '#111827',
@@ -40,12 +45,11 @@ const getStyles = (width, marginLeft) =>
       fontSize: 14,
       marginTop: 2,
       alignSelf: 'flex-start',
-      paddingLeft: '5%',
-      
+      paddingLeft: paddingLeft,
     },
     input: {
       height: 48,
-      width: '90%',
+      width: '100%',
       borderRadius: 8,
       borderColor: 'gray',
       borderWidth: 1,

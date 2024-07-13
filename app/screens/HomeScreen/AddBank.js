@@ -82,6 +82,8 @@ export default function AddBank() {
                 <StyledButton
                     title={'Add Bank Detail'}
                     onPress={() => navigation.navigate('SetPin')}
+                    width='90%'
+                    marginLeft='5%'
                 />
             </View>
         </SafeAreaView>

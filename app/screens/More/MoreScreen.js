@@ -3,17 +3,30 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import LogoutModal from '../../components/Modals/LogoutModal';
+import { EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 export default function MoreScreen() {
   const [imageUri, setImageUri] = useState(null);
   const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
   const navigation = useNavigation();
+  const [success, isSuccess] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
+  const [error, setError] = useState('');
 
   const toggleFaceIDSwitch = () => setIsFaceIDEnabled(previousState => !previousState);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
+    
         <View style={styles.imageContainer}>
           {imageUri ? (
             <Image source={{ uri: imageUri }} style={styles.image} />
@@ -37,9 +50,10 @@ export default function MoreScreen() {
         </TouchableOpacity>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <FontAwesome name="user-circle" size={30} color="#808080" />
               <Text style={styles.settingText}>Edit Personal Data</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
@@ -47,7 +61,7 @@ export default function MoreScreen() {
 
           <View style={styles.faceIDCont}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <AntDesign name="scan1" size={30} color="#808080" />
               <Text style={styles.settingText}>Login With Face ID</Text>
             </View>
             <Switch
@@ -59,53 +73,76 @@ export default function MoreScreen() {
             />
           </View>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('VerifyNewPassword')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <MaterialIcons name="password" size={30} color="#808080" />
               <Text style={styles.settingText}>Change Password</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('SetUpNewPin')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <Feather name="lock" size={30} color="#808080" />
               <Text style={styles.settingText}>Reset pin</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont} 
+            onPress={() => navigation.navigate('BankAccount')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <MaterialCommunityIcons name="bank-outline" size={30} color="#808080" />
               <Text style={styles.settingText}>Withdrawal Bank Account</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont}         
+            onPress={() => navigation.navigate('NotificationSettings')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <Entypo name="notification" size={30} color="#808080" />
               <Text style={styles.settingText}>Notification Settings</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.eachSettingCont}>
+          <TouchableOpacity style={styles.eachSettingCont}          
+            onPress={() => navigation.navigate('Profile')}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#808080" />
+              <MaterialIcons name="support-agent" size={30} color="#808080" />
               <Text style={styles.settingText}>Support</Text>
             </View>
             <FontAwesome name="angle-right" size={22} color="#808080" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.LogOutCont}>
+          <TouchableOpacity style={styles.LogOutCont}  
+            onPress={() => {
+              setModalVisible(true);
+            }}>
             <View style={styles.iconNtext}>
-              <FontAwesome name="angle-left" size={22} color="#EC2F2F" />
+              <AntDesign name="logout" size={30} color="#EC2F2F" />
               <Text style={styles.LogOutText}>Log Out</Text>
             </View>
           </TouchableOpacity>
         </ScrollView>
+        <LogoutModal
+          visible={modalVisible}
+          title='Logout'
+          message='Are you sure you want to logout?'
+          isSuccess={success}
+          cancelText='No'
+          confirmText='Yes'
+          onCancel={() => {
+            setModalVisible(false);
+          }}
+          onConfirm={() => {
+            setModalVisible(false);
+            alert('Logged out');
+          }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -115,7 +152,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 70,
+    paddingTop: 40,
     paddingHorizontal: 20,
     paddingBottom: 10,
   },
@@ -184,7 +221,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
     paddingVertical: 15,
-    marginTop: 18,
+    marginTop: 10,
   },
   iconNtext: {
     flexDirection: 'row',

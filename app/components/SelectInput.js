@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     marginBottom: 5,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   inputIOS: {
     fontSize: 16,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   inputAndroid: {
     fontSize: 16,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   iconContainer: {
     top: 16,

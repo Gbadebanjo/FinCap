@@ -2,14 +2,18 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import StyledButton from '../../components/StyledButton';
 
 export default function UploadDocument({navigate}) {
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView>
             <View style={styles.heading}>
                 <TouchableOpacity
                     style={styles.icon}
-                    onPress={() => navigation.navigate('Savings')}>
+                    onPress={() => navigation.goBack()}>
                     <AntDesign name="left" size={16} color="black" />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>Upload your identity document</Text>
@@ -25,6 +29,21 @@ export default function UploadDocument({navigate}) {
                 </Text>
                 <Text style={styles.text}>SVG, PNG, JPG or GIF(max.800x400px)</Text>
             </View>
+
+            <StyledButton
+                title="Submit"
+                onPress={() => alert("Submit")}
+                width='90%'
+                marginLeft='5%'
+                marginTop={20}
+            />
+            <StyledButton
+                title="Reupload"
+                onPress={() => alert("Reupload")}
+                width='90%'
+                marginLeft='5%'
+                marginTop={20}
+            />
         </SafeAreaView>
     )
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
-
 import { Text, StyleSheet, View } from 'react-native';
 
 function ErrorAlert({ error, showIcon, justifyContent }) {
@@ -28,11 +27,11 @@ const getStyles = justifyContent =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: justifyContent,
-      margin: 10,
+      // margin: 10,
     },
     errorText: {
       color: 'red',
-      marginLeft: 10,
+      // marginLeft: 10,
     },
   });
 
