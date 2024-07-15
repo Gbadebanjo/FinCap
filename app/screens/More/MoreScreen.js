@@ -74,7 +74,7 @@ export default function MoreScreen() {
           </View>
 
           <TouchableOpacity style={styles.eachSettingCont} 
-            onPress={() => navigation.navigate('VerifyNewPassword')}>
+            onPress={() => navigation.navigate('SetNewPassword')}>
             <View style={styles.iconNtext}>
               <MaterialIcons name="password" size={30} color="#808080" />
               <Text style={styles.settingText}>Change Password</Text>
