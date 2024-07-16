@@ -83,7 +83,7 @@ export default function MoreScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.eachSettingCont} 
-            onPress={() => navigation.navigate('SetUpNewPin')}>
+            onPress={() => navigation.navigate('VerifyNewPassword')}>
             <View style={styles.iconNtext}>
               <Feather name="lock" size={30} color="#808080" />
               <Text style={styles.settingText}>Reset pin</Text>

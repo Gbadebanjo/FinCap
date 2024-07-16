@@ -70,7 +70,7 @@ export default function SetNewPassword() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [modalTitle, setModalTitle] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     const [initialValues, setInitialValues] = useState({
       oldPassword: '',
       newPassword: '',
@@ -98,21 +98,26 @@ export default function SetNewPassword() {
           }
         );
         if (response.data && response.data.code === 200) {
-          console.log('response', response.data);
-    
-          setModalTitle(response.data.message);
-          setModalMessage('You can now log in using your new password.');
           setIsSuccess(true);
-        } else {
-          console.log('error', response.data.errors.message );
-          setModalTitle('Error');
-          setModalMessage(response.data.errors.message || 'Failed to reset password.');
+          setModalTitle('Success');
+          setModalMessage('Your new PIN has been set successfully');
+        }else {
           setIsSuccess(false);
+          setModalTitle('Error');
+          if (response.data && response.data.errors && response.data.errors.length > 0) {
+            setModalMessage(response.data.errors[0].message || 'Failed to set the new PIN');
+          } else {
+            setModalMessage('Failed to set the new PIN');
+          }
         }
       } catch (error) {
-        setModalTitle('Error');
-        setModalMessage(error.response?.data?.message || 'Password reset failed. Please try again.');
         setIsSuccess(false);
+        setModalTitle('Error');
+        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+          setModalMessage(error.response.data.errors[0].message || 'Failed to set the new PIN. Please try again.');
+        } else {
+          setModalMessage('Failed to set the new PIN. Please try again.');
+        }
       } finally {
         setLoading(false);
         setModalVisible(true);
