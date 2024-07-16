@@ -1,19 +1,26 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PinView from 'react-native-pin-view';
+import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import ResponseModal from '../../components/Modals/ResponseModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ConfirmNewPin(){
     const pinView = useRef(null);
     const [showRemoveButton, setShowRemoveButton] = useState(false);
     const [showCompleteButton, setShowCompletedButton] = useState(false);
     const [enteredPin, setEnteredPin] = useState('');
     const [modal, setModalVisible] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalMessage, setModalMessage] = useState('');
     const navigation = useNavigation();
-    const [success, isSuccess] = useState(true);
+    const [success, setIsSuccess] = useState(true);
+    const [loading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const route = useRoute();
+    const { password, newPin } = route.params;
 
   
     useEffect(() => {
@@ -28,6 +35,46 @@ export default function ConfirmNewPin(){
         setShowCompletedButton(false);
       }
     }, [enteredPin]);
+
+    const handleConfirmPin = async () => {
+      setIsLoading(true);
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        const response = await axios.post(
+          'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/settings/reset-transaction-pin',
+          { password, newPin, confirmNewPin: enteredPin },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data && response.data.code === 200) {
+          setIsSuccess(true);
+          setModalTitle('Success');
+          setModalMessage('Your new PIN has been set successfully');
+        }else {
+          setIsSuccess(false);
+          setModalTitle('Error');
+          if (response.data && response.data.errors && response.data.errors.length > 0) {
+            setModalMessage(response.data.errors[0].message || 'Failed to set the new PIN');
+          } else {
+            setModalMessage('Failed to set the new PIN');
+          }
+        }
+      } catch (error) {
+        setIsSuccess(false);
+        setModalTitle('Error');
+        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+          setModalMessage(error.response.data.errors[0].message || 'Failed to set the new PIN. Please try again.');
+        } else {
+          setModalMessage('Failed to set the new PIN. Please try again.');
+        }
+      } finally {
+        setIsLoading(false);
+        setModalVisible(true);
+      }
+    };
   
     return (
       <SafeAreaView style={styles.container}>
@@ -52,16 +99,20 @@ export default function ConfirmNewPin(){
               buttonTextStyle={styles.buttonText}
               buttonAreaStyle={styles.buttonArea}
               customRightButton={
-                showRemoveButton && enteredPin.length === 4 ? 
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                  <Text style={styles.customRightButton}>✔️</Text>
-                </TouchableOpacity> : null
+                showRemoveButton && enteredPin.length === 4 ? (
+                  <TouchableOpacity onPress={handleConfirmPin}>
+                    <Text style={styles.customRightButton}>
+                      {loading ? <ActivityIndicator color="#fff" style={{paddingTop: 30, paddingLeft: 30}} /> : '✔️'}
+                    </Text>
+                  </TouchableOpacity>
+                ) : null
               }
               customLeftButton={
-                showRemoveButton ? 
-                <TouchableOpacity onPress={() => pinView.current.clearAll()}>
-                  <Text style={styles.customLeftButton}>❌</Text>
-                </TouchableOpacity> : null
+                showRemoveButton ? (
+                  <TouchableOpacity onPress={() => pinView.current.clearAll()}>
+                    <Text style={styles.customLeftButton}>❌</Text>
+                  </TouchableOpacity>
+                ) : null
               }
               inputTextStyle={styles.inputText} 
             />
@@ -70,8 +121,8 @@ export default function ConfirmNewPin(){
 
         <ResponseModal
         visible={modal}
-        title={success ? 'Success' : 'Error!'}
-        message={error || 'Your New pin has been saved'}
+        title={modalTitle}
+        message={modalMessage}
         isSuccess={success}
         color='white'
         width='90%'
@@ -81,7 +132,7 @@ export default function ConfirmNewPin(){
           if (success) {
             navigation.navigate('MoreScreen');
           } else {
-            navigation.navigate('SetUpNewPin');
+            navigation.navigate('VerifyNewPassword');
           }
         }}
         buttonTitle={success ? 'Go baack to settings' : 'Try again'}

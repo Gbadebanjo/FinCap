@@ -44,14 +44,20 @@ const validationSchema = Yup.object().shape({
 export default function VerifyNewPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [success, isSuccess] = useState(false);
-    const [modal, setModalVisible] = useState(false);
     const [error, setError] = useState('');
 
     const navigation = useNavigation();
   
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
+    };
+
+    const handleFormSubmit = (values) => {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        navigation.navigate('SetUpNewPin', { password: values.newPassword });
+      }, 1000);
     };
 
   return (
@@ -67,8 +73,8 @@ export default function VerifyNewPassword() {
         <Text style={styles.SubHeading}>Enter your password to reset your pin </Text>
 
         <Formik
-          initialValues={{ code: '' }}
-          onSubmit={()=> alert('Password changed successfully')}
+          initialValues={{ newPassword: '' }}
+          onSubmit={handleFormSubmit}
           validationSchema={validationSchema}>
           {({ handleChange, handleSubmit, values, errors }) => (
             <>
@@ -108,7 +114,7 @@ export default function VerifyNewPassword() {
 
               <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Verify'}
-                onPress={()=> navigation.navigate('SetNewPassword')}
+                onPress={handleSubmit}
                 width='100%'
                 marginTop={10}
               />
