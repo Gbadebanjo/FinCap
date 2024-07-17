@@ -15,7 +15,6 @@ export default function VerifyProfile() {
             bvn, phoneNumber, address, selectedState, selectedCity,
         });
     }
-
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.heading}>
