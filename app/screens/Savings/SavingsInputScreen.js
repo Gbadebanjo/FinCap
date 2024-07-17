@@ -25,64 +25,63 @@ export default function SavingsInputScreen({ route }) {
 
     return (
         <SafeAreaView style={styles.main}>
-        <View style={styles.container}>
-            <TouchableOpacity
-                style={styles.icon}
-                onPress={() => navigation.navigate('Savings')}>
-                <AntDesign name="left" size={16} color="black" />
-            </TouchableOpacity>
-            <Text style={styles.plantitle}>{title} plan </Text>
-            <Text style={styles.planbold}>How much do you want to save?</Text>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Amount</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter Amount"
-                    onChangeText={text => setInputAmount(text)} 
-                    placeholderTextColor="#d2d2d4"
-                    value={inputAmount}
+            <View style={styles.container}>
+                <TouchableOpacity
+                    style={styles.icon}
+                    onPress={() => navigation.navigate('Savings')}>
+                    <AntDesign name="left" size={16} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.plantitle}>{title} plan </Text>
+                <Text style={styles.planbold}>How much do you want to save?</Text>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Amount</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter Amount"
+                        onChangeText={text => setInputAmount(text)}
+                        placeholderTextColor="#d2d2d4"
+                        value={inputAmount}
+                    />
+                    <Text style={[styles.label, { color: '#475467' }]}>Your interest rate would be 10% per annum</Text>
+                    <Text style={styles.label}>Select duration</Text>
+                </View>
+                <RNPickerSelect
+                    placeholder={placeholder}
+                    items={[
+                        { label: '12 month', value: '12' },
+                        { label: '24 months', value: '24' },
+                        { label: '36 months', value: '36' },
+                        { label: '48 months', value: '48' },
+                    ]}
+                    onValueChange={(value) => setSelectedDuration(value)}
+                    style={{
+                        inputIOS: styles.inputIOS,
+                        inputAndroid: styles.inputAndroid,
+                        iconContainer: styles.iconContainer,
+                    }}
+                    useNativeAndroidPickerStyle={false} // This is important to hide the default Android icon
+
+                    Icon={() => {
+                        return <AntDesign name="down" size={14} color="gray" />;
+                    }}
                 />
-                <Text style={[styles.label, { color: '#475467' }]}>Your interest rate would be 10% per annum</Text>
-                <Text style={styles.label}>Select duration</Text>
-
+                <Text style={styles.label}>How often do you want to save?</Text>
+                <View style={styles.buttonContainer}>
+                    {buttons.map((button, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={[
+                                styles.button,
+                                selectedButton === button && styles.selectedButton
+                            ]}
+                            onPress={() => setSelectedButton(button)}
+                        >
+                            <Text style={{ color: selectedButton === button ? '#fff' : "#766B80" }}>{button}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
             </View>
-            <RNPickerSelect
-                placeholder={placeholder}
-                items={[
-                    { label: '12 month', value: '12' },
-                    { label: '24 months', value: '24' },
-                    { label: '36 months', value: '36' },
-                    { label: '48 months', value: '48' },
-                ]}
-                onValueChange={(value) => setSelectedDuration(value)}
-                style={{
-                    inputIOS: styles.inputIOS,
-                    inputAndroid: styles.inputAndroid,
-                    iconContainer: styles.iconContainer,
-                }}
-                useNativeAndroidPickerStyle={false} // This is important to hide the default Android icon
-
-                Icon={() => {
-                    return <AntDesign name="down" size={14} color="gray" />;
-                }}
-            />
-            <Text style={styles.label}>How often do you want to save?</Text>
-            <View style={styles.buttonContainer}>
-                {buttons.map((button, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={[
-                            styles.button,
-                            selectedButton === button && styles.selectedButton
-                        ]}
-                        onPress={() => setSelectedButton(button)}
-                    >
-                        <Text style={{ color: selectedButton === button ? '#fff' : "#766B80" }}>{button}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>            
-        </View>
-        <StyledButton
+            <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
                 width='90%'
                 marginLeft='5%'
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     container: {
         paddingLeft: 20,
         marginBottom: 'auto',
-        },
+    },
     icon: {
         paddingVertical: 10,
     },

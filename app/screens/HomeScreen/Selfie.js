@@ -1,13 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {  useRoute } from '@react-navigation/native';
 
 export default function Selfie({ navigation }) {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef(null);
+
+  const route = useRoute();
+  const { bvn, phoneNumber, address, selectedState, selectedCity } = route.params;
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -27,9 +31,9 @@ export default function Selfie({ navigation }) {
   const takePicture = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
-      console.log(photo);
+      // console.log(photo);
       // Handle the captured photo
-      navigation.navigate('UploadDocument', { photo });
+      navigation.navigate('UploadDocument', { photo, bvn, phoneNumber, address, selectedState, selectedCity });
     }
   };
 
