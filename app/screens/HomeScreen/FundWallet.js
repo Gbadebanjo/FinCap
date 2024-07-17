@@ -5,6 +5,11 @@ import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 export default function FundWallet() {
   const navigation = useNavigation();
+
+  const HandlePayment = () => {
+
+  }
+
   return (
     <SafeAreaView style={styles.main}>
       <TouchableOpacity
@@ -16,7 +21,7 @@ export default function FundWallet() {
       <Text style={styles.SubHeading}>Choose how you want to fund your account</Text>
       <TouchableOpacity
        style={styles.PaymentBox} 
-       onPress={() => navigation.navigate('Home')}
+       onPress={() => navigation.navigate('AddMoney')}
        >
         <View style={[styles.Icon, { backgroundColor: "#ffe6d4" }]} >
           <FontAwesome name="flag" size={24} color="#ffc061" borderRadius='0' />
