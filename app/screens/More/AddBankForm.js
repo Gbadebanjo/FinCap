@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text, StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
@@ -7,7 +7,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
 import StyledButton from '../../components/StyledButton';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import ResponseModal from '../../components/Modals/ResponseModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddBankForm() {
     const [selectedBank, setSelectedBank] = useState();
@@ -15,14 +17,89 @@ export default function AddBankForm() {
     const [accountName, setAccountName] = useState();
     const [loading, setLoading] = useState(false);
     const [modal, setModalVisible] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
     const navigation = useNavigation();
+    const [banks, setBanks] = useState([]);
     const [success, isSuccess] = useState(true);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchBanks = async () => {
+            try {
+                const response = await axios.get('https://api.paystack.co/bank');
+                const bankList = response.data.data.map(bank => ({ label: bank.name, value: bank.name }));
+                setBanks(bankList);
+                // console.log('bankList', bankList);
+            } catch (error) {
+                console.error("Error fetching banks: ", error);
+                setError('Failed to load banks. Please try again later.');
+            }
+        };
+
+        fetchBanks();
+    }, []);
 
     const placeholder = {
         label: 'Select Bank',
         value: null,
         color: '#9EA0A4',
+    };
+
+    const handleAddBank = async () => {
+        if (!selectedBank || !accountNumber || !accountName) {
+            setError('All fields are required.');
+            setModalVisible(true);
+            return;
+        }
+    
+        setLoading(true);
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            const response = await axios.post(
+                'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/settings/add-bank-account-detail', // Replace with your API endpoint
+                {
+                    bankName: selectedBank,
+                    accountNumber: accountNumber,
+                    accountName: accountName
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+    
+            if (response.data && response.data.code === 200) {
+                isSuccess(true);
+                // setModalVisible(true);
+                // setIsSuccess(true);
+                setModalTitle('Success');
+                setModalMessage('Bank account details added successfully');
+            }else {
+                isSuccess(false);
+                setModalTitle('Error');
+                if (response.data && response.data.errors && response.data.errors.length > 0) {
+                  setModalMessage(response.data.errors[0].message || 'Failed to add Bank details');
+                } else {
+                  setModalMessage('Failed to add Bank details');
+                }
+              }
+        } catch (error) {
+            console.error("Error adding bank details: ", error);
+            // setModalVisible(true);
+            isSuccess(false);
+            setModalTitle('Error');
+            if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+              setModalMessage(error.response.data.errors[0].message || 'Failed to add Bank details. Please try again.');
+            } else {
+              setModalMessage('Failed to add Bank details. Please try again.');
+            }
+        } finally {
+            setLoading(false);
+            setModalVisible(true);
+        }
     };
 
   return (
@@ -31,7 +108,7 @@ export default function AddBankForm() {
                 <View style={styles.topcontainer}>
                     <TouchableOpacity
                         style={styles.anleleft}
-                        onPress={() => navigation.navigate('HomeScreen')}>
+                        onPress={() => navigation.goBack()}>
                         <FontAwesome name="angle-left" size={22} color="#808080" />
                     </TouchableOpacity>
                     <Text style={styles.pageTitle}>Add Bank Account</Text>
@@ -40,13 +117,8 @@ export default function AddBankForm() {
                 <View style={styles.inputContainer}>
                 <Text style={styles.label}>Bank name</Text>
                 <RNPickerSelect
-                placeholder={placeholder}
-                items={[
-                    { label: 'Access', value: 'Access Bank' },
-                    { label: 'Zenith', value: 'Zenith Bank' },
-                    { label: 'Sterling', value: 'Sterling Bank' },
-                    { label: 'Opay', value: 'Opay' },
-                ]}
+                    placeholder={placeholder}
+                    items={banks}
                     onValueChange={(value) => setSelectedBank(value)}
                     style={{
                         inputIOS: styles.inputIOS,
@@ -54,7 +126,6 @@ export default function AddBankForm() {
                         iconContainer: styles.iconContainer,
                         }}
                     useNativeAndroidPickerStyle={false} // This is important to hide the default Android icon
-
                     Icon={() => {
                     return <AntDesign name="down" size={14} color="gray" />; 
                     }}
@@ -85,16 +156,18 @@ export default function AddBankForm() {
             <View style={styles.addButtonContainer}>
                     <StyledButton
                         title={'Add Bank Detail'}
-                        onPress={() => setModalVisible(true)}
+                        onPress={handleAddBank}
                         width='90%'
                         marginLeft='5%'
+                        loading={loading}
+
                     />
                 </View>
 
             <ResponseModal
                 visible={modal}
-                title={success ? 'Success' : 'Error!'}
-                message={error || 'Bank account added successfully'}
+                title={modalTitle}
+                message={modalMessage}
                 isSuccess={success}
                 color='white'
                 width='90%'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
     Text,
@@ -14,25 +14,57 @@ import {
   import { FontAwesome } from '@expo/vector-icons';
   import { useNavigation } from '@react-navigation/native';
   import StyledButton from '../../components/StyledButton';
+  import AsyncStorage from '@react-native-async-storage/async-storage';
+  import axios from 'axios';
 
 export default function BankAccount() {
 const [loading, setLoading] = useState(false);
+const [bankList, setBankList] = useState({});
+// const [loading, setLoading] = useState(true);
+
 const navigation = useNavigation();
 
+console.log('Bank List:', bankList);
 
+useEffect(() => {
+  const fetchBankList = async () => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await axios.get(
+        'http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/settings/get-bank-account-detail',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data.data)
+      setBankList(response.data.data); 
+      // const { pushNotification, smsNotification, emailNotification } = response.data.data;
 
-const bankList = [
-    {
-        bankName: 'Access Bank',
-        accountNumber: '123456778',
-        accountName: 'John Doe'
-    },
-    {
-        bankName: 'Zenith Bank',
-        accountNumber: '7781224214',
-        accountName: 'Jack Robbinson'
+    } catch (error) {
+   
+      if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+        console.log('Error fetching bank accounts:', error.response.data.errors[0].message);
+      } else {
+        console.log('Error fetching bank accounts:', error);
+      }
+    } finally {
+      setLoading(false);
     }
-];
+  };
+
+  fetchBankList();
+}, []);
+
+if (loading) {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ActivityIndicator size="large" color="#7538EC" style={{flex: 1}}/>
+    </SafeAreaView>
+  );
+}
 
 return (
     <SafeAreaView style={styles.container}>
@@ -49,10 +81,13 @@ return (
 
             <View>
                 {/* Conditional rendering based on bankList's length */}
-                {bankList && bankList.length > 0 ? (
+                {/* {bankList && bankList.length > 0 ? ( */}
+                  {Object.keys(bankList).length > 0 ? (
                     <>
                         {/* Show this button only when there are bank accounts */}
-                        <TouchableOpacity style={styles.addABank}>
+                        <TouchableOpacity style={styles.addABank}
+                         onPress={() => navigation.navigate('AddBankForm')}
+                        >
                             <View style={styles.addABankFirst}>
                                 <View style={styles.AddBankIcon}>
                                     <FontAwesome name="plus" size={18} color="#000" />
@@ -63,20 +98,20 @@ return (
                         </TouchableOpacity>
 
                         {/* Map through bankList to display each bank account */}
-                        {bankList.map((bank, index) => (
-                            <TouchableOpacity key={index} style={styles.bankAccount}>
+                        {/* {bankList.map((bank, index) => ( */}
+                            <TouchableOpacity style={styles.bankAccount}>
                                 <View style={styles.addABankFirst}>
                                     <View style={styles.bankAccountIcon}>
                                         <FontAwesome name="bank" size={18} color="#000" />
                                     </View>
                                     <View>
-                                        <Text style={styles.settingText}>{bank.accountName}</Text>
-                                        <Text style={styles.settingText}>{bank.bankName} {bank.accountNumber}</Text>
+                                        <Text style={styles.settingText}>{bankList.accountName}</Text>
+                                        <Text style={styles.settingText}>{bankList.bankName} {bankList.accountNumber}</Text>
                                     </View>
                                 </View>
                                 <FontAwesome name="angle-right" size={22} color="#808080" />
                             </TouchableOpacity>
-                        ))}
+                        {/* ))} */}
                     </>
                 ) : (
                     <View>

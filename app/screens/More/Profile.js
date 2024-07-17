@@ -53,7 +53,7 @@ export default function Profile() {
         const userID = await AsyncStorage.getItem('userID');
         const response = await axios.get(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/users/get-user-by-id/${userID}`);
         const userData = response.data.data;
-        // console.log('userData', userData);
+        console.log('userData', userData);
         setInitialValues({
           phoneNumber: userData.phoneNumber || '',
           emailAddress: userData.email || '',
@@ -88,11 +88,16 @@ export default function Profile() {
           },
         }
       );
-      console.log('response', response);
+      // console.log('response', response);
       alert('Profile updated successfully');
     } catch (error) {
       console.log(error);
-      setSignupError('Failed to update profile.');
+      // setSignupError('Failed to update profile.');
+      if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+        setSignupError(error.response.data.errors[0].message || 'Failed to update profile. Please try again.');
+      } else {
+        setSignupError('Failed to set the new PIN');
+      }
     } finally {
       setLoading(false);
     }
