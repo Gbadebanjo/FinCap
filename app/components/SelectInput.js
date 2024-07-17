@@ -12,7 +12,7 @@ const SelectInput = ({ label, items, placeholder, onValueChange, width }) => {
         items={items}
         onValueChange={onValueChange}
         style={{
-          iconContainer: {...styles.iconContainer, right: width === '90%' ? '10%' : '1%'} ,
+          iconContainer: {...styles.iconContainer, right: width === '90%' ? '10%' : '5%'} ,
           inputIOS: { ...styles.inputIOS, width },
           inputAndroid: { ...styles.inputAndroid, width },
         }}

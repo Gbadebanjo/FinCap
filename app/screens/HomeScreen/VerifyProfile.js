@@ -1,11 +1,21 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Fontisto, AntDesign, EvilIcons, FontAwesome } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { Fontisto, AntDesign, FontAwesome } from '@expo/vector-icons';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import StyledButton from '../../components/StyledButton';
 
 export default function VerifyProfile() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const { bvn, phoneNumber, address, selectedState, selectedCity } = route.params;
+    // console.log(bvn, phoneNumber,address,selectedState, selectedCity )
+
+    const handleStartSelfie = () => {
+        navigation.navigate('Selfie', {
+            bvn, phoneNumber, address, selectedState, selectedCity,
+        });
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.heading}>
@@ -29,12 +39,11 @@ export default function VerifyProfile() {
             <View style={styles.buttonContainer}>
                 <StyledButton
                     title="Let's Start"
-                    onPress={() => navigation.navigate('Selfie')}
+                    onPress={handleStartSelfie}
                 />
             </View>
-
         </SafeAreaView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
