@@ -130,7 +130,7 @@ export default function SetNewPassword() {
       <>
           <TouchableOpacity
             style={styles.angleLeft}
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.goBack()}
           >
             <FontAwesome name="angle-left" size={22} color="#808080" />
           </TouchableOpacity>
