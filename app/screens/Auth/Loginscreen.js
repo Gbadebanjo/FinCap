@@ -42,6 +42,8 @@ function Loginscreen(props) {
       if (response.data && response.data.data.token) {
         // Save token in AsyncStorage
         await AsyncStorage.setItem('userToken', response.data.data.token);
+        await AsyncStorage.setItem('userID', response.data.data.user.id);
+
         navigation.navigate('HomeScreen');
         setLoading(false);
       } else {

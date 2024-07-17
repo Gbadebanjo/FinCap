@@ -48,16 +48,22 @@ export default function SetupPin() {
             buttonTextStyle={styles.buttonText}
             buttonAreaStyle={styles.buttonArea}
             customRightButton={
-              showRemoveButton && enteredPin.length === 4 ? 
-              <TouchableOpacity onPress={() => navigation.navigate('PinConfirm')}>
-                <Text style={styles.customRightButton}>✔️</Text>
-              </TouchableOpacity> : null
+              showRemoveButton && enteredPin.length === 4 ? (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('PinConfirm', {
+                    newPin: enteredPin,
+                  })}
+                >
+                  <Text style={styles.customRightButton}>✔️</Text>
+                </TouchableOpacity>
+              ) : null
             }
             customLeftButton={
-              showRemoveButton ? 
-              <TouchableOpacity onPress={() => pinView.current.clearAll()}>
-                <Text style={styles.customLeftButton}>❌</Text>
-              </TouchableOpacity> : null
+              showRemoveButton ? (
+                <TouchableOpacity onPress={() => pinView.current.clearAll()}>
+                  <Text style={styles.customLeftButton}>❌</Text>
+                </TouchableOpacity>
+              ) : null
             }
             inputTextStyle={styles.inputText} 
           />

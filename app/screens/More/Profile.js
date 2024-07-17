@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -13,17 +13,19 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Formik } from 'formik';
+import axios from 'axios';
 import * as Yup from 'yup';
 import StyledButton from '../../components/StyledButton';
 import InputField from '../../components/InputField';
 import ErrorAlert from '../../components/ErrorAlert';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required().label('First Name'),
   lastName: Yup.string().required().label('Last Name'),
   phoneNumber: Yup.string().required().label('Phone Number'),
-  email: Yup.string().required().email().label('Email'),
-  dob: Yup.string().required().label('Date of Birth'),
+  emailAddress: Yup.string().required().email().label('Email'),
+  dateOfBirth: Yup.string().required().label('Date of Birth'),
   address: Yup.string().required().label('Address'),
 });
 
@@ -31,8 +33,70 @@ export default function Profile() {
   const [imageUri, setImageUri] = useState(null);
   const [signupError, setSignupError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    phoneNumber: '',
+    emailAddress: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    address: '',
+  });
 
   const navigation = useNavigation();
+
+
+  useEffect(() => {
+    // Fetch user data when the component mounts
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        const userID = await AsyncStorage.getItem('userID');
+        const response = await axios.get(`http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/users/get-user-by-id/${userID}`);
+        const userData = response.data.data;
+        // console.log('userData', userData);
+        setInitialValues({
+          phoneNumber: userData.phoneNumber || '',
+          emailAddress: userData.email || '',
+          firstName: userData.firstName || '',
+          lastName: userData.lastName || '',
+          dateOfBirth: userData.dateOfBirth || '',
+          address: userData.address || '',
+        });
+        setImageUri(userData.imageUrl || null);
+      } catch (error) {
+        setSignupError('Failed to fetch user data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const handleFormSubmit = async (values) => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      // console.log(token)
+      console.log(values);
+
+      const response = await axios.post('http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/settings/create-profile', 
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log('response', response);
+      alert('Profile updated successfully');
+    } catch (error) {
+      console.log(error);
+      setSignupError('Failed to update profile.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -60,16 +124,10 @@ export default function Profile() {
         </View>
         <ErrorAlert error={signupError} showIcon justifyContent="center" />
         <Formik
-          initialValues={{
-            phoneNumber: '',
-            email: '',
-            firstName: '',
-            lastName: '',
-            dob: '',
-            address: '',
-          }}
-          validationSchema={validationSchema}
-          onSubmit={() => alert('Clicked')}
+               enableReinitialize
+               initialValues={initialValues}
+               validationSchema={validationSchema}
+               onSubmit={handleFormSubmit}
         >
           {({ values, errors, handleChange, handleSubmit }) => (
             <View style={styles.form}>
@@ -111,25 +169,25 @@ export default function Profile() {
                 label="Email Address"
                 style={styles.input}
                 placeholder="Enter your email address"
-                value={values.email}
+                value={values.emailAddress}
                 onChangeText={handleChange('email')}
                 width="100%"
                 // marginLeft="22px"
-                error={errors.email}
+                error={errors.emailAddress}
               />
-              <ErrorAlert error={errors.email} />
+              <ErrorAlert error={errors.emailAddress} />
 
               <InputField
                 label="Date of Birth"
                 style={styles.input}
                 placeholder="16th Aug 2025"
-                onChangeText={handleChange('dob')}
-                value={values.dob}
+                onChangeText={handleChange('dateOfBirth')}
+                value={values.dateOfBirth}
                 width="100%"
                 marginLeft="22px"
-                error={errors.dob}
+                error={errors.dateOfBirth}
               />
-              <ErrorAlert error={errors.dob} />
+              <ErrorAlert error={errors.dateOfBirth} />
 
               <InputField
                 label="Address"
@@ -151,7 +209,8 @@ export default function Profile() {
                     'Save Changes'
                   )
                 }
-                onPress={()=> navigation.navigate('SetNewPassword')}
+                // onPress={()=> navigation.navigate('SetNewPassword')}
+                onPress={handleSubmit}
                 width='100%'
                 margin= '0px'
               />

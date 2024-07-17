@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PinView from 'react-native-pin-view';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 
 export default function SetUpNewPin() {
   const pinView = useRef(null);
@@ -11,6 +12,8 @@ export default function SetUpNewPin() {
   const [showCompleteButton, setShowCompletedButton] = useState(false);
   const [enteredPin, setEnteredPin] = useState('');
   const navigation = useNavigation();
+  const route = useRoute();
+  const { password } = route.params;
 
   useEffect(() => {
     if (enteredPin.length > 0) {
@@ -25,11 +28,16 @@ export default function SetUpNewPin() {
     }
   }, [enteredPin]);
 
+  // useEffect(() => {
+  //   setShowRemoveButton(enteredPin.length > 0);
+  //   setShowCompletedButton(enteredPin.length === 4);
+  // }, [enteredPin]);
+
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity
         style={styles.anleleft}
-        onPress={() => navigation.navigate('MoreScreen')}>
+        onPress={() => navigation.navigate('VerifyNewPassword')}>
         <FontAwesome name="angle-left" size={22} color="#808080" />
       </TouchableOpacity>
       <View style={styles.content}>
@@ -48,16 +56,23 @@ export default function SetUpNewPin() {
             buttonTextStyle={styles.buttonText}
             buttonAreaStyle={styles.buttonArea}
             customRightButton={
-              showRemoveButton && enteredPin.length === 4 ? 
-              <TouchableOpacity onPress={() => navigation.navigate('ConfirmNewPin')}>
-                <Text style={styles.customRightButton}>✔️</Text>
-              </TouchableOpacity> : null
+              showRemoveButton && enteredPin.length === 4 ? (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('ConfirmNewPin', {
+                    password,
+                    newPin: enteredPin,
+                  })}
+                >
+                  <Text style={styles.customRightButton}>✔️</Text>
+                </TouchableOpacity>
+              ) : null
             }
             customLeftButton={
-              showRemoveButton ? 
-              <TouchableOpacity onPress={() => pinView.current.clearAll()}>
-                <Text style={styles.customLeftButton}>❌</Text>
-              </TouchableOpacity> : null
+              showRemoveButton ? (
+                <TouchableOpacity onPress={() => pinView.current.clearAll()}>
+                  <Text style={styles.customLeftButton}>❌</Text>
+                </TouchableOpacity>
+              ) : null
             }
             inputTextStyle={styles.inputText} 
           />

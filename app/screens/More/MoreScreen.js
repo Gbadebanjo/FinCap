@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Switch } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -14,12 +15,29 @@ import { Entypo } from '@expo/vector-icons';
 export default function MoreScreen() {
   const [imageUri, setImageUri] = useState(null);
   const [isFaceIDEnabled, setIsFaceIDEnabled] = useState(false);
-  const navigation = useNavigation();
   const [success, isSuccess] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalTitle, setModalTitle] = useState('');
   const [error, setError] = useState('');
+  const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Failed to logout:', error);
+    }
+  };
+
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
+  };
 
   const toggleFaceIDSwitch = () => setIsFaceIDEnabled(previousState => !previousState);
 
@@ -74,7 +92,7 @@ export default function MoreScreen() {
           </View>
 
           <TouchableOpacity style={styles.eachSettingCont} 
-            onPress={() => navigation.navigate('VerifyNewPassword')}>
+            onPress={() => navigation.navigate('SetNewPassword')}>
             <View style={styles.iconNtext}>
               <MaterialIcons name="password" size={30} color="#808080" />
               <Text style={styles.settingText}>Change Password</Text>
@@ -83,7 +101,7 @@ export default function MoreScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.eachSettingCont} 
-            onPress={() => navigation.navigate('SetUpNewPin')}>
+            onPress={() => navigation.navigate('VerifyNewPassword')}>
             <View style={styles.iconNtext}>
               <Feather name="lock" size={30} color="#808080" />
               <Text style={styles.settingText}>Reset pin</Text>
@@ -135,12 +153,10 @@ export default function MoreScreen() {
           isSuccess={success}
           cancelText='No'
           confirmText='Yes'
-          onCancel={() => {
-            setModalVisible(false);
-          }}
+          onCancel={hideModal}
           onConfirm={() => {
-            setModalVisible(false);
-            alert('Logged out');
+            hideModal();
+            handleLogout();
           }}
         />
       </View>
