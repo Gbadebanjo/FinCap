@@ -113,6 +113,9 @@ const Review = ({ route, navigation }) => {
         <StyledButton
           title={loading ? <ActivityIndicator color="#fff" /> : 'Continue'}
           onPress={createInvestmentPlan}
+          width='90%'
+          marginLeft='5%'
+          marginBottom={30}
         />
       </>
       <ResponseModal
@@ -136,10 +139,13 @@ const Review = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   OuterContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'white',
+    height: '100vh',
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   Container: {
-    height: '77%',
     width: '90%',
     marginTop: 40,
     marginHorizontal: '5%',

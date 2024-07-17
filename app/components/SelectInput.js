@@ -12,7 +12,7 @@ const SelectInput = ({ label, items, placeholder, onValueChange, width }) => {
         items={items}
         onValueChange={onValueChange}
         style={{
-          iconContainer: {...styles.iconContainer, right: width === '90%' ? '10%' : '1%'} ,
+          iconContainer: {...styles.iconContainer, right: width === '90%' ? '10%' : '5%'} ,
           inputIOS: { ...styles.inputIOS, width },
           inputAndroid: { ...styles.inputAndroid, width },
         }}
@@ -27,13 +27,14 @@ const SelectInput = ({ label, items, placeholder, onValueChange, width }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginBottom: 20, // Adjust as needed
   },
   label: {
     fontSize: 14,
     color: 'black',
     marginBottom: 5,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   inputIOS: {
     fontSize: 16,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   inputAndroid: {
     fontSize: 16,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 8,
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   iconContainer: {
     top: 16,

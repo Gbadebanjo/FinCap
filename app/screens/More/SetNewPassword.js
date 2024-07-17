@@ -18,9 +18,10 @@ import StyledButton from '../../components/StyledButton';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ErrorAlert from '../../components/ErrorAlert';
 import ResponseModal from '../../components/Modals/ResponseModal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const validationSchema = Yup.object().shape({
-    newPassword: Yup.string()
+  oldPassword: Yup.string()
       .required()
       .min(6)
       .test('uppercase', 'Password must contain a Uppercase', value =>
@@ -38,7 +39,25 @@ const validationSchema = Yup.object().shape({
         value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value),
       )
       .label('Password'),
-    confirmPassword: Yup.string()
+    newPassword: Yup.string()
+      .required()
+      .min(6)
+      .test('uppercase', 'Password must contain a Uppercase', value =>
+        /^(?=.*[A-Z]).+$/.test(value),
+      )
+      .test('lowercase', 'Password must contain a Lowercase', value =>
+        /^(?=.*[a-z]).+$/.test(value),
+      )
+      .test('number', 'Password must contain a Number', value =>
+        /^(?=.*\d).+$/.test(value),
+      )
+      .test(
+        'non-alphabet',
+        'Password must contain a Non-alphabet character',
+        value => /^(?=.*[^a-zA-Z0-9]).+$/.test(value),
+      )
+      .label('newPassword'),
+      confirmNewPassword: Yup.string()
       .oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
       .required()
       .label('Confirm Password'),
@@ -47,17 +66,64 @@ const validationSchema = Yup.object().shape({
 export default function SetNewPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [success, isSuccess] = useState(false);
+    const [success, setIsSuccess] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
     const [modalTitle, setModalTitle] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
+    const [initialValues, setInitialValues] = useState({
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+    });
 
     const navigation = useNavigation();
   
     const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
     };
+
+    const handleFormSubmit = async (values) => {
+      setLoading(true);
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        console.log(values);
+    
+        const response = await axios.post('http://subacapitalappwebapi-dev.eba-m4gwjsvp.us-east-1.elasticbeanstalk.com/api/settings/reset-password', 
+          values,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data && response.data.code === 200) {
+          setIsSuccess(true);
+          setModalTitle('Success');
+          setModalMessage('Your new PIN has been set successfully');
+        }else {
+          setIsSuccess(false);
+          setModalTitle('Error');
+          if (response.data && response.data.errors && response.data.errors.length > 0) {
+            setModalMessage(response.data.errors[0].message || 'Failed to set the new PIN');
+          } else {
+            setModalMessage('Failed to set the new PIN');
+          }
+        }
+      } catch (error) {
+        setIsSuccess(false);
+        setModalTitle('Error');
+        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+          setModalMessage(error.response.data.errors[0].message || 'Failed to set the new PIN. Please try again.');
+        } else {
+          setModalMessage('Failed to set the new PIN. Please try again.');
+        }
+      } finally {
+        setLoading(false);
+        setModalVisible(true);
+      }
+    };
+    
 
   return (
     <SafeAreaView style={styles.Container}>
@@ -73,9 +139,11 @@ export default function SetNewPassword() {
         <Text style={styles.SubHeading}>No worries, we’ll send you reset instructions. </Text>
 
         <Formik
-          initialValues={{ code: '' }}
-          onSubmit={()=> alert('Password changed successfully')}
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={handleFormSubmit}
           validationSchema={validationSchema}>
+
           {({ handleChange, handleSubmit, values, errors }) => (
             <>
               <View style={styles.passwordContainer}>
@@ -83,11 +151,11 @@ export default function SetNewPassword() {
                   label="Enter Old Password"
                   placeholder="*****"
                   secureTextEntry={!showPassword}
-                  onChangeText={handleChange('newPassword')}
-                  value={values.newPassword}
+                  onChangeText={handleChange('oldPassword')}
+                  value={values.oldPassword}
                   width="100%"
                   paddingLeft='0'
-                  error={errors.newPassword}
+                  error={errors.oldPassword}
                 />
                 <TouchableOpacity
                   style={styles.eyeIconContainer}
@@ -100,7 +168,7 @@ export default function SetNewPassword() {
                 </TouchableOpacity>
               </View>
               <ErrorAlert
-                error={errors.newPassword}
+                error={errors.oldPassword}
                 justifyContent="flex-start"
               />
 
@@ -139,11 +207,11 @@ export default function SetNewPassword() {
                   label="Confirm Password"
                   placeholder="******"
                   secureTextEntry={!showPassword}
-                  onChangeText={handleChange('confirmPassword')}
-                  value={values.confirmPassword}
+                  onChangeText={handleChange('confirmNewPassword')}
+                  value={values.confirmNewPassword}
                   width="100%"
                   marginLeft=""
-                  error={errors.confirmPassword}
+                  error={errors.confirmNewPassword}
                 />
                 <TouchableOpacity
                   style={styles.eyeIconContainer}
@@ -156,12 +224,12 @@ export default function SetNewPassword() {
                 </TouchableOpacity>
               </View>
               <ErrorAlert
-                error={errors.confirmPassword}
+                error={errors.confirmNewPassword}
                 justifyContent="flex-start"
               />
               <StyledButton
                 title={loading ? <ActivityIndicator color="#fff" /> : 'Set New Password'}
-                onPress={()=> setModalVisible(true)}
+                onPress={handleSubmit}
                 width='100%'
                 marginTop={10}
               />
@@ -171,18 +239,14 @@ export default function SetNewPassword() {
       </>
       <ResponseModal
         visible={modalVisible}
-        title={success ? 'Your new Password has been Saved' : 'Error!'}
-        message={error || 'Your can now login using your new password'}
+        title={modalTitle}
+        message={modalMessage}
         isSuccess={success}
         onDismiss={() => {
           setModalVisible(false);
-          if (success) {
             navigation.goBack();
-          } else {
-            navigation.navigate('MoreScreen');
-          }
         }}
-        buttonTitle={success ? 'Go back to settings' : 'Try again'}
+        buttonTitle={success ? 'Continue' : 'Try again'}
       />
     </SafeAreaView>
   )

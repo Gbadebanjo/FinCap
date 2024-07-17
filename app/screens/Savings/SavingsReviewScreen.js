@@ -78,6 +78,10 @@ const SavingsReviewScreen = ({ route }) => {
         <StyledButton
           title={loading ? <ActivityIndicator color="#fff" /> : 'Create Savings Plans'}
           onPress={createSavingsPlan}
+          width="90%"
+          marginTop={20}
+          marginLeft="5%"
+
         />
         <TouchableOpacity
           style={styles.newbutton}
@@ -160,6 +164,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 14,
     marginHorizontal: 20,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
   }

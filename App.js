@@ -9,6 +9,7 @@ import SignupScreen from './app/screens/Auth/SignUpScreen';
 import VerifyForgotPassword from './app/screens/Auth/VerifyForgotPassword';
 import VerifySignup from './app/screens/Auth/VerifySignup';
 import ResetPassword from './app/screens/Auth/ResetPassword';
+import Selfie from './app/screens/HomeScreen/Selfie';
 
 import NavButtons from './app/components/NavButtons';
 
@@ -63,6 +64,11 @@ export default function App() {
           component={NavButtons}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+        name="Selfie"
+        component={Selfie}
+        options={{ headerShown: false }}
+      />
 
       </Stack.Navigator>
     </NavigationContainer>

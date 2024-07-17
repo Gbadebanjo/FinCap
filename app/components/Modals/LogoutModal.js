@@ -1,96 +1,89 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
-const LogoutModal = ({ onCancel, onConfirm, title, message, visible, confirmText, cancelText }) => {
+const LogoutModal = ({ onCancel, onConfirm, title, message, visible }) => {
   return (
-    <SafeAreaView>      
-    <Modal visible={visible} transparent>
-      <View style={styles.fullScreenContainer}>
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.overlay}>
         <View style={styles.container}>
-          <View style={styles.titleContainer}>
+          <View style={styles.titleNcancel}>
             <Text style={styles.title}>{title}</Text>
             <TouchableOpacity onPress={onCancel}>
-                <FontAwesome name="angle-left" size={22} color="#808080" />
+            <AntDesign name="close" size={22} color="#808080" />
             </TouchableOpacity>
           </View>
-       
           <Text style={styles.message}>{message}</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={onConfirm} style={styles.confirmTextContainer}>
-              <Text style={styles.confirmText}>{confirmText}</Text>
+            <TouchableOpacity onPress={onConfirm} style={styles.confirmButton}>
+              <Text style={styles.confirmText}>Yes</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onCancel} style={styles.cancelTextContainer}>
-              <Text style={styles.cancelText}>{cancelText}</Text>
+            <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
+              <Text style={styles.cancelText}>No</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </Modal>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  fullScreenContainer: {
+  overlay: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor:  'rgba(0, 0, 0, 0.5)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  container: {                  
+  container: {
     backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    maxWidth: '100%',
-    // maxHeight: '50%',
+    padding: 25,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    width: '100%',
+    maxHeight: '50%',
   },
-  titleContainer: {
+  titleNcancel:{
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   title: {
     fontSize: 24,
-    fontWeight: 600,
+    fontWeight: '500',
     marginBottom: 10,
+    textAlign: 'start',
   },
   message: {
     fontSize: 14,
-    fontWeight: 400,
+    fontWeight: '400',
     lineHeight: 16,
     marginBottom: 20,
+    textAlign: 'start',
   },
   buttonContainer: {
-    marginTop: 20,
+    width: '100%',
     gap: 30,
+    alignContent: 'center'
   },
-  cancelTextContainer: {
-    fontSize: 16,
-    fontWeight: 500,
-    paddingVertical: 20,
+  cancelButton: {
+    paddingVertical: 15,
     borderWidth: 1,
-    borderRadius:10,
-    textAlign: 'center',
-    borderColor: '#D0D5DD'
+    borderRadius: 8,
+    borderColor: '#D0D5DD',
   },
-  cancelText: {
-    // color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-  confirmText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-  },
-  confirmTextContainer: {
-    fontSize: 16,
-    fontWeight: 500,
-    paddingVertical: 20,
-    borderRadius:10,
+  confirmButton: {
+    marginTop: 10,
     backgroundColor: '#CC342E',
-    borderColor: '#CC342E'
+    borderRadius: 8,
+    paddingVertical: 15,
   },
+  confirmText:{
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+  cancelText:{
+    textAlign: 'center',
+    color: '#344054',
+  }
 });
 
 export default LogoutModal;
