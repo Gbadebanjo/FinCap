@@ -109,11 +109,11 @@ function HomeScreen(props) {
                         <Text>Complete account setup</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.EachBox}
-                        onPress={() => navigation.navigate('AddBank')}>
+                        onPress={() => navigation.navigate('WithdrawalInput')}>
                         <View style={styles.Icon}>
                             <FontAwesome name="bank" size={20} color="#fff" />
                         </View>
-                        <Text>Add your bank details</Text>
+                        <Text>Withdraw Funds to Bank</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.PaymentBox}>

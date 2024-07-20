@@ -10,6 +10,9 @@ import FundWallet from '../screens/HomeScreen/FundWallet';
 import KycProfile from '../screens/HomeScreen/KycProfile';
 import VerifyProfile from '../screens/HomeScreen/VerifyProfile';
 import UploadDocument from '../screens/HomeScreen/UploadDocument';
+import WithdrawalInput from '../screens/HomeScreen/WithdrawalInput';
+import ReviewWithdrawal from '../screens/HomeScreen/ReviewWithdrawal';
+import WithdrawalReceipt from '../screens/HomeScreen/WithdrawalReceipt';
 import SavingsScreen from '../screens/Savings/SavingsScreen';
 import SavingsInputScreen from '../screens/Savings/SavingsInputScreen';
 import SavingsReviewScreen from '../screens/Savings/SavingsReviewScreen';
@@ -84,6 +87,21 @@ function HomeStack() {
       <Stack.Screen
         name="UploadDocument"
         component={UploadDocument}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="WithdrawalInput"
+        component={WithdrawalInput}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ReviewWithdrawal"
+        component={ReviewWithdrawal}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="WithdrawalReceipt"
+        component={WithdrawalReceipt}
         options={{ headerShown: false }}
       />
 
